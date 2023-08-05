@@ -58,4 +58,35 @@ abstract class Sql
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($colums);
     }
+
+    public function getOneBy($entry)
+    {
+        $values = [];
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . array_keys($entry)[0] . '=:' . array_keys($entry)[0];
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($entry);
+        while($row = $queryPrepared->fetchObject()){
+            array_push($values, $row); 
+        }
+        return $values;
+    }
+    
+    public function getBy($entry)
+    {
+        $values = [];
+        $sql = 'SELECT * FROM ' . $this->table . ' WHERE ';
+        foreach($entry as $key=>$data){
+            if (end($entry) != $data){
+                $sql .= $key . '=:' . $key . ' and ';
+            }else{
+                $sql .= $key . '=:' . $key;
+            }
+        }
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($entry);
+        while($row = $queryPrepared->fetchObject()){
+            array_push($values, $row); 
+        }
+        return $values;
+    }
 }
