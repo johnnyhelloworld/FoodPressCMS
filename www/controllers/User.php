@@ -20,8 +20,6 @@ class User
 
         if(!empty($_POST)) {
             $result = Verificator::checkForm($user->getExamForm(), $_POST);
-
-            print_r($result);
         }
 
         $view = new View("Register");
@@ -31,5 +29,14 @@ class User
     public function logout()
     {
         die("logout");
+    }
+
+    public function forgetPassword(){
+        $user = new UserModel();
+        $user = $user->getBy(['email' => 'johnny.chen@hotmail.fr', 'id' => 1]);
+        var_dump($user);
+        die();
+        $view = new View("forgetPassword");
+        $view->assign("user", $user);
     }
 }
