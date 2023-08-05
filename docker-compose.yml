@@ -1,0 +1,38 @@
+version: "3"
+services:
+  web:
+    build: site
+    ports:
+      - "81:80"
+    volumes:
+      - ./www:/var/www/html/
+      - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./server/apache2.conf:/etc/apache2/apache2.conf
+      - ./server/php.ini:/usr/local/etc/php/php.ini
+
+  composer:
+    image: composer
+    volumes:
+      - ./www:/var/www/html/
+      - ./www/vendor:/var/www/html/vendor
+    working_dir: /var/www/html/
+    command: composer install
+
+  database:
+    image: postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: esgi
+      POSTGRES_USER: esgi
+      POSTGRES_PASSWORD: Test1234
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8082:8080
+
+volumes:
+  pgdata:
