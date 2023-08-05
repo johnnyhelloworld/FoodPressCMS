@@ -10,9 +10,20 @@ use App\models\PasswordReset;
 use App\PHPMailer\PHPMailer;
 use App\PHPMailer\SMTP;
 use App\PHPMailer\Exception;
+use App\core\Session;
 
 class User 
 {
+    public function session(){
+        $session = new Session();
+        $session->set("pseudo", "JojoCuistot");
+    }
+
+    public function sessionGet(){
+        $session = new Session();
+        echo $session->get("pseudo");
+    }
+
     public function login()
     {
         $user = new UserModel();

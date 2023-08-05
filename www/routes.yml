@@ -45,3 +45,11 @@ changepassword:
 confirmchange:
     controller: user
     action: confirmPasswordChangement
+
+session:
+    controller: user
+    action: session
+
+sessionget:
+    controller: user
+    action: sessionGet
