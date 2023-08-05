@@ -21,3 +21,11 @@ dashboard:
 mail:
     controller: mail
     action: main
+
+confirmaccount:
+    controller: user
+    action: confirmAccount
+
+connection:
+    controller: user
+    action: connection
