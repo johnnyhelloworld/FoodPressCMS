@@ -11,6 +11,7 @@ use App\PHPMailer\PHPMailer;
 use App\PHPMailer\SMTP;
 use App\PHPMailer\Exception;
 use App\core\Session;
+use App\core\Sql;
 
 class User 
 {
@@ -26,16 +27,45 @@ class User
 
     public function login()
     {
+        $view = new View("Login");
         $user = new UserModel();
-
-        if(!empty($_POST)) {
+        $config = $user->getLoginForm();
+        $view->assign("user", $user);
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = Verificator::checkForm($user->getLoginForm(), $_POST);
 
-            print_r($result);
+            if(!empty($result)){
+                $view ->assign('result',$result);
+            }else{
+                if(!empty($_POST))
+                {
+                    $user_form = $user->getOneBy(['email' => $_POST['email']]);
+                    $object = $user_form[0];
+
+                    !is_null($user_form) ? $password = $object->password : '';
+                    !is_null($user_form) ? $email = $object->email : '';
+                    
+                    $token = $object->token;
+
+                    $password_user = isset($password) ? $password : '';
+                    $email_user = isset($email) ? $email : '';
+                    $password_verification = password_verify($_POST['password'],$password_user);
+
+                    if($email_user === $_POST['email'] && $password_verification && $token == null){
+                        header("Location: dashboard");
+                    }elseif(!$password_verification){
+                        $result[] = "Votre mot de passe est incorrect";
+                        $view->assign('result', $result);
+                    }elseif($token !== null){
+                        $result[] = "Veuillez activer votre compte";
+                        $view->assign('result',$result);
+                    }
+                }
+                else {}
+            }
         }
 
-        $view = new View("Login");
-        $view->assign("user", $user);
+        $view->assign("config",$config);
     }
 
     public function register()
@@ -176,13 +206,5 @@ class User
                 echo "Succès";
             }
         }
-    }
-
-    public function connection(){
-        $user = new UserModel();
-        $password = $_POST['password'];
-        $email = $_POST['email'];
-        $user->setPassword($password);
-        $user->setEmail($email);
     }
 }
