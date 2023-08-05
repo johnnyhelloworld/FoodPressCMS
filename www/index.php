@@ -13,7 +13,7 @@ spl_autoload_register(function ($class)
 });
 
 
-$uri = strtolower(trim($_SERVER["REQUEST_URI"], "/"));
+$uri = strtolower(trim(strtok($_SERVER["REQUEST_URI"], "/")));
 $uri = empty($uri)?"default":$uri;
 
 
