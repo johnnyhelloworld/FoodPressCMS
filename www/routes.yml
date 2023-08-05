@@ -21,3 +21,7 @@ dashboard:
 mail:
     controller: mail
     action: main
+
+confirmaccount:
+    controller: user
+    action: confirmAccount

@@ -18,12 +18,6 @@ class User
     {
         $user = new UserModel();
 
-        if(!empty($_POST)) {
-            $result = Verificator::checkForm($user->getExamForm(), $_POST);
-
-            print_r($result);
-        }
-
         $view = new View("Register");
         $view->assign("user", $user);
     }
@@ -31,5 +25,26 @@ class User
     public function logout()
     {
         die("logout");
+    }
+
+    public function confirmAccount() {
+        $user = new UserModel();
+
+        if(!empty($_POST)) 
+        {
+            $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
+
+            if(empty($result)) {
+                $user->setFirstname($_POST['firstname']);
+                $user->setLastname($_POST['lastname']);
+                $user->setEmail($_POST['email']);
+                $user->setPassword($_POST['password']);
+                $user->generateToken();
+
+                $user->save();
+
+                echo "Succès";
+            }
+        }
     }
 }
