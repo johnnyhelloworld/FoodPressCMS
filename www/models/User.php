@@ -208,6 +208,7 @@ class User extends Sql
                     "id"=>"emailRegister",
                     "class"=>"formRegister",
                     "required"=>true,
+                    "error"=>"Email invalide",
                 ],
                 "password"=>[
                     "placeholder"=>"Votre mot de passe ...",
@@ -225,9 +226,9 @@ class User extends Sql
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"",
-                "id"=>"formLogin",
-                "class"=>"formLogin",
+                "action"=>"sendPasswordReset",
+                "id"=>"formResetPassword",
+                "class"=>"formResetPassword",
                 "submit"=>"Récuperer mot de passe"
             ],
             "inputs"=>[
@@ -237,6 +238,36 @@ class User extends Sql
                     "id"=>"emailRegister",
                     "class"=>"formRegister",
                     "required"=>true
+                ]
+            ]
+        ];
+    }
+    public function getChangePasswordForm()
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"confirmChange",
+                "id"=>"formChangePassword",
+                "class"=>"formChangePassword",
+                "submit"=>"Changer de mot de passe"
+            ],
+            "inputs"=>[
+                "password"=>[
+                    "placeholder"=>"Votre mot de passe ...",
+                    "type"=>"password",
+                    "id"=>"changePassword",
+                    "class"=>"changePassword",
+                    "required"=>true,
+                    "error"=>"mot de passe incorrect"
+                ],
+                "confirmPassword"=>[
+                    "placeholder"=>"Confirmez votre mot de pase ...",
+                    "type"=>"password",
+                    "id"=>"changePassword",
+                    "class"=>"changePassword",
+                    "required"=>true,
+                    "error"=>"Pas le meme mot de passe"
                 ]
             ]
         ];

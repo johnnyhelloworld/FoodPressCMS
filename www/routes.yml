@@ -29,3 +29,19 @@ confirmaccount:
 connection:
     controller: user
     action: connection
+
+forgetpassword:
+    controller: user
+    action: forgetPassword
+
+sendpasswordreset:
+    controller: user
+    action: sendPasswordReset
+
+changepassword:
+    controller: user
+    action: changePassword
+
+confirmchange:
+    controller: user
+    action: confirmPasswordChangement

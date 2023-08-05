@@ -65,7 +65,7 @@ abstract class Sql
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . array_keys($entry)[0] . '=:' . array_keys($entry)[0];
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($entry);
-        while($row = $queryPrepared->fetchObject()){
+        while($row = $queryPrepared->fetchObject(get_called_class())){
             array_push($values, $row); 
         }
         return $values;
@@ -84,7 +84,7 @@ abstract class Sql
         }
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($entry);
-        while($row = $queryPrepared->fetchObject()){
+        while($row = $queryPrepared->fetchObject(get_called_class())){
             array_push($values, $row); 
         }
         return $values;
