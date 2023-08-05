@@ -196,7 +196,7 @@ class User extends Sql
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"",
+                "action"=>"/connection",
                 "id"=>"formLogin",
                 "class"=>"formLogin",
                 "submit"=>"Se connecter"
@@ -215,6 +215,7 @@ class User extends Sql
                     "id"=>"pwdRegister",
                     "class"=>"formRegister",
                     "required"=>true,
+                    "error"=>"Mot de passe invalide"
                 ]
             ]
         ];

@@ -25,3 +25,7 @@ mail:
 confirmaccount:
     controller: user
     action: confirmAccount
+
+connection:
+    controller: user
+    action: connection
