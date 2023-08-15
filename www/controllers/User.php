@@ -15,16 +15,6 @@ use App\core\Sql;
 
 class User 
 {
-    public function session(){
-        $session = new Session();
-        $session->set("pseudo", "JojoCuistot");
-    }
-
-    public function sessionGet(){
-        $session = new Session();
-        echo $session->get("pseudo");
-    }
-
     public function login()
     {
         $view = new View("Login");
@@ -97,7 +87,17 @@ class User
         $passwordReset->save();
     }
 
+    public function redirection(){
+        $test = "it works !";
+        $session = new Session();
+        // header('Location: /forgetPassword');
+    }
+
     public function forgetPassword(){
+        if(isset($test)){
+            echo $test;
+            die();
+        }
         $user = new UserModel();
         $view = new View("forgetPassword");
         $view->assign("user", $user);
@@ -109,11 +109,12 @@ class User
         if(!empty($_POST)) {
             $result = Verificator::checkForm($user->getForgetPasswordForm(), $_POST);
             if(empty($result)){
-                $user = $user->getOneBy(["email" => $_POST['email']])[0];
+                $user = $user->getOneBy(["email" => $_POST['email']]);
                 if(!empty($user)){
                     // echo "<pre>";
                     // var_dump($user);
                     // echo "</pre>";
+                    $user = $user[0];
                     $passwordReset = new PasswordReset();
                     $passwordReset->generateToken();
                     $passwordReset->generateTokenExpiry();
@@ -149,7 +150,7 @@ class User
                     $mail->smtpClose();
 
                 }else{
-                    echo "existe pas";
+                    echo "l'email n'existe pas";
                 }
             }else{
                 $view = new View("forgetPassword");
@@ -169,6 +170,8 @@ class User
         if(!empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
             $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
             if($passwordReset->getTokenExpiry() > time()){
+                $session = new Session();
+                $session->set("token", $passwordReset->getToken());
                 $view = new View("changePassword");
                 $view->assign("user", $user);
             }else{
@@ -181,8 +184,16 @@ class User
 
     public function confirmPasswordChangement(){
         $user = new UserModel();
-        if(!empty($_POST)) {
-            $result = Verificator::checkForm($user->getChangePasswordForm(), $_POST);
+        $passwordReset = new PasswordReset();
+        $session = new Session();
+        $passwordReset = $passwordReset->getOneBy(["token" => $session->get('token')])[0];
+        if(!empty($passwordReset) && $passwordReset->getTokenExpiry() > time()){
+            if(!empty($_POST)) {
+                $result = Verificator::checkForm($user->getChangePasswordForm(), $_POST);
+                if(!empty($result)){
+
+                }
+            }
         }
         // var_dump($result);
     }
