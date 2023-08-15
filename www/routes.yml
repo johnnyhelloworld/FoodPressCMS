@@ -46,10 +46,6 @@ confirmchange:
     controller: user
     action: confirmPasswordChangement
 
-session:
+redirection:
     controller: user
-    action: session
-
-sessionget:
-    controller: user
-    action: sessionGet
+    action: redirection
