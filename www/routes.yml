@@ -26,10 +26,6 @@ confirmaccount:
     controller: user
     action: confirmAccount
 
-connection:
-    controller: user
-    action: connection
-
 forgetpassword:
     controller: user
     action: forgetPassword

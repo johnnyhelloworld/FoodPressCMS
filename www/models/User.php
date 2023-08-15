@@ -10,12 +10,12 @@ class User extends Sql
     protected $id;
     protected $firstname = null;
     protected $lastname = null;
-    protected $email;
+    public $email;
     protected $status = 0;
-    protected $password;
+    public $password;
     protected $date_created;
     protected $date_updated;
-    protected $token = null;
+    public $token = null;
     
     public function __construct(){
         parent::__construct();
@@ -196,7 +196,7 @@ class User extends Sql
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"/connection",
+                "action"=>"/login",
                 "id"=>"formLogin",
                 "class"=>"formLogin",
                 "submit"=>"Se connecter"
