@@ -13,8 +13,11 @@ spl_autoload_register(function ($class)
 });
 
 
-$uri = strtolower(trim(strtok($_SERVER["REQUEST_URI"], "/")));
-$uri = empty($uri)?"default":$uri;
+$base_uri = strtolower(trim($_SERVER["REQUEST_URI"], "/"));
+$base_uri = empty($base_uri) ? "default" : $base_uri;
+
+$uri = strstr($base_uri, "?", true);
+$uri = $uri !== false ? $uri : $base_uri;
 
 
 if(!file_exists("routes.yml")){
