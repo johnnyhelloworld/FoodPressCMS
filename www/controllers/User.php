@@ -13,7 +13,7 @@ use App\PHPMailer\Exception;
 use App\core\Session;
 use App\core\Sql;
 
-class User 
+class User
 {
     public function login()
     {
@@ -21,48 +21,47 @@ class User
         $user = new UserModel();
         $config = $user->getLoginForm();
         $view->assign("user", $user);
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = Verificator::checkForm($user->getLoginForm(), $_POST);
 
-            if(!empty($result)){
-                $view ->assign('result',$result);
-            }else{
-                if(!empty($_POST))
-                {
+            if (!empty($result)) {
+                $view->assign('result', $result);
+            } else {
+                if (!empty($_POST)) {
                     $user_form = $user->getOneBy(['email' => $_POST['email']]);
                     $object = $user_form[0];
 
                     !is_null($user_form) ? $password = $object->password : '';
                     !is_null($user_form) ? $email = $object->email : '';
-                    
+
                     $token = $object->token;
 
                     $password_user = isset($password) ? $password : '';
                     $email_user = isset($email) ? $email : '';
-                    $password_verification = password_verify($_POST['password'],$password_user);
+                    $password_verification = password_verify($_POST['password'], $password_user);
 
-                    if($email_user === $_POST['email'] && $password_verification && $token == null){
+                    if ($email_user === $_POST['email'] && $password_verification && $token == null) {
                         header("Location: dashboard");
-                    }elseif(!$password_verification){
+                    } elseif (!$password_verification) {
                         $result[] = "Votre mot de passe est incorrect";
                         $view->assign('result', $result);
-                    }elseif($token !== null){
+                    } elseif ($token !== null) {
                         $result[] = "Veuillez activer votre compte";
-                        $view->assign('result',$result);
+                        $view->assign('result', $result);
                     }
+                } else {
                 }
-                else {}
             }
         }
 
-        $view->assign("config",$config);
+        $view->assign("config", $config);
     }
 
     public function register()
     {
         $user = new UserModel();
 
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $result = Verificator::checkForm($user->getLoginForm(), $_POST);
         }
 
@@ -87,14 +86,16 @@ class User
         $passwordReset->save();
     }
 
-    public function redirection(){
+    public function redirection()
+    {
         $test = "it works !";
         $session = new Session();
         // header('Location: /forgetPassword');
     }
 
-    public function forgetPassword(){
-        if(isset($test)){
+    public function forgetPassword()
+    {
+        if (isset($test)) {
             echo $test;
             die();
         }
@@ -106,11 +107,11 @@ class User
     public function sendPasswordReset()
     {
         $user = new UserModel();
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $result = Verificator::checkForm($user->getForgetPasswordForm(), $_POST);
-            if(empty($result)){
+            if (empty($result)) {
                 $user = $user->getOneBy(["email" => $_POST['email']]);
-                if(!empty($user)){
+                if (!empty($user)) {
                     // echo "<pre>";
                     // var_dump($user);
                     // echo "</pre>";
@@ -141,56 +142,57 @@ class User
                             Changez de mot de passe en cliquant <a href="http://localhost:81/changePassword?token=' . $passwordReset->getToken() . '">ici</a>
                         </div>
                     ';
-                    if($mail->Send()){
+                    if ($mail->Send()) {
                         echo "Email envoyé";
                         $passwordReset->save();
-                    }else{
+                    } else {
                         echo "Une erreur ";
                     }
                     $mail->smtpClose();
-
-                }else{
+                } else {
                     echo "l'email n'existe pas";
                 }
-            }else{
+            } else {
                 $view = new View("forgetPassword");
                 $view->assign("error", "Email invalide. =,(");
                 $view->assign("user", $user);
             }
-        }else{
+        } else {
             $view = new View("forgetPassword");
             $view->assign("error", "Un champ a disparu. =,(");
             $view->assign("user", $user);
         }
     }
 
-    public function changePassword(){
+    public function changePassword()
+    {
         $passwordReset = new PasswordReset();
         $user = new UserModel();
-        if(!empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
+        if (!empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])) {
             $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
-            if($passwordReset->tokenexpiry > time()){
+            if ($passwordReset->tokenexpiry > time()) {
                 $session = new Session();
                 $session->set("token", $passwordReset->getToken());
                 $view = new View("changePassword");
                 $view->assign("user", $user);
-            }else{
+            } else {
                 echo '<p style="color:red;">Le token n\'est plus valide</p>';
             }
-        }else{
+        } else {
             echo '<p style="color:red;">Le token n\'existe pas</p>';
         }
     }
 
-    public function confirmPasswordChangement(){
+    public function confirmPasswordChangement()
+    {
         $user = new UserModel();
         $passwordReset = new PasswordReset();
         $session = new Session();
         $passwordReset = $passwordReset->getOneBy(["token" => $session->get('token')])[0];
-        if(!empty($passwordReset) && $passwordReset->tokenexpiry > time()){
-            if(!empty($_POST)) {
+        if (!empty($passwordReset) && $passwordReset->tokenexpiry > time()) {
+            if (!empty($_POST)) {
                 $result = Verificator::checkForm($user->getChangePasswordForm(), $_POST);
-                if(empty($result)){
+                if (empty($result)) {
                     $user = $user->setId($passwordReset->getUserId());
                     $user->setPassword($_POST['password']);
                     $user->save();
@@ -200,14 +202,14 @@ class User
         }
     }
 
-    public function confirmAccount() {
+    public function confirmAccount()
+    {
         $user = new UserModel();
 
-        if(!empty($_POST)) 
-        {
+        if (!empty($_POST)) {
             $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
 
-            if(empty($result)) {
+            if (empty($result)) {
                 $user->setFirstname($_POST['firstname']);
                 $user->setLastname($_POST['lastname']);
                 $user->setEmail($_POST['email']);
