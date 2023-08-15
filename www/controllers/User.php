@@ -169,7 +169,7 @@ class User
         $user = new UserModel();
         if(!empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
             $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
-            if($passwordReset->getTokenExpiry() > time()){
+            if($passwordReset->tokenexpiry > time()){
                 $session = new Session();
                 $session->set("token", $passwordReset->getToken());
                 $view = new View("changePassword");
@@ -187,15 +187,17 @@ class User
         $passwordReset = new PasswordReset();
         $session = new Session();
         $passwordReset = $passwordReset->getOneBy(["token" => $session->get('token')])[0];
-        if(!empty($passwordReset) && $passwordReset->getTokenExpiry() > time()){
+        if(!empty($passwordReset) && $passwordReset->tokenexpiry > time()){
             if(!empty($_POST)) {
                 $result = Verificator::checkForm($user->getChangePasswordForm(), $_POST);
-                if(!empty($result)){
-
+                if(empty($result)){
+                    $user = $user->setId($passwordReset->getUserId());
+                    $user->setPassword($_POST['password']);
+                    $user->save();
+                    echo "Mot de passe changé";
                 }
             }
         }
-        // var_dump($result);
     }
 
     public function confirmAccount() {
