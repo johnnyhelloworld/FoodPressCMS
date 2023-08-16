@@ -58,7 +58,7 @@ abstract class Sql
     {
         $values = [];
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . array_keys($entry)[0] . '=:' . array_keys($entry)[0];
-        $queryPrepared = $this->pdo->prp($sql, $entry);
+        $queryPrepared = $this->pdo->databasePrepare($sql, $entry);
 
         while ($row = $queryPrepared->fetchObject(get_called_class())) {
             array_push($values, $row);
