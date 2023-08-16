@@ -26,7 +26,7 @@ abstract class Sql
         return $this->pdo;
     }
 
-    public function setId(?int $id): self
+    public function setId(?int $id):self
     {
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE id=:id';
 
@@ -35,16 +35,15 @@ abstract class Sql
         return $queryPrepared->fetchObject(get_called_class());
     }
 
-    protected function save(): void
-    {
+    protected function save():void{
         $colums = get_object_vars($this);
         $columnsToDelete = get_class_vars(get_class());
         $colums = array_diff_key($colums, $columnsToDelete);
 
-        if ($colums['id'] === null) {
+        if($colums['id'] === null){
             $colums = array_diff($colums, [$colums['id']]);
             $sql = 'INSERT INTO ' . $this->table  . ' (' . implode(',', array_keys($colums)) . ') VALUES (:' . implode(',:', array_keys($colums)) . ')';
-        } else {
+        }else{
             $update = [];
             foreach ($colums as $key => $value) {
                 $update[] = $key . '=:' . $key;
@@ -72,9 +71,9 @@ abstract class Sql
         $values = [];
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE ';
         foreach ($entry as $key => $data) {
-            if (end($entry) != $data) {
+            if(end($entry) != $data) {
                 $sql .= $key . '=:' . $key . ' and ';
-            } else {
+            }else{
                 $sql .= $key . '=:' . $key;
             }
         }
