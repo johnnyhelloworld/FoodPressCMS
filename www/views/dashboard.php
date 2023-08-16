@@ -3,3 +3,5 @@ Welcome <?= $firstname?>
 <?php if(false):?>
     <h2>Salut</h2>
 <?php endif;?>
+
+<?php $this->includePartial("form", $user->getLogoutButton());?>

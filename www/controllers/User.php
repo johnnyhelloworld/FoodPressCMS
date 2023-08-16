@@ -43,6 +43,9 @@ class User
 
                     if($email_user === $_POST['email'] && $password_verification && $token == null){
                         header("Location: dashboard");
+                        session_start ();
+                        $_SESSION['email'] = $_POST['email'];
+                        $_SESSION['password'] = $_POST['password'];
                     }elseif(!$password_verification){
                         $result[] = "Votre mot de passe est incorrect";
                         $view->assign('result', $result);
@@ -75,16 +78,13 @@ class User
 
     public function logout()
     {
-        $user = new UserModel();
-        $user = $user->setId(1);
-        $passwordReset = new PasswordReset();
-        $passwordReset->generateToken();
-        $passwordReset->generateTokenExpiry();
-        $passwordReset->setUserId($user);
-        // echo "<pre>";
-        // var_dump($passwordReset);
-        // echo "</pre>";
-        $passwordReset->save();
+        session_start ();
+
+        session_unset ();
+
+        session_destroy ();
+
+        header('Location: login');
     }
 
     public function redirection(){

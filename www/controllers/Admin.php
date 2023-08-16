@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\core\View;
+use App\models\User as UserModel;
 
 class Admin
 {
@@ -11,5 +12,9 @@ class Admin
         $firstname = 'Johnny';
         $view = new View("dashboard", "back");
         $view->assign('firstname', $firstname);
+
+        $user = new UserModel();
+
+        $view->assign("user", $user);
     }
 }
