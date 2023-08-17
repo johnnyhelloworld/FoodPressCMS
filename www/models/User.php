@@ -262,7 +262,7 @@ class User extends Sql
                     "error"=>"mot de passe incorrect"
                 ],
                 "confirmPassword"=>[
-                    "placeholder"=>"Confirmez votre mot de pase ...",
+                    "placeholder"=>"Confirmez votre mot de passe ...",
                     "type"=>"password",
                     "id"=>"changePassword",
                     "class"=>"changePassword",
@@ -270,6 +270,19 @@ class User extends Sql
                     "error"=>"Pas le meme mot de passe"
                 ]
             ]
+        ];
+    }
+    public function getLogoutButton(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"logout",
+                "id"=>"logout_button",
+                "class"=>"logout",
+                "submit"=>"Se déconnecter"
+            ],
+            "inputs"=>[
+            ],
         ];
     }
 }
