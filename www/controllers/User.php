@@ -36,7 +36,7 @@ class User
 
                     $token = $object->token;
 
-                    $password_user = isset($password) ? $password : '';
+                    $password_user = password_hash(isset($password) ? $password : '', PASSWORD_DEFAULT);
                     $email_user = isset($email) ? $email : '';
                     $password_verification = password_verify($_POST['password'], $password_user);
 
