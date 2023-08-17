@@ -1,6 +1,7 @@
 <?php
 
 namespace App\controllers;
+session_start();
 
 use App\core\User as Us;
 use App\core\View;
@@ -12,6 +13,7 @@ use App\PHPMailer\SMTP;
 use App\PHPMailer\Exception;
 use App\core\Session;
 use App\core\Sql;
+use App\controllers\Mail;
 
 class User 
 {
@@ -63,15 +65,58 @@ class User
     {
         $user = new UserModel();
 
-        if(!empty($_POST)) {
-            $result = Verificator::checkForm($user->getLoginForm(), $_POST);
-        }
-
-        // var_dump($result);
-        // echo "<br>";
-        // var_dump($_POST);
         $view = new View("Register");
         $view->assign("user", $user);
+
+        if(!empty($_POST)) {
+
+            $errors = Verificator::checkForm($user->getRegisterForm(), $_POST);
+
+            if(empty($errors)) {
+                $firstname = addslashes(htmlspecialchars($_POST['firstname']));
+                $lastname = addslashes(htmlspecialchars($_POST['lastname']));
+                $email = addslashes($_POST['email']);
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $passwordConfirmation = password_hash($_POST['passwordConfirm'], PASSWORD_DEFAULT);
+
+                $userEmail = $user->uniqueMailVerification($email);
+
+                if($userEmail[0] != 0){
+                    echo "Votre email existe déjà !";
+                }
+                elseif(password_verify($_POST['password'], $password) !== password_verify($_POST['passwordConfirm'], $passwordConfirmation)) {
+                    echo "Vos mots de passe ne correspondent pas !";
+                }
+                else {
+                    $user->setFirstname($firstname);
+                    $user->setLastname($lastname);
+                    $user->setEmail($email);
+                    $user->setPassword($password);
+                    $user->generateToken();
+
+                    $user->save();
+
+                    $token = $user->getToken();
+
+                    $mailConfirmation = new Mail();
+                    $mailConfirmation->main(
+                        $email, 
+                        "Confirmation inscription FoodPressCMS", 
+                        "
+                        Bonjour " . $user->getFirstname() .
+                        " <br><br>Nous avons bien reçu vos informations. <br>
+                        Afin de valider votre compte merci de cliquer sur le lien suivant <a href='http://localhost:81/confirmAccount?token=".$token."'>Ici</a> <br><br>
+                        Cordialement,<br>
+                        <a href=''>L'Equipe de FoodPressCMS</a>
+                        "
+                    );
+
+                    $_SESSION['flash']['success'] = "Un e-mail de confirmation vous a été envoyé pour valider votre compte !";
+                    // header('Location: login');
+                    exit();
+                }
+            }
+        }
     }
 
     public function logout()
@@ -201,20 +246,21 @@ class User
     public function confirmAccount(){
         $user = new UserModel();
 
-        if(!empty($_POST)) {
-            $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
+        $view = new View("confirmAccount");
 
-            if(empty($result)) {
-                $user->setFirstname($_POST['firstname']);
-                $user->setLastname($_POST['lastname']);
-                $user->setEmail($_POST['email']);
-                $user->setPassword($_POST['password']);
-                $user->generateToken();
+        $token = $_GET['token'];
 
-                $user->save();
+        $userInfo = $user->getOneBy(['token' => $token]);
+        $object = $userInfo[0];
 
-                echo "Succès";
-            }
+        $userToken = $object->token;
+        $userId = $object->id;
+
+        if($token === $userToken){
+            $user->activateAccount($userId);
+        }
+        else {
+            echo "Token non valide !";
         }
     }
 }

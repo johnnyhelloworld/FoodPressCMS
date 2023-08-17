@@ -9,7 +9,7 @@ use App\PHPMailer\Exception;
 
 class Mail
 {
-    public function main($mail)
+    public function main($email, $subject, $body)
     {
         $mail = new PHPMailer();
         $mail->isSMTP();
@@ -21,9 +21,9 @@ class Mail
         $mail->Password = MAILPSWD;
         $mail->iSHtml(true);
         $mail->setFrom(MAILUSER);
-        $mail->addAddress("johnny92300@gmail.com");
-        $mail->Subject = "FoodPress - Confirmation d\'inscription";
-        $mail->Body = 'Bonjour ceci est le lien de notre site <a href="https://desolate-earth-34955-a0697a407f9b.herokuapp.com/">ici</a>';
+        $mail->addAddress("$email");
+        $mail->Subject = $subject;
+        $mail->Body = $body;
         if($mail->Send()){
             echo "Email envoyé";
         }else{

@@ -7,7 +7,7 @@ use App\core\Sql;
 
 class User extends Sql
 {
-    protected $id;
+    public $id;
     protected $firstname = null;
     protected $lastname = null;
     public $email;
@@ -137,7 +137,7 @@ class User extends Sql
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"/confirmAccount",
+                "action"=>"/register",
                 "id"=>"formRegister",
                 "class"=>"formRegister",
                 "submit"=>"S'inscrire"
