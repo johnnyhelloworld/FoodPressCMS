@@ -83,18 +83,4 @@ abstract class Sql
         }
         return $values;
     }
-
-    public function activateAccount(?int $id){
-        $sql = 'UPDATE ' . $this->table . ' SET status=true WHERE id=:id';
-        $this->pdo->databasePrepare($sql, ['id' => $id]);
-    }
-
-    public function uniqueMailVerification($email){
-        $sql = 'SELECT count(email) FROM ' . $this->table . " WHERE email=:email";
-        if($queryPrepared =$this->pdo->databasePrepare($sql, ['email' => $email])){
-            $object = $queryPrepared->fetch();
-            return $object;
-        }
-        return false;
-    }
 }
