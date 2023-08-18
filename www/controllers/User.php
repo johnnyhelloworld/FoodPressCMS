@@ -7,12 +7,9 @@ use App\core\View;
 use App\models\User as UserModel;
 use App\core\Verificator;
 use App\models\PasswordReset;
-use App\PHPMailer\PHPMailer;
-use App\PHPMailer\SMTP;
-use App\PHPMailer\Exception;
 use App\core\Session;
 use App\core\Sql;
-use App\controllers\Mail;
+use App\core\Mail;
 
 class User 
 {
@@ -85,29 +82,19 @@ class User
 
         $user->save();
 
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = MAILHOST;
-        $mail->SMTPAuth = "true";
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port = MAILPORT;
-        $mail->Username = MAILUSER;
-        $mail->Password = MAILPSWD;
-        $mail->iSHtml(true);
-        $mail->setFrom(MAILUSER);
-        $mail->addAddress($_POST['email']);
-        $mail->Subject = "Confirmation inscription FoodPressCMS";
-        $mail->Body = "
+        $mail = new Mail();
+        $mail->sendTo($_POST['email']);
+        $mail->subject("Confirmation inscription FoodPressCMS");
+        $mail->message("
         Bonjour " . $user->getFirstname() .
         " <br><br>Nous avons bien reçu vos informations. <br>
         Afin de valider votre compte merci de cliquer sur le lien suivant <a href='http://localhost:81/confirmAccount?token=".$user->getToken()."'>Ici</a> <br><br>
         Cordialement,<br>
         <a href=''>L'Equipe de FoodPressCMS</a>
-        ";
-        if(!$mail->Send()){
+        ");
+        if(!$mail->send()){
             die("Vous rencontrer une erreur lors de l'envoie de mail");
         }
-        $mail->smtpClose();
         $view->assign("success", "Un e-mail de confirmation vous a été envoyé pour valider votre compte !");
     }
 
@@ -164,30 +151,19 @@ class User
         $passwordReset->generateTokenExpiry();
         $passwordReset->setUserId($user);
 
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = MAILHOST;
-        $mail->SMTPAuth = "true";
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port = MAILPORT;
-        $mail->Username = MAILUSER;
-        $mail->Password = MAILPSWD;
-        $mail->iSHtml(true);
-        $mail->setFrom(MAILUSER);
-        $mail->addAddress($_POST['email']);
-        $mail->Subject = "Test";
-        $mail->Body = '<h1 style="color:blue">FoodPressCMS</h1>
-            <p>
-                Nous avons bien reçu votre demande de changement de mot de passe.
-            </p>
-            <div>
-                Changez de mot de passe en cliquant <a href="http://localhost:81/changePassword?token=' . $passwordReset->getToken() . '">ici</a>
-            </div>
-        ';
-        if(!$mail->Send()){
+        $mail = new Mail();
+        $mail->sendTo($_POST['email']);
+        $mail->subject("Changement de mot de passe");
+        $mail->message('<h1 style="color:blue">FoodPressCMS</h1>
+        <p>
+            Nous avons bien reçus votre demande de changement de mot de passe.
+        </p>
+        <div>
+            Changez de mot de passe en cliquant <a href="http://localhost:81/changePassword?token=' . $passwordReset->getToken() . '">ici</a>
+        </div>');
+        if(!$mail->send()){
             die("Vous rencontrer une erreur lors de l'envoie de mail");
         }
-        $mail->smtpClose();
         $passwordReset->save();
         echo "Vous allez recevoir un mail pour modifier votre mail";
     }
