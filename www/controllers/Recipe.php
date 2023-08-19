@@ -16,31 +16,24 @@ class Recipe extends Sql{
     {
 		$view = new View("recipe");
 		$recipe = new RecipeModel();
-		$view->assign("recipe", $recipe);
-
-		// $category = new CategoryModel();
-		// echo '<pre>';
-		// print_r($category->getAll());
-		// echo '</pre>';
-		// die();
 
 		if($_SERVER["REQUEST_METHOD"] == "POST"){
-			//var_dump($_POST);
-			//die();
+
 			$title = addslashes(htmlspecialchars($_POST['title']));
 			$content = addslashes(htmlspecialchars($_POST['content']));
 			$category_id = $_POST['category_id'];
 
 			$result = VerificatorRecipe::validate($recipe->getRecipeForm(), $_POST);
 
-			if(count($result) > 0) {
-				$view->assign('result', $result);
+			if($result && count($result) > 0) {
+				$view->assign(['result' => $result]);
 				return;
 			}
 
 			$recipe->setTitle($title);
 			$recipe->setContent($content);
 			$recipe->setCategoryId($category_id);
+			$recipe->setDateCreated(new \DateTime('now'));
 			// $recipe->setPosition($_POST['position']);
 			$recipe->save();
 
@@ -53,23 +46,26 @@ class Recipe extends Sql{
 			$object = $recipeId[0];
 			$id = $object->id;
 
-			header('Location: /allRecipe');
+			header('Location: /recipes');
 		}
+        $view->assign(["recipe" => $recipe]);
 	}
 
     public function detailsRecipe() {
 		$recipe = new RecipeModel();
+        $category = new CategoryModel();
 		$view = new View("detailsRecipe");
 
-		$recipeId = $_GET['recipe_id'];
+		// $recipeId = $_GET['recipe_id'];
+        $recipeId = isset($_GET['id']) ? $_GET['id'] : '';
 
-		$RecipeDetails = $recipe->getOneBy(['id' => $recipeId]);
-		$object = $RecipeDetails[0];
+		$RecipeDatas = $recipe->getOneBy(['id' => $recipeId]);
+		$recipe = $RecipeDatas[0];
 
-		$id = $object->id;
-		$title = $object->title;
-		$content = $object->content;
-		$category_id = $object->category_id;
+        $categoryDatas = $category->getOneBy(['id' => $recipe->getCategoryId()]);
+        $category = $categoryDatas[0];
+
+        $view->assign(["recipe" => $recipe, "category" => $category]);
 	}
 
 	public function allRecipe() {
@@ -78,11 +74,51 @@ class Recipe extends Sql{
 
 		$allRecipe = $recipe->getAll();
 
-		$view->assign("allRecipe", $allRecipe);
+		$view->assign(["allRecipe" => $allRecipe]);
 	}
 
 	public function updateRecipe() {
+        $recipe = new RecipeModel();
+        $category = new CategoryModel();
 
+        $view = new View("updaterecipe");
+
+        $recipeId = isset($_GET['id']) ? $_GET['id'] : '';
+
+        $recipeDatas = $recipe->getOneBy(['id' => $recipeId]);
+        $recipeObject = $recipeDatas[0];
+
+        $categoryDatas = $category->getOneBy(['id' => $recipeObject->getCategoryId()]);
+        $categoryObject = $categoryDatas[0];
+
+        $params = [
+            "id" => $recipeObject->getId(),
+            "title" => $recipeObject->getTitle(),
+            "content" => $recipeObject->getContent(),
+            "selectedValue" => $categoryObject->getId()
+        ];
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $title = htmlspecialchars($_POST['title']);
+            $content = $_POST['content'];
+            $categoryId = intval($_POST['category_id']);
+
+            $result = VerificatorRecipe::validate($recipe->getRecipeForm(), $_POST);
+
+            if ($result != null && count($result) > 0) {
+                $view->assign(['result' => $result, "recipe" => $recipe, 'params' => $params]);
+                return;
+            }
+
+            $recipeObject->setTitle($title);
+            $recipeObject->setContent($content);
+            $recipeObject->setCategoryId($categoryId);
+            $recipeObject->setUpdatedAt((new \DateTime('now'))->format('Y-m-d'));
+            $recipeObject->save();
+
+            header('Location: /recipes');
+        }
+        $view->assign(["params" => $params, "recipe" => $recipe]);
 	}
 
 	public function deleteRecipe() {

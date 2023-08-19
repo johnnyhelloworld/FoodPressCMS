@@ -37,9 +37,11 @@ class View
         }
     }
 
-    public function assign($key, $value):void
+    public function assign(array $array): void
     {
-        $this->data[$key] = $value;
+        foreach ($array as $key => $value) {
+            $this->data[$key] = $value;
+        }
     }
 
     public function includePartial($partial, $config): void
