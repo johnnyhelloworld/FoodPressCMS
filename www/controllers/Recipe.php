@@ -56,4 +56,36 @@ class Recipe extends Sql{
 			header('Location: /allRecipe');
 		}
 	}
+
+    public function detailsRecipe() {
+		$recipe = new RecipeModel();
+		$view = new View("detailsRecipe");
+
+		$recipeId = $_GET['recipe_id'];
+
+		$RecipeDetails = $recipe->getOneBy(['id' => $recipeId]);
+		$object = $RecipeDetails[0];
+
+		$id = $object->id;
+		$title = $object->title;
+		$content = $object->content;
+		$category_id = $object->category_id;
+	}
+
+	public function allRecipe() {
+		$view = new View("recipes");
+		$recipe = new RecipeModel();
+
+		$allRecipe = $recipe->getAll();
+
+		$view->assign("allRecipe", $allRecipe);
+	}
+
+	public function updateRecipe() {
+
+	}
+
+	public function deleteRecipe() {
+
+	}
 }
