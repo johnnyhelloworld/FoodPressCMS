@@ -79,6 +79,7 @@ class User
         $user->setEmail($_POST['email']);
         $user->setPassword($_POST['password']);
         $user->generateToken();
+        $user->setRole('User');
 
         $user->save();
 
