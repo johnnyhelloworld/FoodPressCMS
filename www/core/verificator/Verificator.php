@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace App\Core\verificator;
 
 class Verificator
 {
@@ -20,10 +20,6 @@ class Verificator
             }
 
             if(!empty($input["required"]) && empty($data[$name]) ){
-                $errors[]=$name ." ne peut pas être vide";
-            }
-
-            if(!empty($input["type"]=="text") && empty($data[$name])) {
                 $errors[]=$name ." ne peut pas être vide";
             }
 
