@@ -46,13 +46,21 @@ redirection:
     controller: user
     action: redirection
 
-recipe:
+createrecipe:
     controller: recipe
     action: recipeCreate
 
 detailsrecipe:
     controller: recipe
     action: detailsRecipe
+
+updaterecipe:
+    controller: recipe
+    action: updateRecipe
+
+deleterecipe:
+    controller: recipe
+    action: deleteRecipe
 
 recipes:
     controller: recipe
