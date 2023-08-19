@@ -74,6 +74,11 @@ class User
             die();
         }
 
+        if($_POST['password'] !== $_POST['passwordConfirm']) {
+            echo "Vos mots de passe ne correspondent pas !";
+            die();
+        }
+
         $user->setFirstname($firstname);
         $user->setLastname($lastname);
         $user->setEmail($_POST['email']);
@@ -207,8 +212,6 @@ class User
 
     public function confirmAccount(){
         $user = new UserModel();
-
-        $view = new View("confirmaccount", "empty");
 
         if(!isset($user->getOneBy(['token' => $_GET['token']])[0])){
             die();

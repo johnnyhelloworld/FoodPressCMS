@@ -8,7 +8,7 @@
 </head>
 <body>
     <?php
-        include $this->view . '.view.php';
+        include $this->view;
     ?>
 </body>
 </html>
