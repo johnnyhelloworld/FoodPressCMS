@@ -83,4 +83,12 @@ abstract class Sql
         }
         return $values;
     }
+
+    public function getAll()
+    {
+        $sql = 'SELECT * FROM ' . $this->table;
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
