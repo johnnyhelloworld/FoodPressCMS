@@ -221,4 +221,56 @@ class User
 
         header('Location: /login');
     }
+
+    public function isAdmin(){
+        $user = new UserModel();
+        $foundAdmin = isset($_SESSION['email']) ? $user->getOneBy(['email' => $_SESSION['email']])[0] : null;
+
+        if(!empty($foundAdmin)){
+            die("Admin non trouvé");
+        }
+
+        if($foundAdmin->getRole() == "Admin"){
+            return true;
+        }
+    }
+
+    public function isChef(){
+        $user = new UserModel();
+        $foundChef = isset($_SESSION['email']) ? $user->getOneBy(['email' => $_SESSION['email']])[0] : null;
+
+        if(empty($foundChef)){
+            die("Chef non trouvé");
+        }
+
+        if($foundChef->getRole() == "Chef"){
+            return true;
+        }
+    }
+
+    public function isSubcriber(){
+        $user = new UserModel();
+        $foundSub = isset($_SESSION['email']) ? $user->getOneBy(['email' => $_SESSION['email']])[0] : null;
+
+        if(empty($foundSub)){
+            die("Subscriber non trouvé");
+        }
+
+        if($foundSub->getRole() == "Subscriber"){
+            return true;
+        }
+    }
+
+    public function isUser(){
+        $user = new UserModel();
+        $foundUser = isset($_SESSION['email']) ? $user->getOneBy(['email' => $_SESSION['email']])[0] : null;
+
+        if(empty($foundUser)){
+            die("User non trouvé");
+        }
+
+        if($foundUser->getRole() == "User"){
+            return true;
+        }
+    }
 }
