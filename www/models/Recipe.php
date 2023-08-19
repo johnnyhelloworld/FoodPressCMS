@@ -81,7 +81,7 @@ class Recipe extends Sql
 
         $datas = [];
         for ($i = 0; $i < count($categories); $i++) {
-            $datas[] = [$categories[$i]->getId(), $categories[$i]->getName()];
+            $datas[] = [$categories[$i]['id'], $categories[$i]['name']];
         }
 
         return [

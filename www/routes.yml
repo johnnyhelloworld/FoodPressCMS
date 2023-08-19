@@ -45,3 +45,15 @@ confirmchange:
 redirection:
     controller: user
     action: redirection
+
+recipe:
+    controller: recipe
+    action: recipeCreate
+
+detailsrecipe:
+    controller: recipe
+    action: detailsRecipe
+
+recipes:
+    controller: recipe
+    action: allRecipe
