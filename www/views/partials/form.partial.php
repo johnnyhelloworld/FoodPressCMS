@@ -34,10 +34,11 @@
                 break;
                 ?>
         <?php case "select":?>
-                <select name="<?= $name ?>" id="<?= $input["id"]??"" ?>" class="<?= $input["class"]??"" ?>" >
-                    <?php foreach($input['value'] as $key=>$value):?>
-                        <option value="<?= $value??""?>" <?php if(!empty( $input["selected"])) echo ($value === $input['selected'])? 'selected="selected"': '';?>><?= $key??"Choix"?></option>
-                    <?php  endforeach;?>
+                <select name="<?= $name ?>" id="<?= $input["id"] ?? "" ?>" class="<?= $input["class"] ?? "" ?>">
+                    <option value="">Veuillez choisir</option>
+                    <?php foreach ($input['value'] as $value) : ?>
+                        <option value="<?= $value[0] ?>"><?= $value[1]  ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <br>
                 <?php break;?>
