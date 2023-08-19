@@ -208,6 +208,8 @@ class User
     public function confirmAccount(){
         $user = new UserModel();
 
+        $view = new View("confirmaccount", "empty");
+
         if(!isset($user->getOneBy(['token' => $_GET['token']])[0])){
             die();
         }
