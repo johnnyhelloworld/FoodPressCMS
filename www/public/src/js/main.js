@@ -1,13 +1,14 @@
-$(document).ready(function(){
-    $('#menu-button').click(function(){
+/******** MENU HAMBURGER  ********/
+$(document).ready(function () {
+    $('#menu-button').click(function () {
         $('#site-nav').toggleClass('open');
     })
 })
 
-$(window).scroll(function(){
-    if($(this).scrollTop() > 0){
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 0) {
         $('#site-header').addClass('sticky');
-    }else{
+    } else {
         $('#site-header').removeClass('sticky');
     }
 
@@ -16,11 +17,11 @@ $(window).scroll(function(){
 
     console.log(windowHeight, windowScroll);
 
-    $('main > section:not(#section1)').each(function(){
+    $('main > section:not(#section1)').each(function () {
         var sectionTop = $(this).position().top;
         var offset = windowHeight - (sectionTop - windowScroll);
 
-        if(offset >= windowHeight / 3){
+        if (offset >= windowHeight / 3) {
             $(this).css('opacity', 1);
             $(this).css('top', 0);
         }
@@ -28,20 +29,26 @@ $(window).scroll(function(){
     })
 })
 
-$(document).ready(function(){
-    if($('.slider').length){
-        $('.slider').each(function(index){
+/******** SLIDER ********/
+$(document).ready(function () {
+
+    if ($('.slider').length) {
+        $('.slider').each(function (index) {
             sliderInit($(this));
         })
     }
 
+
     var premierSlider = $('.slider')[0];
-    var interval = setInterval(function(){
+    var interval = setInterval(function () {
         next($(premierSlider))
     }, 5000);
+
+
 })
 
-function sliderInit(element){
+function sliderInit(element) {
+
     let container = $('<div></div>');
     container.addClass('slides-container');
     container.html(element.html());
@@ -56,27 +63,27 @@ function sliderInit(element){
     element.append(nav);
     element.attr('data-currentSlide', 0);
 
-    element.find('.prev').click(function(){
+    element.find('.prev').click(function () {
         prev(element);
     })
-    element.find('.next').click(function(){
+    element.find('.next').click(function () {
         next(element);
     })
 }
 
-function prev(slider){
+function prev(slider) {
     let attrValue = Number(slider.attr('data-currentSlide'));
     slider.attr('data-currentSlide', attrValue - 1);
     slide(slider);
 }
 
-function next(slider){
+function next(slider) {
     let attrValue = Number(slider.attr('data-currentSlide'));
     slider.attr('data-currentSlide', attrValue + 1);
     slide(slider);
 }
 
-function slide(slider){
+function slide(slider) {
     let attrValue = Number(slider.attr('data-currentSlide'));
     let leftValue = attrValue * 100 * (-1);
 
@@ -85,23 +92,29 @@ function slide(slider){
 
     disableNav(slider);
 
-    if(attrValue == totalSlides){
+
+
+    if (attrValue == totalSlides) {
         let clone = container.children('img:first-child').clone();
         container.append(clone);
 
-        container.on('transitionend', function(){
+        container.on('transitionend', function () {
+
             container.off('transitionend');
+
             container.css('transition', 'none');
             container.css('left', 0);
             container.children('img:last-child').remove();
             slider.attr('data-currentSlide', 0);
-            setTimeout(function(){
+            setTimeout(function () {
                 container.css('transition', 'left 1s');
             }, 20);
         })
     }
 
-    if(attrValue == -1){
+
+
+    if (attrValue == -1) {
         let clone = container.children('img:last-child').clone();
         clone.css({
             'position': 'absolute',
@@ -110,14 +123,14 @@ function slide(slider){
             'transform': 'translateX(-100%)'
         });
 
-        container.prepend(clone); 
-        container.on('transitionend', function(){
+        container.prepend(clone);
+        container.on('transitionend', function () {
             $(this).off('transitionend');
             container.css('transition', 'none');
             container.css('left', ((totalSlides - 1) * -100) + '%');
             container.children('img:first-child').remove();
             slider.attr('data-currentSlide', totalSlides - 1);
-            setTimeout(function(){
+            setTimeout(function () {
                 container.css('transition', 'left 1s');
             }, 20);
         })
@@ -125,16 +138,17 @@ function slide(slider){
 
     container.css('left', leftValue + '%');
 
-    container.on('transitionend', function(){
+    // Ecoute la fin de la transition pour rétablir la navbar
+    container.on('transitionend', function () {
         $(this).off('transitionend');
         enableNav(slider);
     })
 }
 
-function disableNav(slider){
-    slider.find('nav button').attr('disabled','true');
+function disableNav(slider) {
+    slider.find('nav button').attr('disabled', 'true');
 }
 
-function enableNav(slider){
+function enableNav(slider) {
     slider.find('nav button').removeAttr('disabled');
 }

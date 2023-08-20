@@ -1,4 +1,4 @@
-#section2{
+#section2 {
 	position: relative;
 	margin-bottom: 6rem;
 	overflow-y: scroll;
@@ -51,7 +51,7 @@
 				content: "";
 				width: 30px;
 				height: 30px;
-				background-image: url("../../../assets/images/arrow.svg");
+				background-image: url("../assets/images/arrow.svg");
 				background-size: contain;
 				background-position: center;
 				background-repeat: no-repeat;
@@ -65,24 +65,26 @@
 	}
 }
 
-.next{
+.next {
 	border-radius: 3px 0 0 3px;
 }
 
-.prev{
+.prev {
 	border-radius: 0 3px 3px 0;
 }
 
-.prev:hover, .next:hover {
+.prev:hover,
+.next:hover {
 	background-color: rgba(181, 142, 212, 0.801);
 }
 
-.prev, .next{
+.prev,
+.next {
 	transition: 0.6s ease;
 }
 
-@media screen and (max-width: 715px){
-	.slider{
+@media screen and (max-width: 715px) {
+	.slider {
 		width: 500px;
 		height: 200px;
 		margin-top: 1.5rem;
@@ -94,8 +96,8 @@
 	}
 }
 
-@media screen and (max-width: 525px){
-	.slider{
+@media screen and (max-width: 525px) {
+	.slider {
 		width: 360px;
 		height: 150px;
 		margin-top: 1.5rem;
