@@ -11,10 +11,10 @@ class Admin
     {
         $firstname = 'Johnny';
         $view = new View("dashboard", "back");
-        $view->assign('firstname', $firstname);
+        $view->assign(['firstname' => $firstname]);
 
         $user = new UserModel();
 
-        $view->assign("user", $user);
+        $view->assign(["user" => $user]);
     }
 }
