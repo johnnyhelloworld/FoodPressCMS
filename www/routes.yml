@@ -1,67 +1,89 @@
 default:
     controller: main
     action: home
+    role: [public]
 
 login:
     controller: user
     action: login
+    role: [public]
 
 logout:
     controller: user
     action: logout
+    role: [user, admin, super_admin]
 
 register:
     controller: user
     action: register
+    role: [public]
 
 dashboard:
     controller: admin
     action: home
+    role: [admin, super_admin]
 
 mail:
     controller: mail
     action: main
+    role: [user, admin, super_admin]
 
 confirmaccount:
     controller: user
     action: confirmAccount
+    role: [public]
 
 forgetpassword:
     controller: user
     action: forgetPassword
+    role: [public]
 
 sendpasswordreset:
     controller: user
     action: sendPasswordReset
+    role: [public]
 
 changepassword:
     controller: user
     action: changePassword
+    role: [user, admin, super_admin]
 
 confirmchange:
     controller: user
     action: confirmPasswordChangement
+    role: [user, admin, super_admin]
 
 redirection:
     controller: user
     action: redirection
+    role: [user, admin, super_admin]
+
+comment:
+    controller: comment
+    action: commentCreate
+    role: [user, admin, super_admin]
 
 createrecipe:
     controller: recipe
     action: recipeCreate
+    role: [admin, super_admin]
 
 detailsrecipe:
     controller: recipe
     action: detailsRecipe
+    role: [user, admin, super_admin]
 
 updaterecipe:
     controller: recipe
     action: updateRecipe
+    role: [admin, super_admin]
 
 deleterecipe:
     controller: recipe
     action: deleteRecipe
+    role: [admin, super_admin]
 
 recipes:
     controller: recipe
     action: allRecipe
+    role: [user, admin, super_admin]
