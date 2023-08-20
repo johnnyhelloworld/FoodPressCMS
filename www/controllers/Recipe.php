@@ -8,6 +8,8 @@ use App\core\verificator\VerificatorRecipe;
 use App\models\Category as CategoryModel;
 use App\models\Block as BlockModel;
 use App\models\User as UserModel;
+use App\models\Comment as CommentModel;
+use App\models\Like as LikeModel;
 use App\core\Sql;
 use App\core\Session;
 
@@ -56,8 +58,13 @@ class Recipe extends Sql{
     public function detailsRecipe() {
 		$recipe = new RecipeModel();
         $category = new CategoryModel();
+		$commentRecipe= new CommentModel();
+		$likeRecipe = new LikeModel();
 		$view = new View("detailsRecipe");
 		$recipe_id = $_GET['id'];
+
+		$like = count($likeRecipe->getUserLikeByRecipe(1, $recipe_id)); // remplacer par l'id user id de session 
+		$total_likes = $likeManager->countAllLikesByRecipe($recipe_id);
 
 		$RecipeDatas = $recipe->getOneBy(['id' => $recipeId]);
 		$recipe = $RecipeDatas[0];
@@ -65,7 +72,24 @@ class Recipe extends Sql{
         $categoryDatas = $category->getOneBy(['id' => $recipe->getCategoryId()]);
         $category = $categoryDatas[0];
 
-        $view->assign(["recipe" => $recipe, "category" => $category]);
+		$comments = $commentManager->getCommentsByRecipe($recipe_id);
+
+		$replies = $commentManager->getRepliesByComment($recipe_id);
+		$countComments = $commentManager->countComments($recipe_id);
+
+		if (count($comments) > 0) {
+			$view->assign(['comments' => $comments]);
+		}
+		if (count($replies) > 0) {
+			$view->assign(['replies' => $replies]);
+		}
+
+        $view->assign(["recipe" => $recipe,
+		 "category" => $category,
+		 "countComments" => $countComments,
+		 "like" => $like,
+		 "total_likes" => $total_likes['likes']
+		]);
 	}
 
 	public function allRecipe() {
