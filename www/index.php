@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+session_start();
+
 require "conf.inc.php";
 
 spl_autoload_register(function ($class)
@@ -37,6 +39,14 @@ if(empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
 
 $c = $routes[$uri]["controller"]; //Security
 $a = $routes[$uri]["action"]; //login
+
+$role = $routes[$uri]['role'];
+
+if(isset($_SESSION['role'])){
+    if(!in_array($_SESSION['role'], $role) && !in_array('public',$role)){
+        throw new \Exception('Vous n\'avez pas le droit d\'accéder à cette page');
+    }
+}
 
 //Sinon si il n'y a pas de fichier controller correspondant die absence du fichier controller
 if(!file_exists("controllers/".$c.".php")){
