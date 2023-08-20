@@ -16,6 +16,7 @@ class User extends Sql
     protected $date_created;
     protected $date_updated;
     public $token = null;
+    protected $role;
     
     public function __construct(){
         parent::__construct();
@@ -125,6 +126,16 @@ class User extends Sql
     {
         $bytes = random_bytes(128);
         $this->token = substr(str_shuffle(bin2hex($bytes)), 0, 255);
+    }
+
+    public function getRole():string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role):void
+    {
+        $this->role = $role;
     }
 
     public function save(): void
