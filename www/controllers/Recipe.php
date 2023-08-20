@@ -6,6 +6,8 @@ use App\core\View;
 use App\models\Recipe as RecipeModel;
 use App\core\verificator\VerificatorRecipe;
 use App\models\Category as CategoryModel;
+use App\models\Block as BlockModel;
+use App\models\User as UserModel;
 use App\core\Sql;
 use App\core\Session;
 
@@ -26,14 +28,14 @@ class Recipe extends Sql{
 			$result = VerificatorRecipe::validate($recipe->getRecipeForm(), $_POST);
 
 			if($result && count($result) > 0) {
-				$view->assign(['result' => $result]);
+				$view->assign(['result' => $result, "recipe" => $recipe]);
 				return;
 			}
 
 			$recipe->setTitle($title);
 			$recipe->setContent($content);
 			$recipe->setCategoryId($category_id);
-			$recipe->setDateCreated(new \DateTime('now'));
+			$recipe->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 			// $recipe->setPosition($_POST['position']);
 			$recipe->save();
 
@@ -55,9 +57,7 @@ class Recipe extends Sql{
 		$recipe = new RecipeModel();
         $category = new CategoryModel();
 		$view = new View("detailsRecipe");
-
-		// $recipeId = $_GET['recipe_id'];
-        $recipeId = isset($_GET['id']) ? $_GET['id'] : '';
+		$recipe_id = $_GET['id'];
 
 		$RecipeDatas = $recipe->getOneBy(['id' => $recipeId]);
 		$recipe = $RecipeDatas[0];
@@ -83,7 +83,7 @@ class Recipe extends Sql{
 
         $view = new View("updaterecipe");
 
-        $recipeId = isset($_GET['id']) ? $_GET['id'] : '';
+        $recipeId = isset($_GET['id']);
 
         $recipeDatas = $recipe->getOneBy(['id' => $recipeId]);
         $recipeObject = $recipeDatas[0];
@@ -92,7 +92,7 @@ class Recipe extends Sql{
         $categoryObject = $categoryDatas[0];
 
         $params = [
-            "id" => $recipeObject->getId(),
+            // "id" => $recipeObject->getId(),
             "title" => $recipeObject->getTitle(),
             "content" => $recipeObject->getContent(),
             "selectedValue" => $categoryObject->getId()
@@ -122,6 +122,10 @@ class Recipe extends Sql{
 	}
 
 	public function deleteRecipe() {
+		$recipe = new RecipeModel();
+		$recipe->delete($_GET['id']);
+
+		header('Location: /recipes');
 
 	}
 }
