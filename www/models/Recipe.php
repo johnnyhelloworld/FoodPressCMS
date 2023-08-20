@@ -13,6 +13,8 @@ class Recipe extends Sql
     protected $position;
     protected $block_id;
     protected $category_id;
+    protected $date_created;
+    protected $date_updated;
 
     public function __construct()
     {
@@ -74,6 +76,26 @@ class Recipe extends Sql
         $this->category_id = $category_id;
     }
 
+    public function getDateCreated(): ?string
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated($date_created): void
+    {
+        $this->date_created = $date_created;
+    }
+
+    public function getDateUpdated(): ?string
+    {
+        return $this->date_updated;
+    }
+
+    public function setDateUpdated($date_updated): void
+    {
+        $this->date_updated = $date_updated;
+    }
+
     public function getRecipeForm($params = null):array
     {
         $category = new Category();
@@ -87,7 +109,7 @@ class Recipe extends Sql
         return [
             "config" => [
                 "method" => "POST",
-                "action" => "/recipe",
+                "action" => "",
                 "class" => "formRecipe",
                 "id" => "formRecipe",
                 "submit" => "Enregistrer",
@@ -95,7 +117,7 @@ class Recipe extends Sql
 
             "inputs" => [
                 "title" => [
-                    "value" => $params != null ? $params['value'] : "", // permet de préremplir le formulaire lors de la modification du formulaire
+                    "value" => $params != null ? $params['title'] : "",
                     "type" => "text",
                     "id" => "title",
                     "class" => "title",
@@ -105,6 +127,7 @@ class Recipe extends Sql
                 ],
 
                 "content" => [
+                    "value" => $params != null ? $params['content'] : "",
                     "type" => "textarea",
                     "id" => "content",
                     "class" => "content",
@@ -120,6 +143,7 @@ class Recipe extends Sql
                     "class" => "categories",
                     //"required" => "required",
                     "value" => $datas,
+                    "selectedValue" => $params != null ? $params['selectedValue'] : "",
                 ],
             ]
         ];
