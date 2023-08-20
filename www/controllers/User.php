@@ -17,7 +17,7 @@ class User
     {
         $view = new View("Login", "empty");
         $user = new UserModel();
-        $view->assign("user", $user);
+        $view->assign(['user' => $user]);
         
         if(empty($_POST)){
             die();
@@ -25,23 +25,23 @@ class User
 
         $errors = Verificator::checkForm($user->getLoginForm(), $_POST);
         if(!empty($errors)){
-            $view->assign('errors', $errors);
+            $view->assign(['errors' => $errors]);
             die();
         }
         if(!isset($user->getOneBy(['email' => $_POST['email']])[0])){
-            $view->assign('errors', ["Votre email ou mot de passe est invalide"]);
+            $view->assign(['errors' => ["Votre email ou mot de passe est invalide"]]);
             die();
         }
         $user = $user->getOneBy(['email' => $_POST['email']])[0];
 
         if(!password_verify($_POST['password'], $user->getPassword())){
-            $view->assign('errors', ["Votre email ou mot de passe est invalide"]);
+            $view->assign(['errors'=> ["Votre email ou mot de passe est invalide"]]);
             die();
         }
         $status = $user->getStatus();
 
         if($status == false){
-            $view->assign('errors', ["Votre compte n'est pas encore actif"]);
+            $view->assign(['errors' => ["Votre compte n'est pas encore actif"]]);
             die();
         }
         $session = new Session();
@@ -54,7 +54,7 @@ class User
         $user = new UserModel();
 
         $view = new View("Register", "empty");
-        $view->assign("user", $user);
+        $view->assign(['user' => $user]);
 
         if(empty($_POST)){
             die();
@@ -63,14 +63,14 @@ class User
         $errors = Verificator::checkForm($user->getRegisterForm(), $_POST);
 
         if(!empty($errors)){
-            $view->assign("errors", $errors);
+            $view->assign(["errors" => $errors]);
             die();
         }
         $firstname = strip_tags($_POST['firstname']);
         $lastname = strip_tags($_POST['lastname']);
 
         if(isset($user->getOneBy(['email' => $_POST['email']])[0])){
-            $view->assign("errors",  ["L'utilisateur existe"]);
+            $view->assign(["errors" =>  ["L'utilisateur existe déjà"]]);
             die();
         }
 
@@ -101,7 +101,7 @@ class User
         if(!$mail->send()){
             die("Vous rencontrer une erreur lors de l'envoie de mail");
         }
-        $view->assign("success", "Un e-mail de confirmation vous a été envoyé pour valider votre compte !");
+        $view->assign(["success" => "Un e-mail de confirmation vous a été envoyé pour valider votre compte !"]);
     }
 
     public function logout()
@@ -129,26 +129,26 @@ class User
         }
         $user = new UserModel();
         $view = new View("forgetPassword");
-        $view->assign("user", $user);
+        $view->assign(["user" => $user]);
     }
 
     public function sendPasswordReset()
     {
         $view = new View("forgetpassword");
         $user = new UserModel();
-        $view->assign("user", $user);
+        $view->assign(["user" => $user]);
             if(empty($_POST)){
-            $view->assign("error", "Un champ a disparu. =,(");
+            $view->assign(["error" => "Un champ a disparu. =,("]);
             die();
         }
         $result = Verificator::checkForm($user->getForgetPasswordForm(), $_POST);
         if(!empty($result)){
-            $view->assign("error", "Aie ton email est mal écrit. =,(");
+            $view->assign(["error" => "Aie ton email est mal écrit. =,("]);
             die();
         }
         $user = $user->getOneBy(["email" => $_POST['email']]);
         if(empty($user)){
-            $view->assign("error", "L'email n'existe pas. =,(");
+            $view->assign(["error" => "L'email n'existe pas. =,("]);
             die();
         }
         $user = $user[0]; 
@@ -187,7 +187,7 @@ class User
         $session = new Session();
         $session->set("token", $passwordReset->getToken());
         $view = new View("changePassword");
-        $view->assign("user", $user);
+        $view->assign(["user" => $user]);
     }
 
     public function confirmPasswordChangement(){
