@@ -11,7 +11,6 @@ class Recipe extends Sql
     protected $title;
     protected $content;
     protected $position;
-    protected $block_id;
     protected $category_id;
     protected $date_created;
     protected $date_updated;
@@ -54,16 +53,6 @@ class Recipe extends Sql
     public function setPosition($position):void
     {
         $this->position = $position;
-    }
-
-    public function getBlockId():?int
-    {
-        return $this->block_id;
-    }
-
-    public function setBlockId($block_id):void
-    {
-        $this->block_id = $block_id;
     }
 
     public function getCategoryId():?int

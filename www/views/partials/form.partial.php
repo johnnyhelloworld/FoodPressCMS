@@ -47,7 +47,7 @@
                 <br>
                 <?php break;?>
         <?php case "textarea":?>
-                <textarea name="<?= $name ?>" class="<?= $input["class"]??"" ?>" id="<?= $input["id"]??"" ?>" placeholder="<?= $input["placeholder"]??"" ?>"></textarea>
+                <textarea name="<?= $name ?>" class="<?= $input["class"]??"" ?>" id="<?= $input["id"]??"" ?>" placeholder="<?= $input["placeholder"]??"" ?>"><?= $input["value"] ?? '' ?></textarea>
                 <br>
                 <?php break;?>
         <?php case "file":?>
@@ -65,8 +65,9 @@
                 id="<?= $input["id"]??"" ?>"
                 placeholder="<?= $input["placeholder"]??"" ?>"
                 type="<?= $input["type"]??"text" ?>"
+                value="<?= $input["value"] ?? "" ?>" 
                 <?= !empty( $input["required"])?'required="required"':""  ?>
-                ><br>
+                ><br>                
         <?php endswitch;?>        
     <?php endforeach;?>
 
