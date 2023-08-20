@@ -118,7 +118,7 @@ class Recipe extends Sql
                 "content" => [
                     "value" => $params != null ? $params['content'] : "",
                     "type" => "textarea",
-                    "id" => "content",
+                    "id" => "editor",
                     "class" => "content",
                     "placeholder" => "Contenu de la recette",
                     //"required" => "required",

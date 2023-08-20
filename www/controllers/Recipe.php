@@ -122,7 +122,7 @@ class Recipe extends Sql{
 	}
 
 	public function deleteRecipe() {
-		$recipe = new ArticleModel();
+		$recipe = new RecipeModel();
 		$recipe->delete($_GET['id']);
 
 		header('Location: /recipes');
