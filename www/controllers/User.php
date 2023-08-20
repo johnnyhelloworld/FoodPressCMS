@@ -5,7 +5,7 @@ namespace App\controllers;
 use App\core\User as Us;
 use App\core\View;
 use App\models\User as UserModel;
-use App\core\Verificator;
+use App\core\verificator\Verificator;
 use App\models\PasswordReset;
 use App\core\Session;
 use App\core\Sql;
@@ -15,7 +15,7 @@ class User
 {
     public function login()
     {
-        $view = new View("Login");
+        $view = new View("Login", "empty");
         $user = new UserModel();
         $view->assign("user", $user);
         
@@ -53,7 +53,7 @@ class User
     {
         $user = new UserModel();
 
-        $view = new View("Register");
+        $view = new View("Register", "empty");
         $view->assign("user", $user);
 
         if(empty($_POST)){
@@ -71,6 +71,11 @@ class User
 
         if(isset($user->getOneBy(['email' => $_POST['email']])[0])){
             $view->assign("errors",  ["L'utilisateur existe"]);
+            die();
+        }
+
+        if($_POST['password'] !== $_POST['passwordConfirm']) {
+            echo "Vos mots de passe ne correspondent pas !";
             die();
         }
 
