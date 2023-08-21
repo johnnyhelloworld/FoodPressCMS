@@ -87,3 +87,19 @@ recipes:
     controller: recipe
     action: allRecipe
     role: [user, admin, super_admin]
+
+comment:
+    controller: comment
+    action: commentCreate
+
+replycomment:
+    controller: comment
+    action: replyComment
+
+createlike:
+    controller: like
+    action: createLike
+
+getlikes:
+    controller: like
+    action: getLikes

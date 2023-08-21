@@ -10,7 +10,7 @@ if (isset($allRecipe)) : ?>
         <div style='display:flex;padding:10px 0'>
             <span style="font-weight:bold; margin:0 20px"><?= ucfirst($value['title']) ?></span>
             <span style="margin:0 20px"><?= substr($value['content'], 0, 40) . '...' ?></span>
-            <span style='font-style:italic; margin:0 20px'><?= 'Posté par : admin le ' . substr($value['date_created'], 0, 10) ?></span>
+            <span style='font-style:italic; margin:0 20px'><?= 'Posté par : admin le ' . substr($value['$date_created'], 0, 10) ?></span>
             <span style="margin:0 20px;padding:4px;background:lightgrey">
                 <a href="/detailsRecipe?id=<?= $value['id'] ?>" style="font-size:11px;text-decoration:none;color:blue">Lire la suite</a>
             </span>
