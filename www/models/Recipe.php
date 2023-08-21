@@ -72,7 +72,7 @@ class Recipe extends Sql
 
     public function setDateCreated($date_created): void
     {
-        $this->date_created = $date_created;
+        $this->date_created = date("Y-m-d h:i:s", $date_created);
     }
 
     public function getDateUpdated(): ?string
@@ -82,7 +82,7 @@ class Recipe extends Sql
 
     public function setDateUpdated($date_updated): void
     {
-        $this->date_updated = $date_updated;
+        $this->date_updated = date("Y-m-d h:i:s", $date_updated);
     }
 
     public function getRecipeForm($params = null):array
