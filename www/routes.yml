@@ -107,3 +107,18 @@ getlikes:
     controller: like
     action: getLikes
     role: [public]
+
+/adminmember:
+    controller: admin
+    action: memberView
+    role: [admin, super_admin]
+
+/deleteuser:
+    controller: admin
+    action: deleteUser
+    role: [admin, super_admin]
+
+/edituserrole:
+    controller: admin
+    action: editUserRole
+    role: [admin, super_admin]
