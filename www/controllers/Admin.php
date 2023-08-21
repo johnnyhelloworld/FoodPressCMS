@@ -44,7 +44,7 @@ class Admin
         $selectedRole = $_POST['role'];
         $user = $userDatas[0];
         $user->setRole($selectedRole);
-        $user->setUpdatedAt((new \DateTime('now'))->format('Y-m-d H:i:s'));
+        $user->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
         $user->save();
 
         header('Location: /adminmember');

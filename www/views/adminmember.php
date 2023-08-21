@@ -1,4 +1,4 @@
-h1>Gestion des membres</h1>
+<h1>Gestion des membres</h1>
 
 <table>
     <tr>
@@ -18,7 +18,7 @@ h1>Gestion des membres</h1>
             <td><?= $user["email"]; ?></td>
             <td><?= $user["status"] == 1 ? "actif" : "inactif" ?></td>
             <td><?= (new \datetime($user["date_created"]))->format('d-m-Y') ; ?></td>
-            <td><?= (new \datetime($user["$date_updated"]))->format('d-m-Y') ; ?></td>
+            <td><?= (new \datetime($user["date_updated"]))->format('d-m-Y') ; ?></td>
 
             <td>
                 <form action="/editUserRole" method="POST">
