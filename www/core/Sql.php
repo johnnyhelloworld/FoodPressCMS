@@ -3,6 +3,7 @@
 namespace App\core;
 
 use App\core\Database;
+use PDO;
 
 abstract class Sql
 {
@@ -96,5 +97,79 @@ abstract class Sql
     {
         $sql = "DELETE FROM {$this->table} WHERE id = ?";
         $this->pdo->databasePrepare($sql, [$id]);
+    }
+
+    public function getCommentsByRecipe($id)
+    {
+        $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.date_created,u.firstname, u.lastname, u.id as 'idUser'
+        FROM {$this->table} as c
+        JOIN `fp_user`as u
+        ON u.id = c.author_id
+        WHERE c.recipe_id = ?
+        AND c.parent_id IS NULL
+        ORDER BY c.date_created DESC";
+
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$id]);
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countComments($id)
+    {
+        $sql = "SELECT count(id) as 'count' FROM {$this->table}
+        WHERE recipe_id = ?";
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$id]);
+        return $queryPrepared->fetch();
+    }
+
+
+    public function getRepliesByComment($id)
+    {
+        $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.date_created,u.firstname, u.lastname, u.id as 'idUser'
+        FROM {$this->table} as c
+        JOIN `fp_user`as u
+        ON u.id = c.author_id
+        WHERE c.recipe_id = ?
+        AND c.parent_id IS NOT NULL
+        ORDER BY c.date_created DESC";
+
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$id]);
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserLikeByRecipe($user_id, $recipe_id)
+    {
+        $sql = "SELECT l.id as 'like' FROM `fp_like` as l
+        JOIN `fp_user`as u
+        ON l.user_id = u.id
+        JOIN `fp_recipe`as r
+        ON l.recipe_id = r.id
+        WHERE u.id = ?
+        AND r.id = ?";
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$user_id, $recipe_id]);
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function toggleLikes($user_id, $recipe_id)
+    {
+        $likes = $this->getUserLikeByRecipe($user_id, $recipe_id);
+
+        if (count($likes) == 0) {
+            $sql = "INSERT INTO fp_like (user_id, recipe_id) VALUES (?, ?)";
+            $this->pdo->databasePrepare($sql, [$user_id, $recipe_id]);
+        } else {
+            $sql = "DELETE FROM {$this->table} WHERE user_id = ? AND recipe_id = ?";
+            $this->pdo->databasePrepare($sql, [$user_id, $recipe_id]);
+        }
+    }
+
+    public function countAllLikesByRecipe($recipe_id)
+    {
+        $sql = "SELECT count(l.id) as 'likes' FROM `fp_like` as l
+        JOIN `fp_recipe`as r
+        ON l.recipe_id = r.id
+        AND r.id = ?";
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$recipe_id]);
+        return $queryPrepared->fetch();
     }
 }
