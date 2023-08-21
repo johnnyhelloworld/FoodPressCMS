@@ -85,34 +85,22 @@ class User extends Sql
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
-    /**
-     * @return Integer
-     */
-    public function getDateCreated(): int
+    public function getDateCreated(): ?string
     {
         return $this->date_created;
     }
 
-    /**
-     * @param Integer $date_created
-     */
-    public function setDateCreated(Int $date_created): void
+    public function setDateCreated($date_created): void
     {
         $this->date_created = date("Y-m-d h:i:s", $date_created);
     }
 
-    /**
-     * @return Integer
-     */
-    public function getDateUpdated(): Int
+    public function getDateUpdated(): ?string
     {
         return $this->date_updated;
     }
 
-    /**
-     * @param Integer $date_updated
-     */
-    public function setDateUpdated(Int $date_updated): void
+    public function setDateUpdated($date_updated): void
     {
         $this->date_updated = date("Y-m-d h:i:s", $date_updated);
     }
