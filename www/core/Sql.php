@@ -101,13 +101,13 @@ abstract class Sql
 
     public function getCommentsByRecipe($id)
     {
-        $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.content_created,u.firstname, u.lastname, u.id as 'idUser'
+        $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.created_at,u.firstname, u.lastname, u.id as 'idUser'
         FROM {$this->table} as c
         JOIN `fp_user`as u
         ON u.id = c.author_id
         WHERE c.recipe_id = ?
         AND c.parent_id IS NULL
-        ORDER BY c.content_created DESC";
+        ORDER BY c.created_at DESC";
 
         $queryPrepared = $this->pdo->databasePrepare($sql, [$id]);
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
@@ -124,13 +124,13 @@ abstract class Sql
 
     public function getRepliesByComment($id)
     {
-        $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.content_created,u.firstname, u.lastname, u.id as 'idUser'
+        $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.created_at,u.firstname, u.lastname, u.id as 'idUser'
         FROM {$this->table} as c
         JOIN `fp_user`as u
         ON u.id = c.author_id
         WHERE c.recipe_id = ?
         AND c.parent_id IS NOT NULL
-        ORDER BY c.content_created DESC";
+        ORDER BY c.created_at DESC";
 
         $queryPrepared = $this->pdo->databasePrepare($sql, [$id]);
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
