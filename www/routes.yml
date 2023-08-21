@@ -91,15 +91,19 @@ recipes:
 comment:
     controller: comment
     action: commentCreate
+    role: [public]
 
 replycomment:
     controller: comment
     action: replyComment
+    role: [public]
 
 createlike:
     controller: like
     action: createLike
+    role: [public]
 
 getlikes:
     controller: like
     action: getLikes
+    role: [public]
