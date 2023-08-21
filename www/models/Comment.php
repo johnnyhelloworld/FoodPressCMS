@@ -13,7 +13,7 @@ class Comment extends Sql
     protected $recipe_id;
     protected $title;
     protected $content;
-    protected $created_at;
+    protected $date_created;
 
     public function __construct()
     {
@@ -73,13 +73,13 @@ class Comment extends Sql
         $this->content = $content;
     }
 
-    public function getContentCreated(): ?string
+    public function getDateCreated(): ?string
     {
-        return $this->created_at;
+        return $this->date_created;
     }
 
-    public function setContentCreated($created_At): void
+    public function setDateCreated($date_created): void
     {
-        $this->created_at = $created_at;
+        $this->date_created = $date_created;
     }
 }

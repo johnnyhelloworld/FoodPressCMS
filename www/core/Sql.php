@@ -154,7 +154,6 @@ abstract class Sql
     {
         $likes = $this->getUserLikeByRecipe($user_id, $recipe_id);
 
-
         if (count($likes) == 0) {
             $sql = "INSERT INTO fp_like (user_id, recipe_id) VALUES (?, ?)";
             $this->pdo->databasePrepare($sql, [$user_id, $recipe_id]);
@@ -166,11 +165,11 @@ abstract class Sql
 
     public function countAllLikesByRecipe($recipe_id)
     {
-    $sql = "SELECT count(l.id) as 'likes' FROM `fp_like` as l
-    JOIN `fp_recipe`as a
-    ON l.recipe_id = a.id
-    AND a.id = ?";
-    $queryPrepared = $this->pdo->databasePrepare($sql, [$recipe_id]);
-    return $queryPrepared->fetch();
+        $sql = "SELECT count(l.id) as 'likes' FROM `fp_like` as l
+        JOIN `fp_recipe`as a
+        ON l.recipe_id = a.id
+        AND a.id = ?";
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$recipe_id]);
+        return $queryPrepared->fetch();
     }
 }

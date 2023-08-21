@@ -27,7 +27,7 @@ class Comment extends Sql
 		$comment->setRecipeId($_POST['recipe']);
 		$comment->setTitle($_POST['title']);
 		$comment->setContent($_POST['content']);
-		$comment->setContentCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
+		$comment->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 		$comment->save();
 
 		$userManager = new userModel();
@@ -45,8 +45,8 @@ class Comment extends Sql
 				"firstname" => $user->getFirstname(),
 				"lastname" => $user->getLastname(),
 				"recipe" => $comment->getRecipeId(),
-				"date" => substr($comment->getContentCreated(), 0, 10),
-				"hour" => substr($comment->getContentCreated(), -9, 18),
+				"date" => substr($comment->getDateCreated(), 0, 10),
+				"hour" => substr($comment->getDateCreated(), -9, 18),
 
 			]
 		]);
@@ -64,7 +64,7 @@ class Comment extends Sql
 		$comment->setParentId($_POST['parentId']);
 		$comment->setRecipeId($_POST['recipeId']);
 		$comment->setContent($_POST['replyContent']);
-		$comment->setContentCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
+		$comment->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 		$comment->save();
 
 		$userManager = new userModel();
@@ -81,8 +81,8 @@ class Comment extends Sql
 				"firstname" => $user->getFirstname(),
 				"lastname" => $user->getLastname(),
 				"recipe" => $comment->getRecipeId(),
-				"date" => substr($comment->getContentCreated(), 0, 10),
-				"hour" => substr($comment->getContentCreated(), -9, 18),
+				"date" => substr($comment->getDateCreated(), 0, 10),
+				"hour" => substr($comment->getDateCreated(), -9, 18),
 				"parent" => $comment->getParentId(),
 			]
 		]);
