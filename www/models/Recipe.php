@@ -14,6 +14,7 @@ class Recipe extends Sql
     protected $category_id;
     protected $date_created;
     protected $date_updated;
+    protected $slug;
 
     public function __construct()
     {
@@ -83,6 +84,16 @@ class Recipe extends Sql
     public function setDateUpdated($date_updated): void
     {
         $this->date_updated = date("Y-m-d h:i:s", $date_updated);
+    }
+
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function getRecipeForm($params = null):array
