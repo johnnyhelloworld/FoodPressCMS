@@ -271,17 +271,17 @@ class User extends Sql
             ]
         ];
     }
-    public function getLogoutButton(){
-        return [
-            "config"=>[
-                "method"=>"POST",
-                "action"=>"logout",
-                "id"=>"logout_button",
-                "class"=>"logout",
-                "submit"=>"Se déconnecter"
-            ],
-            "inputs"=>[
-            ],
-        ];
-    }
+    // public function getLogoutButton(){
+    //     return [
+    //         "config"=>[
+    //             "method"=>"POST",
+    //             "action"=>"logout",
+    //             "id"=>"logout_button",
+    //             "class"=>"logout",
+    //             "submit"=>"Se déconnecter"
+    //         ],
+    //         "inputs"=>[
+    //         ],
+    //     ];
+    // }
 }
