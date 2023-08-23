@@ -1,4 +1,4 @@
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+// console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 let recipe = document.querySelector('#heart_like').dataset.recipe
 
 $.ajax({

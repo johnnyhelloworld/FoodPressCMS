@@ -12,6 +12,7 @@ use App\models\Comment as CommentModel;
 use App\models\Like as LikeModel;
 use App\core\Sql;
 use App\core\Session;
+use App\helpers\Slugger;
 
 
 class Recipe extends Sql{
@@ -24,7 +25,7 @@ class Recipe extends Sql{
 		if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 			$title = addslashes(htmlspecialchars($_POST['title']));
-			$content = addslashes(htmlspecialchars($_POST['content']));
+			$content = $_POST['content'];
 			$category_id = $_POST['category_id'];
 
 			$result = VerificatorRecipe::validate($recipe->getRecipeForm(), $_POST);
@@ -35,6 +36,7 @@ class Recipe extends Sql{
 			}
 
 			$recipe->setTitle($title);
+			$recipe->setSlug(Slugger::sluggify($_POST['title']));
 			$recipe->setContent($content);
 			$recipe->setCategoryId($category_id);
 			$recipe->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
@@ -61,21 +63,23 @@ class Recipe extends Sql{
 		$commentRecipe= new CommentModel();
 		$likeRecipe = new LikeModel();
 		$view = new View("detailsRecipe");
-		$recipe_id = $_GET['id'];
+		$recipeId = $_GET['slug'];
 
-		$like = count($likeRecipe->getUserLikeByRecipe(1, $recipe_id)); // remplacer par l'id user id de session 
-		$total_likes = $likeManager->countAllLikesByRecipe($recipe_id);
-
-		$RecipeDatas = $recipe->getOneBy(['id' => $recipeId]);
+		$RecipeDatas = $recipe->getOneBy(['slug' => $recipeId]);
 		$recipe = $RecipeDatas[0];
+
+		$like = count($likeRecipe->getUserLikeByRecipe(1, $recipeId)); // remplacer par l'id user id de session 
+		$total_likes = $likeRecipe->countAllLikesByRecipe($recipeId->getId());
+
+
 
         $categoryDatas = $category->getOneBy(['id' => $recipe->getCategoryId()]);
         $category = $categoryDatas[0];
 
-		$comments = $commentManager->getCommentsByRecipe($recipe_id);
+		$comments = $commentRecipe->getCommentsByRecipe($recipeId->getId());
 
-		$replies = $commentManager->getRepliesByComment($recipe_id);
-		$countComments = $commentManager->countComments($recipe_id);
+		$replies = $commentRecipe->getRepliesByComment($recipeId->getId());
+		$countComments = $commentRecipe->countComments($recipeId->getId());
 
 		if (count($comments) > 0) {
 			$view->assign(['comments' => $comments]);
@@ -92,7 +96,7 @@ class Recipe extends Sql{
 		]);
 	}
 
-	public function allRecipe() {
+	public function indexRecipe() {
 		$view = new View("recipes");
 		$recipe = new RecipeModel();
 
@@ -107,9 +111,9 @@ class Recipe extends Sql{
 
         $view = new View("updaterecipe");
 
-        $recipeId = isset($_GET['id']);
+        $recipeId = isset($_GET['slug']);
 
-        $recipeDatas = $recipe->getOneBy(['id' => $recipeId]);
+        $recipeDatas = $recipe->getOneBy(['slug' => $recipeId]);
         $recipeObject = $recipeDatas[0];
 
         $categoryDatas = $category->getOneBy(['id' => $recipeObject->getCategoryId()]);
@@ -147,6 +151,9 @@ class Recipe extends Sql{
 
 	public function deleteRecipe() {
 		$recipe = new RecipeModel();
+		// $comment = new CommentModel();
+
+		// $comment->deleteComments($_GET['id']);
 		$recipe->delete($_GET['id']);
 
 		header('Location: /recipes');

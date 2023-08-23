@@ -85,7 +85,7 @@ deleterecipe:
 
 recipes:
     controller: recipe
-    action: allRecipe
+    action: indexRecipe
     role: [user, admin, super_admin]
 
 comment:

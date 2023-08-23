@@ -1,4 +1,4 @@
-<h1>Créer une recette</h1>
+<h1 style="padding-top:300px;">Créer une recette</h1>
 
 <?php $this->includePartial("form", $recipe->getRecipeForm(null));?>
 

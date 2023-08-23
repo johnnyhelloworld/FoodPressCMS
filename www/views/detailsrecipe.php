@@ -10,7 +10,7 @@
 <h1>Détails recette</h1>
 <a href="/recipes">Retour</a>
 
-<div class="container">
+<div class="container" style="padding-top: 100px;">
     <div class="block-recipe" style="min-height:250px;width:500px;margin:0 auto">
         <h1><?= $recipe->getTitle() ?></h1>
         <small>Posté par Admin - Catégorie : <?= $category->getName() ?> -
@@ -89,3 +89,6 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="../public/src/js/comment.js"></script>
+<script src="../public/src/js/like.js"></script>
+<script src="/"></script>
