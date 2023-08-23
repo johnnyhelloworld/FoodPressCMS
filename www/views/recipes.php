@@ -1,5 +1,5 @@
 <div style="display:flex; align-items:center; padding-top: 100px;">
-    <h1 style="margin-top: 150px;">Nos recipes(<?= count($allRecipe) ?>)</h1>
+    <h1>Nos recipes(<?= count($allRecipe) ?>)</h1>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a style="text-decoration:none;border-radius:50%; background:grey;padding:5px 10px;color:white;" href="/createrecipe">+</a>
 </div>
@@ -12,10 +12,10 @@ if (isset($allRecipe)) : ?>
             <span style="margin:0 20px"><?= substr($value['content'], 0, 40) . '...' ?></span>
             <span style='font-style:italic; margin:0 20px'><?= 'Posté par : admin le ' . substr($value['date_created'], 0, 10) ?></span>
             <span style="margin:0 20px;padding:4px;background:lightgrey">
-                <a href="/detailsRecipe?slug=<?= $value['id'] ?>" style="font-size:11px;text-decoration:none;color:blue">Lire la suite</a>
+                <a href="/detailsRecipe?slug=<?= $value['slug'] ?>" style="font-size:11px;text-decoration:none;color:blue">Lire la suite</a>
             </span>
             <span style="margin:0 20px;padding:4px;background:lightgrey">
-                <a href="/updateRecipe?slug=<?= $value['id'] ?>" style="font-size:11px;text-decoration:none;color:blue">Editer</a>
+                <a href="/updateRecipe?slug=<?= $value['slug'] ?>" style="font-size:11px;text-decoration:none;color:blue">Editer</a>
             </span>
             <span style="margin:0 20px;padding:4px;background:lightgrey">
                 <a href="/deleteRecipe?id=<?= $value['id'] ?>" style="font-size:11px;text-decoration:none;color:blue" onclick="confirm('Confirmer la suppression ?')">Supprimer</a>

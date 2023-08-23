@@ -69,17 +69,17 @@ class Recipe extends Sql{
 		$recipe = $RecipeDatas[0];
 
 		$like = count($likeRecipe->getUserLikeByRecipe(1, $recipeId)); // remplacer par l'id user id de session 
-		$total_likes = $likeRecipe->countAllLikesByRecipe($recipeId-getId());
+		$total_likes = $likeRecipe->countAllLikesByRecipe($recipeId->getId());
 
 
 
         $categoryDatas = $category->getOneBy(['id' => $recipe->getCategoryId()]);
         $category = $categoryDatas[0];
 
-		$comments = $commentRecipe->getCommentsByRecipe($recipeId-getId());
+		$comments = $commentRecipe->getCommentsByRecipe($recipeId->getId());
 
-		$replies = $commentRecipe->getRepliesByComment($recipeId-getId());
-		$countComments = $commentRecipe->countComments($recipeId-getId());
+		$replies = $commentRecipe->getRepliesByComment($recipeId->getId());
+		$countComments = $commentRecipe->countComments($recipeId->getId());
 
 		if (count($comments) > 0) {
 			$view->assign(['comments' => $comments]);
