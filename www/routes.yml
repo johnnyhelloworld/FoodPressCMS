@@ -122,3 +122,18 @@ edituserrole:
     controller: admin
     action: editUserRole
     role: [admin, super_admin]
+
+addpage:
+    controller: admin
+    action: addPage
+    role: [admin, super_admin]
+
+deletepage:
+    controller: admin
+    action: deletePageAdmin
+    role: [admin, super_admin]
+
+recipetest:
+    controller: recipe
+    action: indexRecipe
+    role: [public]

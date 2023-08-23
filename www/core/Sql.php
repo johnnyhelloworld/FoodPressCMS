@@ -99,6 +99,18 @@ abstract class Sql
         $this->pdo->databasePrepare($sql, [$id]);
     }
 
+    public function deletePage($page)
+    {
+        $sql = "DELETE FROM {$this->table} WHERE title = ?";
+        $this->pdo->databasePrepare($sql, [$page]);
+    }
+
+    public function deleteBlock($page)
+    {
+        $sql = "DELETE FROM {$this->table} WHERE page_id = ?";
+        $this->pdo->databasePrepare($sql, [$page]);
+    }
+
     public function getCommentsByRecipe($id)
     {
         $sql = "SELECT c.id as 'idComment', c.parent_id as 'parent', c.author_id as 'author', c.title, c.content, c.date_created,u.firstname, u.lastname, u.id as 'idUser'
