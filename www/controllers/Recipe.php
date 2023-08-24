@@ -40,6 +40,7 @@ class Recipe extends Sql{
 			$recipe->setContent($content);
 			$recipe->setCategoryId($category_id);
 			$recipe->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
+			$recipe->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 			// $recipe->setPosition($_POST['position']);
 			$recipe->save();
 
@@ -58,28 +59,28 @@ class Recipe extends Sql{
 	}
 
     public function detailsRecipe() {
-		$recipe = new RecipeModel();
+		$recipeManager = new RecipeModel();
         $category = new CategoryModel();
 		$commentRecipe= new CommentModel();
 		$likeRecipe = new LikeModel();
-		$view = new View("detailsRecipe");
+		$view = new View("detailsRecipe", "empty");
 		$recipeId = $_GET['slug'];
 
-		$RecipeDatas = $recipe->getOneBy(['slug' => $recipeId]);
-		$recipe = $RecipeDatas[0];
+		$recipeDatas = $recipeManager->getOneBy(['slug' => $recipeId]);
+		$recipe = $recipeDatas[0];
 
 		$like = count($likeRecipe->getUserLikeByRecipe(1, $recipeId)); // remplacer par l'id user id de session 
-		$total_likes = $likeRecipe->countAllLikesByRecipe($recipeId->getId());
+		$total_likes = $likeRecipe->countAllLikesByRecipe($recipe->getId());
 
 
 
         $categoryDatas = $category->getOneBy(['id' => $recipe->getCategoryId()]);
         $category = $categoryDatas[0];
 
-		$comments = $commentRecipe->getCommentsByRecipe($recipeId->getId());
+		$comments = $commentRecipe->getCommentsByRecipe($recipe->getId());
 
-		$replies = $commentRecipe->getRepliesByComment($recipeId->getId());
-		$countComments = $commentRecipe->countComments($recipeId->getId());
+		$replies = $commentRecipe->getRepliesByComment($recipe->getId());
+		$countComments = $commentRecipe->countComments($recipe->getId());
 
 		if (count($comments) > 0) {
 			$view->assign(['comments' => $comments]);
@@ -111,7 +112,7 @@ class Recipe extends Sql{
 
         $view = new View("updaterecipe");
 
-        $recipeId = isset($_GET['slug']);
+        $recipeId = $_GET['slug'];
 
         $recipeDatas = $recipe->getOneBy(['slug' => $recipeId]);
         $recipeObject = $recipeDatas[0];
@@ -141,7 +142,7 @@ class Recipe extends Sql{
             $recipeObject->setTitle($title);
             $recipeObject->setContent($content);
             $recipeObject->setCategoryId($categoryId);
-            $recipeObject->setUpdatedAt((new \DateTime('now'))->format('Y-m-d'));
+            $recipeObject->setDateUpdated((new \DateTime('now'))->format('Y-m-d'));
             $recipeObject->save();
 
             header('Location: /recipes');

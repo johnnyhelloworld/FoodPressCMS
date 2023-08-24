@@ -71,7 +71,7 @@ createrecipe:
 detailsrecipe:
     controller: recipe
     action: detailsRecipe
-    role: [user, admin, super_admin]
+    role: [public, user, admin, super_admin]
 
 updaterecipe:
     controller: recipe
@@ -86,7 +86,7 @@ deleterecipe:
 recipes:
     controller: recipe
     action: indexRecipe
-    role: [user, admin, super_admin]
+    role: [public, user, admin, super_admin]
 
 comment:
     controller: comment
@@ -137,3 +137,8 @@ recipetest:
     controller: recipe
     action: indexRecipe
     role: [public]
+
+reportcomment:
+    controller: comment 
+    action: reportComment
+    role: [public, user, admin, super_admin]

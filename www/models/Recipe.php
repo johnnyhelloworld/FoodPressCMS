@@ -11,10 +11,10 @@ class Recipe extends Sql
     protected $title;
     protected $content;
     protected $position;
-    protected $category_id;
+    protected $slug;
     protected $date_created;
     protected $date_updated;
-    protected $slug;
+    protected $fp_category_id;
 
     public function __construct()
     {
@@ -56,14 +56,14 @@ class Recipe extends Sql
         $this->position = $position;
     }
 
-    public function getCategoryId():?int
+    public function getSlug(): ?string
     {
-        return $this->category_id;
+        return $this->slug;
     }
 
-    public function setCategoryId($category_id):void
+    public function setSlug($slug): void
     {
-        $this->category_id = $category_id;
+        $this->slug = $slug;
     }
 
     public function getDateCreated(): ?string
@@ -73,7 +73,7 @@ class Recipe extends Sql
 
     public function setDateCreated($date_created): void
     {
-        $this->date_created = date("Y-m-d h:i:s", $date_created);
+        $this->date_created = $date_created;
     }
 
     public function getDateUpdated(): ?string
@@ -83,17 +83,17 @@ class Recipe extends Sql
 
     public function setDateUpdated($date_updated): void
     {
-        $this->date_updated = date("Y-m-d h:i:s", $date_updated);
+        $this->date_updated = $date_updated;
     }
 
-    public function getSlug(): ?string
+    public function getCategoryId():?int
     {
-        return $this->slug;
+        return $this->fp_category_id;
     }
 
-    public function setSlug($slug): void
+    public function setCategoryId($fp_category_id):void
     {
-        $this->slug = $slug;
+        $this->fp_category_id = $fp_category_id;
     }
 
     public function getRecipeForm($params = null):array

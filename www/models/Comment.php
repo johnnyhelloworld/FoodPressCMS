@@ -10,10 +10,10 @@ class Comment extends Sql
     protected $id;
     protected $parent_id = null;
     protected $author_id;
-    protected $fp_recipe_id;
     protected $title;
     protected $content;
     protected $date_created;
+    protected $fp_recipe_id;
 
     public function __construct()
     {
@@ -44,15 +44,6 @@ class Comment extends Sql
         $this->author_id = $author_id;
     }
 
-    public function getRecipeId(): ?int
-    {
-        return $this->fp_recipe_id;
-    }
-    public function setRecipeId($fp_recipe_id): void
-    {
-        $this->fp_recipe_id = $fp_recipe_id;
-    }
-
     public function getTitle(): ?string
     {
         return $this->title;
@@ -81,5 +72,15 @@ class Comment extends Sql
     public function setDateCreated($date_created): void
     {
         $this->date_created = $date_created;
+    }
+
+    public function getRecipeId(): ?int
+    {
+        return $this->fp_recipe_id;
+    }
+    
+    public function setRecipeId($fp_recipe_id): void
+    {
+        $this->fp_recipe_id = $fp_recipe_id;
     }
 }
