@@ -105,15 +105,15 @@ class Admin extends Sql
     private function writeRoute(array $params): void
     {
         $content = file_get_contents('routes.yml');
-        $content .= "\n\n/" . strtolower($params['route']) . ':';
+        $content .= "\n\n" . strtolower($params['route']) . ':';
         $content .= "\n  controller: " . $params['model'];
         $content .= "\n  action: " . $params['action'];
         $content .= "\n  role: [" . $params['role'] . "]";
         file_put_contents('routes.yml', $content);
 
-        // $file = fopen('views/' . strtolower($params['route']) . '.php', 'a');
-        // fwrite($file, '<h1>' . ucfirst($params['route']) . '</h1>');
-        // fclose($file);
+        $file = fopen('views/' . strtolower($params['route']) . '.php', 'a');
+        fwrite($file, '<h1>' . ucfirst($params['route']) . '</h1>');
+        fclose($file);
     }
 
     private function eraseRoute(string $route): void
