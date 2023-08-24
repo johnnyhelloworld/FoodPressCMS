@@ -9,7 +9,6 @@
 </style>
 <h1>Détails recette</h1>
 <a href="/recipes">Retour</a>
-
 <div class="container" style="padding-top: 100px;">
     <div class="block-recipe" style="min-height:250px;width:500px;margin:0 auto">
         <h1><?= $recipe->getTitle() ?></h1>
@@ -36,9 +35,14 @@
         <?php if (isset($comments)) : ?>
             <?php foreach ($comments as $comment) : ?>
                 <hr>
-                <small style=font-weight:bold;font-style:italic>Commenté par <?= $comment['firstname'] . ' ' . $comment['lastname'] ?> le
-                    <?= substr($comment['date_created'], 0, 10) ?> à <?= substr($comment['date_created'], -9, 18) ?>
-                </small>
+                <div style="display:flex; justify-content:space-between">
+                    <small style=font-weight:bold;font-style:italic>Commenté par <?= $comment['firstname'] . ' ' . $comment['lastname'] ?> le
+                        <?= substr($comment['date_created'], 0, 10) ?> à <?= substr($comment['date_created'], -9, 18) ?>
+                    </small>
+                    <a title="signaler" href="/reportComment?id=<?= $comment['id'] ?>">
+                        <img src="/public/assets/images/warning.svg" alt="" width="19" height="19">
+                    </a>
+                </div>
                 <div style="display:flex;align-items:center;margin-top:10px;">
                     <span style="padding:10px;border-radius:50%;background:grey;color:white">
                         <?= ucfirst(substr($comment['firstname'], 0, 1)) . ucfirst(substr($comment['lastname'], 0, 1)) ?>
@@ -46,9 +50,7 @@
                     &nbsp;&nbsp;
                     <h3 style="margin-top:15px"><?= $comment['title'] ?></h3>
                     &nbsp;&nbsp;
-                    <!-- button reply comment -->
-                    <!-- remplacer 1 par la variable de session user -->
-                    <button type="button" class="reply" data-replyer="1" data-parentid="<?= $comment['idComment'] ?>" data-recipe="<?= $recipe->getId() ?>">
+                    <button type="button" class="reply" data-replyer="1" data-parentid="<?= $comment['id'] ?>" data-recipe="<?= $recipe->getId() ?>">
                         reply
                     </button>
                 </div>
@@ -56,15 +58,20 @@
                     <?= $comment['content'] ?>
                 </span>
                 <?php if (isset($replies)) : ?>
-                    <div class="replyComments-block" id="replyComment<?= $comment['idComment'] ?>">
+                    <div class="replyComments-block" id="replyComment<?= $comment['id'] ?>">
                         <?php foreach ($replies as $reply) : ?>
-                            <?php if ($reply['parent'] == $comment['idComment']) : ?>
+                            <?php if ($reply['parent_id'] == $comment['id']) : ?>
                                 <br>
                                 <br>
                                 <div style="margin-left:50px;padding:8px 0; border-top:1px solid black">
-                                    <small style="font-weight:bold;font-style:italic">répondu par <?= $reply['firstname'] . ' ' . $reply['lastname'] ?> le
-                                        <?= substr($reply['date_created'], 0, 10) ?> à <?= substr($reply['date_created'], -9, 18) ?>
-                                    </small>
+                                    <div style="display:flex; justify-content:space-between">
+                                        <small style="font-weight:bold;font-style:italic">répondu par <?= $reply['firstname'] . ' ' . $reply['lastname'] ?> le
+                                            <?= substr($reply['date_created'], 0, 10) ?> à <?= substr($reply['date_created'], -9, 18) ?>
+                                        </small>
+                                        <a title="signaler" href="/reportComment?id=<?= $reply['id'] ?>">
+                                            <img src="/public/assets/images/warning.svg" alt="" width="19" height="19">
+                                        </a>
+                                    </div>
                                     <div style="display:flex;align-items:center;margin-top:10px;">
                                         <span style="padding:5px;border-radius:50%;background:grey;color:white">
                                             <?= ucfirst(substr($reply['firstname'], 0, 1)) . ucfirst(substr($reply['lastname'], 0, 1)) ?>
@@ -91,4 +98,3 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="../public/src/js/comment.js"></script>
 <script src="../public/src/js/like.js"></script>
-<script src="/"></script>
