@@ -91,22 +91,22 @@ recipes:
 comment:
     controller: comment
     action: commentCreate
-    role: [public]
+    role: [public, user, admin, super_admin]
 
 replycomment:
     controller: comment
     action: replyComment
-    role: [public]
+    role: [public, user, admin, super_admin]
 
 createlike:
     controller: like
     action: createLike
-    role: [public]
+    role: [public, user, admin, super_admin]
 
 getlikes:
     controller: like
     action: getLikes
-    role: [public]
+    role: [public, user, admin, super_admin]
 
 adminmember:
     controller: admin
