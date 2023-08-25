@@ -37,21 +37,21 @@
                         <ion-icon name="home-outline" class="nav__icon "></ion-icon>
                         <span class="nav__name active">Dashboard</span>
                     </a>
-                    <a href="/gerer-mon-menu" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/gerer-mon-menu' ? 'active-link' : '' ?>">
+                    <a href="/editMenu" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/editMenu' ? 'active-link' : '' ?>">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Gérer mon menu</span>
                     </a>
-                    <a href="/gerer-mes-pages" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/gerer-mes-pages' ? 'active-link' : '' ?>">
+                    <a href="/addpage" class="nav__link <?= $_SERVER['REQUEST_URI'] == '//addpage' ? 'active-link' : '' ?>">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Gérer mes pages</span>
                     </a>
 
-                    <a href="/gerer-mes-articles" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/gerer-mes-articles' ? 'active-link' : '' ?>">
+                    <a href="/recipes" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/recipes' ? 'active-link' : '' ?>">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
-                        <span class="nav__name">Gérer mes articles</span>
+                        <span class="nav__name">Gérer mes recettes</span>
                     </a>
 
-                    <a href="/gerer-mes-categories" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/gerer-mes-categories' ? 'active-link' : '' ?>">
+                    <a href="#" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/' ? 'active-link' : '' ?>">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Gérer mes categories</span>
                     </a>
