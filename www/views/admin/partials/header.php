@@ -41,7 +41,7 @@
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Gérer mon menu</span>
                     </a>
-                    <a href="/addpage" class="nav__link <?= $_SERVER['REQUEST_URI'] == '//addpage' ? 'active-link' : '' ?>">
+                    <a href="/addpage" class="nav__link <?= $_SERVER['REQUEST_URI'] == '/addpage' ? 'active-link' : '' ?>">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Gérer mes pages</span>
                     </a>
