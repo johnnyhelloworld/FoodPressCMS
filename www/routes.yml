@@ -19,9 +19,9 @@ register:
     role: [public]
 
 dashboard:
-  controller: admin
-  action: dashboard
-  role: [admin, super_admin]    
+    controller: admin
+    action: dashboard
+    role: [admin, super_admin]    
 
 # dashboard:
 #   controller: admin
@@ -133,15 +133,19 @@ addpage:
     action: addPage
     role: [admin, super_admin]
 
+editpage:
+    controller: admin
+    action: editPage
+
 deletepage:
     controller: admin
     action: deletePageAdmin
     role: [admin, super_admin]
 
 editpage:
-  controller: admin
-  action: editPage
-  role: [admin, super_admin]
+    controller: admin
+    action: editPage
+    role: [admin, super_admin]
 
 recipetest:
     controller: recipe

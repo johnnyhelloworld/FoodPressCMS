@@ -45,4 +45,4 @@
 <span><?= isset($message) ? $message : '' ?></span>
 
 <?php $content = ob_get_clean(); ?>
-<?php require('base/base.php'); ?>
+<?php require(__DIR__ . '/base/base.php'); ?>

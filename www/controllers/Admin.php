@@ -12,7 +12,6 @@ use App\models\Theme as ThemeModel;
 use App\models\Block as BlockModel;
 use App\models\Report as ReportModel;
 
-
 class Admin extends Sql
 {
     public function dashboard(): void
@@ -30,8 +29,9 @@ class Admin extends Sql
 
     public function addPage(): void
     {
-        // $view = new View("admin/addPage", 'back'); /**** A SUPPRIMER *****/
-        $themeManager = new ThemeModel();
+        $pageManager = new PageModel();
+        $pages = $pageManager->getAll();
+
         $params = [];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -53,7 +53,6 @@ class Admin extends Sql
                 if ($currentPage['type'] == $params['model']) {
                     $message = 'Page déjà existante';
                     Router::render('admin/addpage.php', ["message" => $message]);
-                    return;
                 }
             }
 
@@ -73,10 +72,8 @@ class Admin extends Sql
             $block->save();
 
             $this->writeRoute($params);
-
-            header('Location: /dashboard');
         }
-        // Router::render('admin/addpage.php', ['pages' => $pages]);
+        Router::render('admin/addpage.php', ['pages' => $pages]);
     }
 
     public function deletePageAdmin(): void
@@ -89,7 +86,7 @@ class Admin extends Sql
 
         $this->eraseRoute($_GET['page']);
 
-        header('Location: /dashboard');
+        header('Location: /addpage');
     }
 
     public function editPage()
