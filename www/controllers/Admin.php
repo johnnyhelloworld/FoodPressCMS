@@ -9,20 +9,17 @@ use App\models\User as UserModel;
 use App\models\Page as PageModel;
 use App\models\Theme as ThemeModel;
 use App\models\Block as BlockModel;
+use App\models\Report as ReportModel;
 
 class Admin extends Sql
 {
     public function home()
     {
-        $firstname = 'Johnny';
         $view = new View("dashboard", "back");
-        
-        $pageManager = new PageModel();
-        $pages = $pageManager->getAll();
-        $view->assign([
-            'firstname' => $firstname,
-            'pages' => $pages
-        ]);
+
+        $report = new ReportModel();
+        $reports = $report->getReportNotifications();
+        $_SESSION['report'] = count($reports);
     }
 
     public function addPage(): void
