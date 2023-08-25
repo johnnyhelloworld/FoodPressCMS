@@ -18,9 +18,9 @@ class Router
 
     public static function includePartial($partial, $config): void
     {
-        if (!file_exists("views/admin/" . $partial . ".partial.php")) {
+        if (!file_exists("views/admin/" . $partial . ".php")) {
             die("Le partial " . $partial . " n'existe pas");
         }
-        include "views/admin/" . $partial . ".partial.php";
+        include "views/admin/" . $partial . ".php";
     }
 }

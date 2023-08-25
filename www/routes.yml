@@ -23,6 +23,11 @@ dashboard:
   action: dashboard
   role: [admin, super_admin]    
 
+# dashboard:
+#   controller: admin
+#   action: home
+#   role: [public, user, admin, super_admin]  
+
 mail:
     controller: mail
     action: main
