@@ -138,6 +138,11 @@ deletepage:
     action: deletePageAdmin
     role: [admin, super_admin]
 
+editpage:
+  controller: admin
+  action: editPage
+  role: [admin, super_admin]
+
 recipetest:
     controller: recipe
     action: indexRecipe

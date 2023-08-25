@@ -1,3 +1,26 @@
+<?php ob_start(); ?>
+
+<h5>Liste de mes pages</h5>
+<?php foreach ($pages as $page) : ?>
+    <div class="page_edit">
+        <span>
+            <a href="<?= $page['link'] ?>"><?= $page['title'] ?></a>
+        </span>
+        &nbsp;
+        <span>
+            <a href="/editpage?page=<?= $page['title'] ?>">
+                <img src="/public/assets/images/edit.svg" alt="" width="20" height="20" />
+            </a>
+        </span>
+        &nbsp;
+        <span>
+            <a href="/deletepage?page=<?= $page['title'] ?>&id=<?= $page['id'] ?>" onclick="confirm('confirmer la suppression?')">
+                <img src="/public/assets/images/trash.svg" alt="" width="20" height="20" />
+            </a>
+        </span>
+    </div>
+<?php endforeach ?>
+
 <h5>Créer une page de blog</h5>
 <span style="color:green"><?= isset($success) ? $success :  '' ?></span>
 <form action="" method="POST">
@@ -20,3 +43,6 @@
     <button type="submit" name="submit_add_page">Valider</button>
 </form>
 <span><?= isset($message) ? $message : '' ?></span>
+
+<?php $content = ob_get_clean(); ?>
+<?php require('base/base.php'); ?>

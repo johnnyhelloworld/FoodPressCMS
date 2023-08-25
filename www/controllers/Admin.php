@@ -4,13 +4,14 @@ namespace App\controllers;
 
 use App\core\Sql;
 use App\core\View;
+use App\core\Router;
 
 use App\models\User as UserModel;
 use App\models\Page as PageModel;
 use App\models\Theme as ThemeModel;
 use App\models\Block as BlockModel;
 use App\models\Report as ReportModel;
-use App\core\Router;
+
 
 class Admin extends Sql
 {
@@ -29,7 +30,7 @@ class Admin extends Sql
 
     public function addPage(): void
     {
-        $view = new View("admin/addPage", 'back');
+        // $view = new View("admin/addPage", 'back'); /**** A SUPPRIMER *****/
         $themeManager = new ThemeModel();
         $params = [];
 
@@ -38,6 +39,7 @@ class Admin extends Sql
             if (!$_POST['page_title'] || !$_POST['page_role'] || !$_POST['type']) {
                 throw new \Exception('missing parameters');
             }
+
             $params['route'] = strtolower($_POST['page_title']) ?? null;
             $params['role'] = strtolower($_POST['page_role']) ?? null;
             $params['model'] = strtolower($_POST['type']) ?? null;
@@ -50,7 +52,7 @@ class Admin extends Sql
             foreach ($currentPages as $currentPage) {
                 if ($currentPage['type'] == $params['model']) {
                     $message = 'Page déjà existante';
-                    $view->assign(["message" => $message]);
+                    Router::render('admin/addpage.php', ["message" => $message]);
                     return;
                 }
             }
@@ -74,6 +76,7 @@ class Admin extends Sql
 
             header('Location: /dashboard');
         }
+        // Router::render('admin/addpage.php', ['pages' => $pages]);
     }
 
     public function deletePageAdmin(): void
@@ -92,7 +95,7 @@ class Admin extends Sql
     public function editPage()
     {
         $pageModel = new PageModel();
-        $view = new View("admin/editPage", 'back');
+        Router::render('admin/editPage.php'); //vue a rajouté
 
         $data = $pageModel->getOneBy(['title' => $_GET['page']]);
         $page = $data[0];
@@ -100,7 +103,7 @@ class Admin extends Sql
 
     public function editMenu()
     {
-        $view = new View("admin/editMenu", 'back');
+        Router::render('admin/editMenu.php');
     }
 
     // écrit la route dans routes.yml
@@ -142,12 +145,12 @@ class Admin extends Sql
 
     public function memberView()
     {
-        $view = new View("adminMember", "back");
+        
         $user = new UserModel();
 
         $users = $user->getAll();
 
-        $view->assign(["users" => $users]);
+        Router::render('adminmember.php', ["users" => $users]);
     }
 
     public function deleteUser()
