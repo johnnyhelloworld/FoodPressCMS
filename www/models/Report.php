@@ -9,6 +9,7 @@ class Report extends Sql
     protected $id;
     protected $message;
     protected $email;
+    protected $has_read;
     protected $date_created;
     protected $fp_comment_id;
 
@@ -30,6 +31,16 @@ class Report extends Sql
     public function setMessage($message): void
     {
         $this->message = $message;
+    }
+
+    public function getHasRead(): int
+    {
+        return $this->has_read;
+    }
+
+    public function setHasRead($has_read): void
+    {
+        $this->has_read = $has_read;
     }
 
     public function getEmail(): ?string

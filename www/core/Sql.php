@@ -187,4 +187,11 @@ abstract class Sql
         $queryPrepared = $this->pdo->databasePrepare($sql, [$recipe_id]);
         return $queryPrepared->fetch();
     }
+
+    public function getReportNotifications()
+    {
+        $sql = "SELECT * FROM " . $this->table . " as r WHERE r.has_read = false ";
+        $queryPrepared = $this->pdo->databasePrepare($sql, []);
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

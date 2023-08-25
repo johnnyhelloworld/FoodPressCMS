@@ -142,3 +142,8 @@ reportcomment:
     controller: comment 
     action: reportComment
     role: [public, user, admin, super_admin]
+
+reports:
+    controller: comment
+    action: getReports
+    role: [public, user, admin, super_admin]
