@@ -10,16 +10,21 @@ use App\models\Page as PageModel;
 use App\models\Theme as ThemeModel;
 use App\models\Block as BlockModel;
 use App\models\Report as ReportModel;
+use App\core\Router;
 
 class Admin extends Sql
 {
-    public function home()
+    public function dashboard(): void
     {
-        $view = new View("dashboard", "back");
+        // pour les test, session en dur
+        // a mettre au login si role du user = 'admin
+        $_SESSION['role'] = 'admin';
 
         $report = new ReportModel();
         $reports = $report->getReportNotifications();
         $_SESSION['report'] = count($reports);
+
+        Router::render('dashboard.php');
     }
 
     public function addPage(): void

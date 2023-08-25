@@ -19,9 +19,9 @@ register:
     role: [public]
 
 dashboard:
-    controller: admin
-    action: home
-    role: [admin, super_admin]
+  controller: admin
+  action: dashboard
+  role: [admin, super_admin]    
 
 mail:
     controller: mail
