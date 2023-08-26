@@ -9,8 +9,8 @@ use App\core\Router;
 use App\models\User as UserModel;
 use App\models\Page as PageModel;
 use App\models\Theme as ThemeModel;
-use App\models\Block as BlockModel;
 use App\models\Report as ReportModel;
+use App\models\Recipe as RecipeModel;
 
 class Admin extends Sql
 {
@@ -25,6 +25,17 @@ class Admin extends Sql
         $_SESSION['report'] = count($reports);
 
         Router::render('dashboard.php');
+    }
+
+    public function indexRecipe()
+    {
+        $recipe = new RecipeModel();
+
+        $allRecipe = $recipe->getAll();
+
+        Router::render("admin/recipe/recipes.php", [
+            "allRecipe" => $allRecipe,
+        ]);
     }
 
     public function addPage(): void
@@ -65,12 +76,6 @@ class Admin extends Sql
             $pageData = $pageManager->getOneBy(['title' => $pageManager->getTitle()]);
             $page = $pageData[0];
 
-            $block = new BlockModel();
-            $block->setPageId($page->getId());
-            $block->setPosition(1);
-            $block->setTitle($_POST['page_title']);
-            $block->save();
-
             $this->writeRoute($params);
         }
         Router::render('admin/addpage.php', ['pages' => $pages]);
@@ -79,10 +84,8 @@ class Admin extends Sql
     public function deletePageAdmin(): void
     {
         $page = new PageModel();
-        $block = new BlockModel();
 
         $page->deletePage($_GET['page']);
-        $block->deleteBlock($_GET['id']);
 
         $this->eraseRoute($_GET['page']);
 
@@ -136,8 +139,6 @@ class Admin extends Sql
             $content .= $output[$i];
         }
         file_put_contents('routes.yml', $content);
-
-        unlink('views/' . strtolower($route) . '.php');
     }
 
     public function memberView()
