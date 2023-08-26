@@ -162,3 +162,8 @@ reports:
     controller: comment
     action: getReports
     role: [public, user, admin, super_admin]
+
+pagenotfound:
+    controller: error
+    action: errorNotFound
+    role: [public, user, admin, super_admin]

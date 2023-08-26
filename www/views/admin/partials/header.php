@@ -9,7 +9,7 @@
         <span class="line"></span>
         <a href="">
             <p>Johnny Chen</p>
-            <img src="../../../public/assets/images/shiba.jpeg" alt="photo profil"></a>
+            <img src="../../../public/assets/images/unsplash.png" alt="photo profil"></a>
         </a>
     </div>
 
