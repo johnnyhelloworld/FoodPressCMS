@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<?php include_once '../partials/head.php' ?>
-<?php include_once '../partials/header.php' ?>
+<?php include_once __DIR__ . '/../partials/head.php' ?>
+<?php include_once __DIR__ . '/../partials/header.php' ?>
 
 <body id="body-pd">
     <main style="min-height:58vh">
         <?= $content ?>
     </main>
 
-    <?php include_once '../partials/footer.php' ?>
+    <?php include_once __DIR__ . '/../partials/footer.php' ?>
 
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
-    <script src="../../../public/src/js//script.js"></script>
+    <script src="../../../public/src/js/script.js"></script>
 </body>
 </html>
 
