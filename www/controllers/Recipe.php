@@ -7,7 +7,6 @@ use App\core\View;
 use App\models\Recipe as RecipeModel;
 use App\core\verificator\VerificatorRecipe;
 use App\models\Category as CategoryModel;
-use App\models\Block as BlockModel;
 use App\models\User as UserModel;
 use App\models\Comment as CommentModel;
 use App\models\Like as LikeModel;
@@ -20,7 +19,6 @@ class Recipe extends Sql{
 
 	public function recipeCreate() 
     {
-		$view = new View("recipe");
 		$recipe = new RecipeModel();
 
 		if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -32,7 +30,10 @@ class Recipe extends Sql{
 			$result = VerificatorRecipe::validate($recipe->getRecipeForm(), $_POST);
 
 			if($result && count($result) > 0) {
-				$view->assign(['result' => $result, "recipe" => $recipe]);
+				Router::render('admin/recipe/recipecreate.php', [
+                    "result" => $result,
+                    "recipe" => $recipe
+                ]);
 				return;
 			}
 
@@ -56,7 +57,10 @@ class Recipe extends Sql{
 
 			header('Location: /recipes');
 		}
-        $view->assign(["recipe" => $recipe]);
+        Router::render('admin/recipe/recipecreate.php', [
+            "recipe" => $recipe,
+            'form' => $recipe->getRecipeForm(null),
+        ]);
 	}
 
     public function detailsRecipe() {
@@ -64,7 +68,6 @@ class Recipe extends Sql{
         $category = new CategoryModel();
 		$commentRecipe= new CommentModel();
 		$likeRecipe = new LikeModel();
-		$view = new View("detailsRecipe", "empty");
 		$recipeId = $_GET['slug'];
 
 		$recipeDatas = $recipeManager->getOneBy(['slug' => $recipeId]);
@@ -72,8 +75,6 @@ class Recipe extends Sql{
 
 		$like = count($likeRecipe->getUserLikeByRecipe(1, $recipeId)); // remplacer par l'id user id de session 
 		$total_likes = $likeRecipe->countAllLikesByRecipe($recipe->getId());
-
-
 
         $categoryDatas = $category->getOneBy(['id' => $recipe->getCategoryId()]);
         $category = $categoryDatas[0];
@@ -83,35 +84,30 @@ class Recipe extends Sql{
 		$replies = $commentRecipe->getRepliesByComment($recipe->getId());
 		$countComments = $commentRecipe->countComments($recipe->getId());
 
-		if (count($comments) > 0) {
-			$view->assign(['comments' => $comments]);
-		}
-		if (count($replies) > 0) {
-			$view->assign(['replies' => $replies]);
-		}
-
-        $view->assign(["recipe" => $recipe,
-		 "category" => $category,
-		 "countComments" => $countComments,
-		 "like" => $like,
-		 "total_likes" => $total_likes['likes']
-		]);
+		Router::render("front/recipe/recipe.php", [
+            "recipe" => $recipe,
+            "category" => $category,
+            'countComments' => count($countComments) > 0 ? $countComments : null,
+            'replies' => count($replies) > 0 ? $replies : null,
+            'like' => $like,
+            'total_likes' => $total_likes['likes'],
+            'comments' => $comments
+        ]);
 	}
 
 	public function indexRecipe() {
-		$view = new View("recipes");
 		$recipe = new RecipeModel();
 
 		$allRecipe = $recipe->getAll();
 
-		$view->assign(["allRecipe" => $allRecipe]);
+		Router::render("front/recipe/recipes.php", [
+            "allRecipe" => $allRecipe        
+		]);
 	}
 
 	public function updateRecipe() {
         $recipe = new RecipeModel();
         $category = new CategoryModel();
-
-        $view = new View("updaterecipe");
 
         $recipeId = $_GET['slug'];
 
@@ -136,8 +132,11 @@ class Recipe extends Sql{
             $result = VerificatorRecipe::validate($recipe->getRecipeForm(), $_POST);
 
             if ($result != null && count($result) > 0) {
-                $view->assign(['result' => $result, "recipe" => $recipe, 'params' => $params]);
-                return;
+                Router::render("admin/recipe/updaterecipe.php", [
+                    'result' => $result,
+                    "recipe" => $recipe,
+                    'params' => $params
+                ]);
             }
 
             $recipeObject->setTitle($title);
@@ -148,17 +147,15 @@ class Recipe extends Sql{
 
             header('Location: /recipes');
         }
-        $view->assign(["params" => $params, "recipe" => $recipe]);
 	}
 
 	public function deleteRecipe() {
 		$recipe = new RecipeModel();
-		// $comment = new CommentModel();
+		$comment = new CommentModel();
 
-		// $comment->deleteComments($_GET['id']);
+		$comment->deleteComments($_GET['id']);
 		$recipe->delete($_GET['id']);
 
 		header('Location: /recipes');
-
 	}
 }
