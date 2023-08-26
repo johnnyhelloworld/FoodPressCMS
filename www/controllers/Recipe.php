@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\core\Router;
 use App\core\View;
 use App\models\Recipe as RecipeModel;
 use App\core\verificator\VerificatorRecipe;

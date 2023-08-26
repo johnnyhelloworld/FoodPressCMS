@@ -88,8 +88,13 @@ deleterecipe:
     action: deleteRecipe
     role: [admin, super_admin]
 
+# recipes:
+#     controller: recipe
+#     action: indexRecipe
+#     role: [public, user, admin, super_admin]
+
 recipes:
-    controller: recipe
+    controller: admin
     action: indexRecipe
     role: [public, user, admin, super_admin]
 
@@ -131,26 +136,22 @@ edituserrole:
 addpage:
     controller: admin
     action: addPage
-    role: [admin, super_admin]
+    role: [public, user, admin, super_admin]
 
 editpage:
     controller: admin
     action: editPage
+    role: [public, user, admin, super_admin]
 
 deletepage:
     controller: admin
     action: deletePageAdmin
-    role: [admin, super_admin]
+    role: [public, user, admin, super_admin]
 
 editpage:
     controller: admin
     action: editPage
     role: [admin, super_admin]
-
-recipetest:
-    controller: recipe
-    action: indexRecipe
-    role: [public]
 
 reportcomment:
     controller: comment 
