@@ -10,6 +10,8 @@ class Category extends Sql
     protected $id;
     protected $name;
     protected $description;
+    protected $image;
+    protected $slug;
 
     public function __construct()
     {
