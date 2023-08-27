@@ -1,0 +1,22 @@
+{
+  "name": "foodpress",
+  "version": "1.0.0",
+  "description": "A CMS for food",
+  "main": "index.js",
+  "scripts": {
+    "test": "test-npm-init"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnyhelloworld/FoodPressCMS.git"
+  },
+  "keywords": [
+    "foodpress"
+  ],
+  "author": "Johnny CHEN & Thomas RIEHL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnnyhelloworld/FoodPressCMS/issues"
+  },
+  "homepage": "https://github.com/johnnyhelloworld/FoodPressCMS#readme"
+}

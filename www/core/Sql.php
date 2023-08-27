@@ -200,4 +200,11 @@ abstract class Sql
         $queryPrepared = $this->pdo->databasePrepare($sql, []);
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public function truncate($table)
+    {
+        $sql = "TRUNCATE TABLE fp_" . $table;
+        $queryPrp = $this->pdo->databasePrepare($sql, []);
+    }
 }

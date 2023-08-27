@@ -167,3 +167,111 @@ pagenotfound:
     controller: error
     action: errorNotFound
     role: [public, user, admin, super_admin]
+
+### FIXTURE ###
+
+### fixtures
+devfixtures:
+    controller: admin
+    action: loadFixtures
+    role: [public]
+
+vegetarien:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+viande:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+pate:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+asie:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+vegetarien:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+viande:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+pate:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+asie:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+vegetarien:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+viande:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+pate:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+asie:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+vegetarien:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+viande:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+pate:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+asie:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+vegetarien:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+viande:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+pate:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+asie:
+    controller: category
+    action: categoryPage
+    role: [public]
