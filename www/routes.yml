@@ -88,12 +88,12 @@ deleterecipe:
     action: deleteRecipe
     role: [admin, super_admin]
 
-# recipes:
-#     controller: recipe
-#     action: indexRecipe
-#     role: [public, user, admin, super_admin]
-
 recipes:
+    controller: recipe
+    action: indexRecipe
+    role: [public, user, admin, super_admin]
+
+managerecipes:
     controller: admin
     action: indexRecipe
     role: [public, user, admin, super_admin]

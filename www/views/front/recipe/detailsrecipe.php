@@ -1,3 +1,5 @@
+<?php ob_start(); ?>
+
 <style>
     .unliked {
         color: grey;
@@ -7,8 +9,14 @@
         color: red;
     }
 </style>
+
+<?php if (isset($_SESSION['admin'])) : ?>
+    <a href="/admin">Back</a>
+<?php else : ?>
+    <a href="/recipes">Back</a>
+<?php endif ?>
+
 <h1>Détails recette</h1>
-<a href="/recipes">Retour</a>
 <div class="container" style="padding-top: 100px;">
     <div class="block-recipe" style="min-height:250px;width:500px;margin:0 auto">
         <h1><?= $recipe->getTitle() ?></h1>
@@ -40,7 +48,7 @@
                         <?= substr($comment['date_created'], 0, 10) ?> à <?= substr($comment['date_created'], -9, 18) ?>
                     </small>
                     <a title="signaler" href="/reportComment?id=<?= $comment['id'] ?>">
-                        <img src="/public/assets/images/warning.svg" alt="" width="19" height="19">
+                        <img src="../../../public/assets/images/warning.svg" alt="" width="19" height="19">
                     </a>
                 </div>
                 <div style="display:flex;align-items:center;margin-top:10px;">
@@ -69,7 +77,7 @@
                                             <?= substr($reply['date_created'], 0, 10) ?> à <?= substr($reply['date_created'], -9, 18) ?>
                                         </small>
                                         <a title="signaler" href="/reportComment?id=<?= $reply['id'] ?>">
-                                            <img src="/public/assets/images/warning.svg" alt="" width="19" height="19">
+                                            <img src="../../../public/assets/images/warning.svg" alt="" width="19" height="19">
                                         </a>
                                     </div>
                                     <div style="display:flex;align-items:center;margin-top:10px;">
@@ -96,5 +104,9 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script src="../public/src/js/comment.js"></script>
-<script src="../public/src/js/like.js"></script>
+
+<script type="text/javascript" src="../../../public/assets/js/comment.js"></script>
+<script type="text/javascript" src="../../../public/src/js/like.js"></script>
+
+<?php $base = ob_get_clean(); ?>
+<?php require(__DIR__ . '../base/base.php'); ?>

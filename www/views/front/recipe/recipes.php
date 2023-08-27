@@ -1,25 +1,17 @@
-<div style="display:flex; align-items:center; padding-top: 100px;">
-    <h1>Nos recipes(<?= count($allRecipe) ?>)</h1>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a style="text-decoration:none;border-radius:50%; background:grey;padding:5px 10px;color:white;" href="/createrecipe">+</a>
-</div>
 
-<?php
-if (isset($allRecipe)) : ?>
+<?php ob_start(); ?>
+
+
+<h1>Recipes</h1>
+
+<?php if (isset($allRecipe)) : ?>
+
     <?php foreach ($allRecipe as $recipe => $value) : ?>
-        <div style='display:flex;padding:10px 0'>
-            <span style="font-weight:bold; margin:0 20px"><?= ucfirst($value['title']) ?></span>
-            <span style="margin:0 20px"><?= substr($value['content'], 0, 40) . '...' ?></span>
-            <span style='font-style:italic; margin:0 20px'><?= 'Posté par : admin le ' . substr($value['date_created'], 0, 10) ?></span>
-            <span style="margin:0 20px;padding:4px;background:lightgrey">
-                <a href="/detailsRecipe?slug=<?= $value['slug'] ?>" style="font-size:11px;text-decoration:none;color:blue">Lire la suite</a>
-            </span>
-            <span style="margin:0 20px;padding:4px;background:lightgrey">
-                <a href="/updateRecipe?slug=<?= $value['slug'] ?>" style="font-size:11px;text-decoration:none;color:blue">Editer</a>
-            </span>
-            <span style="margin:0 20px;padding:4px;background:lightgrey">
-                <a href="/deleteRecipe?id=<?= $value['id'] ?>" style="font-size:11px;text-decoration:none;color:blue" onclick="confirm('Confirmer la suppression ?')">Supprimer</a>
-            </span>
-        </div>
-    <?php endforeach; ?>
+        <h1><?= ucfirst($value['title']) ?></h1>
+        <p><?= substr($value['content'], 0, 40) . '...' ?></p>
+        <hr>
+    <?php endforeach ?>
 <?php endif; ?>
+
+<?php $base = ob_get_clean(); ?>
+<?php require(__DIR__ . '../base/base.php'); ?>
