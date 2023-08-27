@@ -275,3 +275,123 @@ asie:
     controller: category
     action: categoryPage
     role: [public]
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]

@@ -10,7 +10,7 @@ class Category extends Sql
     protected $id;
     protected $name;
     protected $description;
-    protected $image;
+    protected $picture;
     protected $slug;
 
     public function __construct()
@@ -43,14 +43,14 @@ class Category extends Sql
         $this->description = $description;
     }
 
-    public function setImage($image): void
+    public function setPicture($picture): void
     {
-        $this->image = $image;
+        $this->picture = $picture;
     }
 
-    public function getImage(): ?string
+    public function getPicture(): ?string
     {
-        return $this->image;
+        return $this->picture;
     }
 
     public function setSlug($slug): void

@@ -204,7 +204,7 @@ abstract class Sql
 
     public function truncate($table)
     {
-        $sql = "TRUNCATE TABLE fp_" . $table;
+        $sql = "TRUNCATE TABLE fp_" . $table . " CASCADE";
         $queryPrp = $this->pdo->databasePrepare($sql, []);
     }
 }
