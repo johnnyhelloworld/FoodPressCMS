@@ -44,6 +44,8 @@ class User
         }
         $session = new Session();
         $session->set('email', $_POST['email']);
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['password'] = $_POST['password'];
         header("Location: dashboard");
     }
 
@@ -169,19 +171,49 @@ class User
         echo "Vous allez recevoir un mail pour modifier votre mail";
     }
 
-    public function changePassword(){
-        $passwordReset = new PasswordReset();
+    // public function changePassword(){
+    //     $passwordReset = new PasswordReset();
+    //     $user = new UserModel();
+    //     if(empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
+    //         die('<p style="color:red;">Le token n\'existe pas</p>');
+    //     }
+    //     $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
+    //     if($passwordReset->tokenexpiry < time()){
+    //         die('<p style="color:red;">Le token n\'est plus valide</p>');
+    //     }
+    //     $session = new Session();
+    //     $session->set("token", $passwordReset->getToken());
+    //     Router::render('front/security/changepassword.php', ["user" => $user]);
+    // }
+
+    public function changePassword()
+    {
         $user = new UserModel();
-        if(empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
-            die('<p style="color:red;">Le token n\'existe pas</p>');
+        Router::render('admin/user/userprofilepassword.php', ["user" => $user]);
+
+        $user = $user->getOneBy(['email' => $_SESSION['email']])[0];
+        $status = $user->getStatus();
+
+        if(password_verify($_POST['oldPassword'], $user->getPassword()) && $status == 1){
+            if ($_POST['password'] !== $_POST['oldPassword'] ){
+                if($_POST['password'] === $_POST['passwordConfirm'] ) {
+                    $user->setPassword($_POST['password']);
+                    $user->save();
+                    echo "Votre mot de passe a été modifié";
+                }
+                else{
+                    echo "Vos mots de passe ne correspondent pas !!!";
+                    die();
+                }
+            } else
+            {
+                echo "Le nouveau mot de passe ne doit pas être similaire à l'ancien";
+            }
+        }else
+        {
+            echo "L'ancien mot de passe n'est pas bon";
+            die();
         }
-        $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
-        if($passwordReset->tokenexpiry < time()){
-            die('<p style="color:red;">Le token n\'est plus valide</p>');
-        }
-        $session = new Session();
-        $session->set("token", $passwordReset->getToken());
-        Router::render('front/security/changepassword.php', ["user" => $user]);
     }
 
     public function confirmPasswordChangement(){

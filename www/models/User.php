@@ -304,7 +304,7 @@ class User extends Sql
                     "label" => "Votre prénom",
                     "id" => "firstname",
                     "class" => "formInput",
-                    "placeholder" => "Johnny",
+                    "placeholder" => "John",
                     "value" => $this->firstname ?? "",
                     "disabled" => 'disabled'
                 ],
@@ -313,21 +313,36 @@ class User extends Sql
                     "label" => "Votre nom",
                     "id" => "lastname",
                     "class" => "formInput",
-                    "placeholder" => "Chen",
+                    "placeholder" => "Doe",
                     "value" => $this->lastname ?? "",
                     "disabled" => 'disabled'
                 ],
                 "email" => [
                     "type" => "email",
-                    "label" => "Votre email)",
+                    "label" => "Votre email",
                     "id" => "email",
                     "class" => "formInput",
-                    "placeholder" => "nom@gmail.com",
+                    "placeholder" => "john@doe.com",
                     "value" => $this->getEmail() ?? '',
                     "error" => "Votre email doit faire entre 8 et 320 caractères",
                     "required" => true,
                     "disabled" => 'disabled'
                 ],
+            ]
+        ];
+    }
+
+    public function getUserPasswordForm(){
+        return [
+
+            "config" => [
+                "method" => "POST",
+                "action" => "",
+                "id" => "formUserprofile",
+                "class" => "formUserprofile",
+                "submit" => "Valider"
+            ],
+            "inputs" => [
                 "oldPassword" => [
                     "type" => "password",
                     "label" => "Votre mot de passe actuel",
@@ -340,7 +355,7 @@ class User extends Sql
                 "password" => [
                     "label" => "Votre nouveau mot de passe",
                     "type" => "password",
-                    "id" => "passwordd",
+                    "id" => "password",
                     "class" => "formInput",
                     "placeholder" => "",
                     "error" => "Votre mot de passe doit faire au minimum 8 caractères",
