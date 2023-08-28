@@ -23,7 +23,7 @@
                 ?>
                 <div class="logo__text">
                     <img class="logo" src="../../public/assets/images/mail.png" alt="email">
-                    <label><?= $input["label"] ?></label>
+                    <label><?= $input["label"] ?? "" ?></label>
                 </div>
                 <input name="<?= $name ?>" class="<?= $input["class"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" type="<?= $input["type"] ?? "text" ?>" value="<?= $input["value"] ?? "" ?>" <?= !empty($input["required"]) ? 'required="required"' : ""  ?>><br>
                 <?php break; 
@@ -32,7 +32,7 @@
                 ?>
                 <div class="logo__text">
                 <img class="logo" src="../../public/assets/images/lock.png" alt="password">
-                <label><?= $input["label"] ?></label>
+                <label><?= $input["label"] ?? "" ?></label>
                 </div>
                 <input name="<?= $name ?>" class="<?= $input["class"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" type="<?= $input["type"] ?? "text" ?>" value="<?= $input["value"] ?? "" ?>" <?= !empty($input["required"]) ? 'required="required"' : ""  ?>><br>
                 <?php break; 
@@ -45,7 +45,7 @@
                         class="<?= $input["class"]??"" ?>" 
                         value="<?= $value??""?>"
                         <?php if(!empty( $input["checked"])) echo ($value === $input['checked'])? 'checked': '';?>>
-                    <label><?= $key??"Choix"?></label>
+                        <label><?= $input["label"] ?? "" ?></label>
                     <br>
                 <?php 
                 endforeach;
