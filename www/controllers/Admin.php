@@ -6,11 +6,12 @@ use App\core\Sql;
 use App\core\View;
 use App\core\Router;
 
-use App\models\User as UserModel;
+use App\Helpers\Fixtures;
 use App\models\Page as PageModel;
+use App\models\User as UserModel;
 use App\models\Theme as ThemeModel;
-use App\models\Report as ReportModel;
 use App\models\Recipe as RecipeModel;
+use App\models\Report as ReportModel;
 use App\models\MenuItem as MenuItemsModel;
 
 class Admin extends Sql
@@ -169,6 +170,19 @@ class Admin extends Sql
         header('Location: /adminmember');
     }
 
+    public function loadFixtures():void
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $fixtures = new Fixtures();
+            $fixtures->generateFixtures();
+            $message = 'fixtures enregistrées';
+            Router::render('admin/fixture.php', ['message', $message]);
+
+        }
+
+        Router::render('admin/fixture.php');
+    }
+    
     public function editMenu()
     {
         $menuItem = new MenuItemsModel();

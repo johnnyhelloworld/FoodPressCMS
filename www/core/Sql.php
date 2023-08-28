@@ -201,6 +201,13 @@ abstract class Sql
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function truncate($table)
+    {
+        $sql = "TRUNCATE TABLE fp_" . $table . " CASCADE";
+        $queryPrepared = $this->pdo->databasePrepare($sql, []);
+    }
+    
     public function getAllByPosition()
     {
         $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY position ';
