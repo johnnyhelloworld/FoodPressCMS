@@ -23,7 +23,7 @@
                 ?>
                 <div class="logo__text">
                     <img class="logo" src="../../public/assets/images/mail.png" alt="email">
-                    <p>Email</p>
+                    <label><?= $input["label"] ?? "" ?></label>
                 </div>
                 <input name="<?= $name ?>" class="<?= $input["class"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" type="<?= $input["type"] ?? "text" ?>" value="<?= $input["value"] ?? "" ?>" <?= !empty($input["required"]) ? 'required="required"' : ""  ?>><br>
                 <?php break; 
@@ -32,16 +32,7 @@
                 ?>
                 <div class="logo__text">
                 <img class="logo" src="../../public/assets/images/lock.png" alt="password">
-                <p>Mot de passe</p>
-                </div>
-                <input name="<?= $name ?>" class="<?= $input["class"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" type="<?= $input["type"] ?? "text" ?>" value="<?= $input["value"] ?? "" ?>" <?= !empty($input["required"]) ? 'required="required"' : ""  ?>><br>
-                <?php break; 
-                ?>
-        <?php case 'passwordConfirm': 
-                ?>
-                <div class="logo__text">
-                <img class="logo" src="../../public/assets/images/lock.png" alt="passwordconfirm">
-                <p>Confirmation du mot de passe</p>
+                <label><?= $input["label"] ?? "" ?></label>
                 </div>
                 <input name="<?= $name ?>" class="<?= $input["class"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" type="<?= $input["type"] ?? "text" ?>" value="<?= $input["value"] ?? "" ?>" <?= !empty($input["required"]) ? 'required="required"' : ""  ?>><br>
                 <?php break; 
@@ -54,7 +45,7 @@
                         class="<?= $input["class"]??"" ?>" 
                         value="<?= $value??""?>"
                         <?php if(!empty( $input["checked"])) echo ($value === $input['checked'])? 'checked': '';?>>
-                    <label><?= $key??"Choix"?></label>
+                        <label><?= $input["label"] ?? "" ?></label>
                     <br>
                 <?php 
                 endforeach;
@@ -72,6 +63,15 @@
                     <?php endforeach; ?>
                 </select>
                 <br>
+                <?php break;?>
+        <?php case "text":?>
+                <?php if($_SERVER['REQUEST_URI'] == '/register') :?>
+                    <div class="logo__text">
+                        <img class="logo" src="../../public/assets/images/user.png" alt="logo">
+                        <label><?= $input["label"] ?></label>
+                    </div>
+                    <input name="<?= $name ?>" class="<?= $input["class"] ?? "" ?>" id="<?= $input["id"] ?? "" ?>" placeholder="<?= $input["placeholder"] ?? "" ?>" type="<?= $input["type"] ?? "text" ?>" value="<?= $input["value"] ?? "" ?>" <?= !empty($input["required"]) ? 'required="required"' : ""  ?>><br>
+                <?php endif?>
                 <?php break;?>
         <?php case "textarea":?>
                 <textarea name="<?= $name ?>" class="<?= $input["class"]??"" ?>" id="<?= $input["id"]??"" ?>" placeholder="<?= $input["placeholder"]??"" ?>"><?= $input["value"] ?? '' ?></textarea>
