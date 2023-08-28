@@ -200,4 +200,18 @@ abstract class Sql
         $queryPrepared = $this->pdo->databasePrepare($sql, []);
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAllByPosition()
+    {
+        $sql = 'SELECT * FROM ' . $this->table . ' ORDER BY position ';
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateItemPosition($position, $block_id)
+    {
+        $sql = "UPDATE " . $this->table . " SET position = ?  WHERE id= ?";
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$block_id, $position]);
+    }
 }

@@ -11,6 +11,7 @@ use App\models\Page as PageModel;
 use App\models\Theme as ThemeModel;
 use App\models\Report as ReportModel;
 use App\models\Recipe as RecipeModel;
+use App\models\MenuItem as MenuItemsModel;
 
 class Admin extends Sql
 {
@@ -101,11 +102,6 @@ class Admin extends Sql
         $page = $data[0];
     }
 
-    public function editMenu()
-    {
-        Router::render('admin/editMenu.php');
-    }
-
     // écrit la route dans routes.yml
     private function writeRoute(array $params): void
     {
@@ -171,5 +167,41 @@ class Admin extends Sql
         $user->save();
 
         header('Location: /adminmember');
+    }
+
+    public function editMenu()
+    {
+        $menuItem = new MenuItemsModel();
+        $items = $menuItem->getAllByPosition();
+
+        $page = new PageModel();
+        $pages = $page->getAll();
+
+        Router::render('admin/editmenu.php', [
+            'items' => $items,
+            'pages' => $pages
+        ]);
+    }
+
+    public function addItem()
+    {
+        $menuItem = new MenuItemsModel();
+        $count = count($menuItem->getAllByPosition());
+        $menuItem->setLink("/{$_POST['route']}");
+        $menuItem->setName($_POST['name']);
+        $menuItem->setPosition($count + 1);
+        $menuItem->save();
+
+        echo json_encode(['id' => $count + 1]);
+    }
+
+    public function moveItemPosition(): void
+    {
+        $block = new MenuItemsModel();
+
+        foreach ($_POST as $key => $value) {
+            $block->updateItemPosition($key, $value);
+        }
+        echo json_encode(['data' => $_POST, 'objet' => $block]);
     }
 }

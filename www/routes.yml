@@ -167,3 +167,18 @@ pagenotfound:
     controller: error
     action: errorNotFound
     role: [public, user, admin, super_admin]
+
+menu:
+    controller: admin
+    action: editMenu
+    role: [public]
+
+moveitemposition:
+    controller: admin
+    action: moveItemPosition
+    role: [public]
+
+additem:
+    controller: admin
+    action: addItem
+    role: [public]
