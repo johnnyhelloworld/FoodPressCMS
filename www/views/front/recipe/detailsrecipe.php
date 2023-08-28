@@ -16,8 +16,7 @@
     <a href="/recipes">Back</a>
 <?php endif ?>
 
-<h1>Détails recette</h1>
-<div class="container" style="padding-top: 100px;">
+<div class="container">
     <div class="block-recipe" style="min-height:250px;width:500px;margin:0 auto">
         <h1><?= $recipe->getTitle() ?></h1>
         <small>Posté par Admin - Catégorie : <?= $category->getName() ?> -

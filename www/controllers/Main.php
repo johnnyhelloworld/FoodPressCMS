@@ -1,12 +1,12 @@
 <?php
 
 namespace App\controllers;
-use App\core\View;
+use App\core\Router;
 
 class Main 
 {
     public function home()
     {
-        $view = new View("home");
+        Router::render('front/home/home.php');
     }
 }

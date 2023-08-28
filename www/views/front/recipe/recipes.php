@@ -14,4 +14,4 @@
 <?php endif; ?>
 
 <?php $base = ob_get_clean(); ?>
-<?php require(__DIR__ . '../base/base.php'); ?>
+<?php require(__DIR__ . '../../base/base.php'); ?>
