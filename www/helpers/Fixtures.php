@@ -20,8 +20,6 @@ use App\models\User;
 
 class Fixtures extends Sql
 {
-
-
 	private function writeRoute(array $params): void
 	{
 		$content = file_get_contents('routes.yml');
@@ -42,7 +40,7 @@ class Fixtures extends Sql
 			$category = new Category();
 			$category->setName($key);
 			$category->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
-			$category->setPicture($value);
+			$category->setImage($value);
 			$category->setSlug(Slugger::sluggify(strtolower($key)));
 			$category->save();
 
@@ -52,7 +50,6 @@ class Fixtures extends Sql
 			$params['action'] = 'categoryPage';
 			$this->writeRoute($params);
 		}
-
 
 		$recipeManager = new RecipeModel();
 		$recipeManager->truncate('recipe');
@@ -67,8 +64,10 @@ class Fixtures extends Sql
 			$title = $arrayContent[rand(0, count($arrayContent) - 1)] . ' ' . $arrayContent[rand(0, count($arrayContent) - 1)] . ' ' . $arrayContent[rand(0, count($arrayContent) - 1)];
 			$recipe = new RecipeModel();
 			$recipe->setCategoryId($categories[$i]['id']);
-			$recipe->settitle($title);
+			$recipe->setTitle($title);
 			$recipe->setContent($content);
+            $recipe->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
+            $recipe->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 			$recipe->setSlug(Slugger::sluggify($title));
 			$recipe->save();
 			}
@@ -93,9 +92,9 @@ class Fixtures extends Sql
 			$user->save();
 		}
 		$admin = new User();
-		$admin->setFirstName('sport');
-		$admin->setLastname('cms');
-		$admin->setEmail('sport.cms@gmail.com');
+		$admin->setFirstName('Johnny');
+		$admin->setLastname('Chen');
+		$admin->setEmail('johnny.chen@hotmail.fr');
 		$admin->setStatus(1);
 		$admin->setPassword(password_hash('1234', PASSWORD_BCRYPT));
 		$admin->setRole('admin');
@@ -118,26 +117,27 @@ class Fixtures extends Sql
 			$rand2 = rand(1, 3);
 
 			for ($j = 0; $j < $rand; $j++) {
-			$comment = new CommentModel();
-			$comment->setParentId(null);
-			$comment->setAuthorId($users[rand(0, count($users) - 1)]['id']);
-			$comment->setRecipeId($recipe['id']);
-			$comment->setTitle($explode[rand(1, count($explode) - 1)] . ' ' . $explode[rand(1, count($explode) - 1)]);
-			$comment->setContent(substr($contentComment, rand(0, 50), rand(100, strlen($contentComment))));
-			$comment->save();
+                $comment = new CommentModel();
+                $comment->setParentId(null);
+                $comment->setAuthorId($users[rand(0, count($users) - 1)]['id']);
+                $comment->setRecipeId($recipe['id']);
+                $comment->setTitle($explode[rand(1, count($explode) - 1)] . ' ' . $explode[rand(1, count($explode) - 1)]);
+                $comment->setContent(substr($contentComment, rand(0, 50), rand(100, strlen($contentComment))));
+                $comment->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
+                $comment->save();
 			}
 			for ($k = 0; $k < $rand2; $k++) {
-			$like = new LikeModel();
-			$like->setUserId($users[rand(0, count($users) - 1)]['id']);
-			$like->setRecipeId($recipe['id']);
-			$like->save();
+                $like = new LikeModel();
+                $like->setUserId($users[rand(0, count($users) - 1)]['id']);
+                $like->setRecipeId($recipe['id']);
+                $like->save();
 			}
 		}
 
 		$theme = new ThemeModel();
 		$theme->truncate('theme');
 		$theme->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-		$theme->setDomain('https://sport-cms.fr');
+		$theme->setDomain('https://foodpress-cms.fr');
 		$theme->setName('Blog and news');
 		$theme->save();
 
@@ -148,9 +148,10 @@ class Fixtures extends Sql
 			$reply = new CommentModel();
 			$reply->setParentId($comment['id']);
 			$reply->setAuthorId($users[rand(0, count($users) - 1)]['id']);
-			$reply->setRecipeId($comment['recipe_id']);
+			$reply->setRecipeId($comment['fp_recipe_id']);
 			$reply->setTitle($explode[rand(1, count($explode) - 1)] . ' ' . $explode[rand(1, count($explode) - 1)]);
 			$reply->setContent(substr($contentComment, rand(0, 50), rand(100, strlen($contentComment))));
+            $reply->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 			$reply->save();
 			}
 		}
@@ -180,7 +181,5 @@ class Fixtures extends Sql
 
 			$position++;
 		}
-
-
 	}
 }
