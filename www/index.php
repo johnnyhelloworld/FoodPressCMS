@@ -30,7 +30,7 @@ $routes  = yaml_parse_file("routes.yml");
 
 //Si l'uri n'existe pas dans $routes die page 404
 if(empty($routes[$uri])){
-    ini_get('display_errors') == 1 ? die('404 not found') : header('Location:/pagenotfound');
+    ini_get('display_errors') == 0 ? die('404 not found') : header('Location:/pagenotfound');
 }
 //Sinon si l'uri ne possède pas de controller ni d'action die erreur fichier routes.yml
 if(empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
@@ -64,7 +64,7 @@ $controller = new ($namespaceController.$c)(); //new Front();
 
 //Sinon appel de l'action
 if(!method_exists($controller, $a)){
-    ini_get('display_errors') == 1 ? die('404 not found : la classe n\'existe pas') : header('Location:/pagenotfound');
+    ini_get('display_errors') == 0 ? die('404 not found : la classe n\'existe pas') : header('Location:/pagenotfound');
 }
 
 //Front->contact();
