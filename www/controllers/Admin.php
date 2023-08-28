@@ -29,6 +29,12 @@ class Admin extends Sql
         Router::render('admin/home.php');
     }
 
+    public function getUserProfile(): void
+    {
+        $user = new UserModel();
+        Router::render('admin/user/userprofile.php', ["user" => $user]);
+    }
+
     public function indexRecipe()
     {
         $recipe = new RecipeModel();
