@@ -9,7 +9,6 @@ use App\helpers\Fixtures;
 
 use App\models\Page as PageModel;
 use App\models\User as UserModel;
-use App\models\Theme as ThemeModel;
 use App\models\Recipe as RecipeModel;
 use App\models\Report as ReportModel;
 use App\models\MenuItem as MenuItemsModel;
@@ -78,7 +77,7 @@ class Admin extends Sql
             $pageManager->setTitle($params['route']);
             $pageManager->setType($params['model']);
             $pageManager->setLink('/' . $params['route']);
-            $pageManager->setThemeId(1);
+            // $pageManager->setThemeId(1);
             $pageManager->save();
 
             $pageData = $pageManager->getOneBy(['title' => $pageManager->getTitle()]);
