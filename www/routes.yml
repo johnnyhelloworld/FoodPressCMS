@@ -88,12 +88,12 @@ deleterecipe:
     action: deleteRecipe
     role: [admin, super_admin]
 
-# recipes:
-#     controller: recipe
-#     action: indexRecipe
-#     role: [public, user, admin, super_admin]
-
 recipes:
+    controller: recipe
+    action: indexRecipe
+    role: [public, user, admin, super_admin]
+
+managerecipes:
     controller: admin
     action: indexRecipe
     role: [public, user, admin, super_admin]
@@ -168,6 +168,16 @@ pagenotfound:
     action: errorNotFound
     role: [public, user, admin, super_admin]
 
+notauthorized:
+    controller: error
+    action: errorUnauthorized
+    role: [public]
+
+servererror:
+    controller: error
+    action: errorServer
+    role: [public]
+
 devfixtures:
     controller: admin
     action: loadFixtures
@@ -206,4 +216,24 @@ moveitemposition:
 additem:
     controller: admin
     action: addItem
+    role: [public]
+
+about:
+    controller: about
+    action: index
+    role: [public]
+
+contact:
+    controller: contact
+    action: index
+    role: [public]
+
+presentation:
+    controller: presentation
+    action: index
+    role: [public]
+
+getStatConnexion:
+    controller: admin
+    action: getStatConnexion
     role: [public]

@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <section class="stats">
     <h1>Statistiques</h1>
     <div class="date">
@@ -172,3 +173,5 @@
         </section>
     </div>
 </div>
+<?php $content = ob_get_clean(); ?>
+<?php require(__DIR__ . '/base/base.php'); ?>

@@ -26,7 +26,7 @@ class Admin extends Sql
         $reports = $report->getReportNotifications();
         $_SESSION['report'] = count($reports);
 
-        Router::render('dashboard.php');
+        Router::render('admin/home.php');
     }
 
     public function indexRecipe()
@@ -112,10 +112,6 @@ class Admin extends Sql
         $content .= "\n  action: " . $params['action'];
         $content .= "\n  role: [" . $params['role'] . "]";
         file_put_contents('routes.yml', $content);
-
-        $file = fopen('views/' . strtolower($params['route']) . '.php', 'a');
-        fwrite($file, '<h1>' . ucfirst($params['route']) . '</h1>');
-        fclose($file);
     }
 
     private function eraseRoute(string $route): void

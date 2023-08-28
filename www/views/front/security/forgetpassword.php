@@ -1,3 +1,6 @@
+<?php ob_start();
+use App\core\Router; ?>
+
 <h1>Mot de passe oublié ?</h1>
 <?php
     if(isset($error)):
@@ -6,4 +9,4 @@
     <?php
     endif;
 ?>
-<?php $this->includePartial("form", $user->getForgetPasswordForm());?>
+<?php Router::includePartial("form", $user->getForgetPasswordForm());?>
