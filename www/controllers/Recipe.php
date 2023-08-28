@@ -3,16 +3,15 @@
 namespace App\controllers;
 
 use App\core\Router;
-use App\core\View;
-use App\models\Recipe as RecipeModel;
 use App\core\verificator\VerificatorRecipe;
+use App\core\Sql;
+
+use App\helpers\Slugger;
+
+use App\models\Recipe as RecipeModel;
 use App\models\Category as CategoryModel;
-use App\models\User as UserModel;
 use App\models\Comment as CommentModel;
 use App\models\Like as LikeModel;
-use App\core\Sql;
-use App\core\Session;
-use App\helpers\Slugger;
 
 
 class Recipe extends Sql{
