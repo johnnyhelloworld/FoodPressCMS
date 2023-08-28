@@ -1,8 +1,8 @@
 <header>
     <div class="search">
-        <a href="#"> <img src="../../../public/assets/images/search.png" alt=""></a>
+        <!-- <a href="#"> <img src="../../../public/assets/images/search.png" alt=""></a>
         <input type="text" class="large" placeholder="Rechercher">
-        <input type="text" class="small" placeholder="Rechercher">
+        <input type="text" class="small" placeholder="Rechercher"> -->
     </div>
     <div class="profil">
         <a href=""><img src="../../../public/assets/images/vector.png" alt="Mail"> <span class="t-contact">Contact</span></a>
