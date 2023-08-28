@@ -3,10 +3,10 @@
 namespace App\controllers;
 
 use App\core\Sql;
-use App\core\View;
 use App\core\Router;
 
-use App\Helpers\Fixtures;
+use App\helpers\Fixtures;
+
 use App\models\Page as PageModel;
 use App\models\User as UserModel;
 use App\models\Theme as ThemeModel;

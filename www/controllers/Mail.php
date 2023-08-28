@@ -4,8 +4,6 @@ namespace App\controllers;
 
 
 use App\PHPMailer\PHPMailer;
-use App\PHPMailer\SMTP;
-use App\PHPMailer\Exception;
 
 class Mail
 {

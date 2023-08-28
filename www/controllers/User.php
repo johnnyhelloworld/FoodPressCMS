@@ -2,14 +2,13 @@
 
 namespace App\controllers;
 
-use App\core\User as Us;
 use App\core\Router;
-use App\models\User as UserModel;
-use App\core\verificator\Verificator;
-use App\models\PasswordReset;
 use App\core\Session;
-use App\core\Sql;
 use App\core\Mail;
+use App\core\verificator\Verificator;
+
+use App\models\User as UserModel;
+use App\models\PasswordReset;
 
 class User 
 {

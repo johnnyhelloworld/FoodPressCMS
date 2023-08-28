@@ -4,15 +4,12 @@ namespace App\controllers;
 
 
 use App\core\Sql;
-use PDOException;
-use App\core\View;
-use App\core\Session;
+use App\core\verificator\VerificatorReport;
+use App\core\Router;
+
 use App\models\Comment as CommentModel;
 use App\models\User as UserModel;
-use App\core\verificator\VerificatorComment;
 use App\models\Report as ReportModel;
-use App\core\verificator\VerificatorReport;
-
 
 class Comment extends Sql
 {
@@ -92,7 +89,6 @@ class Comment extends Sql
 
     public function reportComment()
     {
-        $view = new View("report", "empty");
         $reportManager = new ReportModel();
         $commentManager = new CommentModel();
         $userManager = new UserModel();
@@ -109,7 +105,7 @@ class Comment extends Sql
             $result = VerificatorReport::validate($reportManager->getReportForm(), $_POST);
 
             if ($result && count($result) > 0) {
-                $view->assign([
+                Router::render('admin/report/reports.php', [
                     'result' => $result,
                     "reportManager" => $reportManager,
                     "comment" => $comment,
@@ -129,7 +125,7 @@ class Comment extends Sql
             header('Location: /recipes');
         }
 
-        $view->assign([
+        Router::render('admin/report/reports.php', [
             "reportManager" => $reportManager,
             "comment" => $comment,
             "author" => $user
@@ -138,7 +134,6 @@ class Comment extends Sql
 
     public function getReports()
     {
-        $view = new View("reports", "empty");
         $report = new ReportModel();
         $reports = $report->getBy(['has_read' => 0]);
 
@@ -150,6 +145,6 @@ class Comment extends Sql
         }
 
 
-        $view->assign(['reports' => $reports]);
+        Router::render('admin/report/reports.php', ['reports' => $reports]);
     }
 }
