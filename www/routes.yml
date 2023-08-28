@@ -233,7 +233,12 @@ presentation:
     action: index
     role: [public]
 
-getStatConnexion:
+getstatconnexion:
     controller: admin
     action: getStatConnexion
+    role: [public]
+
+userprofile:
+    controller: admin
+    action: getUserProfile
     role: [public]

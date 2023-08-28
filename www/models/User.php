@@ -289,4 +289,74 @@ class User extends Sql
     //         ],
     //     ];
     // }
+    public function getUserProfileForm(){
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => "",
+                "id" => "formUserProfile",
+                "class" => "formUserprofile",
+                "submit" => "Valider"
+            ],
+            "inputs" => [
+                "firstname" => [
+                    "type" => "text",
+                    "label" => "Votre prénom",
+                    "id" => "firstname",
+                    "class" => "formInput",
+                    "placeholder" => "Johnny",
+                    "value" => $this->firstname ?? "",
+                    "disabled" => 'disabled'
+                ],
+                "lastname" => [
+                    "type" => "text",
+                    "label" => "Votre nom",
+                    "id" => "lastname",
+                    "class" => "formInput",
+                    "placeholder" => "Chen",
+                    "value" => $this->lastname ?? "",
+                    "disabled" => 'disabled'
+                ],
+                "email" => [
+                    "type" => "email",
+                    "label" => "Votre email)",
+                    "id" => "email",
+                    "class" => "formInput",
+                    "placeholder" => "nom@gmail.com",
+                    "value" => $this->getEmail() ?? '',
+                    "error" => "Votre email doit faire entre 8 et 320 caractères",
+                    "required" => true,
+                    "disabled" => 'disabled'
+                ],
+                "oldPassword" => [
+                    "type" => "password",
+                    "label" => "Votre mot de passe actuel",
+                    "id" => "password",
+                    "class" => "formInput",
+                    "placeholder" => "",
+                    "error" => "Votre mot de passe doit faire au minimum 8 caractères",
+                    "required" => false
+                ],
+                "password" => [
+                    "label" => "Votre nouveau mot de passe",
+                    "type" => "password",
+                    "id" => "passwordd",
+                    "class" => "formInput",
+                    "placeholder" => "",
+                    "error" => "Votre mot de passe doit faire au minimum 8 caractères",
+                    "required" => false
+                ],
+                "passwordConfirm" => [
+                    "label" => "Confirmation",
+                    "type" => "password",
+                    "confirm" => "password",
+                    "id" => "passwordConfirm",
+                    "class" => "formInput",
+                    "placeholder" => "",
+                    "error" => "Votre mot de mot de passe de confirmation ne correspond pas",
+                    "required" => false
+                ],
+            ]
+        ];
+    }
 }
