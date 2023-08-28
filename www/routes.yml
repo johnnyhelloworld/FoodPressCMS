@@ -167,3 +167,43 @@ pagenotfound:
     controller: error
     action: errorNotFound
     role: [public, user, admin, super_admin]
+
+devfixtures:
+    controller: admin
+    action: loadFixtures
+    role: [public]
+
+vegetarien:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+viande:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+pate:
+    controller: category
+    action: categoryPage
+    role: [public]
+
+asie:
+    controller: category
+    action: categoryPage
+    role: [public]
+    
+menu:
+    controller: admin
+    action: editMenu
+    role: [public]
+
+moveitemposition:
+    controller: admin
+    action: moveItemPosition
+    role: [public]
+
+additem:
+    controller: admin
+    action: addItem
+    role: [public]
