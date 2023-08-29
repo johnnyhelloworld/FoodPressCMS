@@ -1,7 +1,7 @@
 <?php ob_start();
 use App\core\Router; ?>
 
-<h1>Login</h1>
+<img class="logo__login" src="../../../public/assets/images/Foodpress.png" alt="Logo Foodpress">
 
 <?php if(!empty($errors)): ?>
     <div class="">
@@ -11,4 +11,6 @@ use App\core\Router; ?>
     </div>
 <?php endif ?>
 
-<?php Router::includePartial("form", $user->getLoginForm());?>
+<?php Router::includePartial("form", $user->getLoginForm(null));?>
+<?php $base = ob_get_clean(); ?>
+<?php require(__DIR__ . '/../base/base.php'); ?>
