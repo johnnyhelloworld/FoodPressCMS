@@ -125,7 +125,7 @@ class Comment extends Sql
             header('Location: /recipes');
         }
 
-        Router::render('admin/report/reports.php', [
+        Router::render('front/report/report.php', [
             "reportManager" => $reportManager,
             "comment" => $comment,
             "author" => $user

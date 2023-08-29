@@ -242,3 +242,8 @@ userprofile:
     controller: admin
     action: getUserProfile
     role: [public]
+
+page2:
+  controller: article
+  action: indexArticle
+  role: [public]
