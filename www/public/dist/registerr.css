@@ -14,6 +14,7 @@ body {
 
 #formRegister .logo__text {
     display: flex;
+    margin-bottom: 0.5rem;
 }
 
 #formRegister {
@@ -44,7 +45,6 @@ body {
 
 .link_register {
     margin: auto;
-    margin-bottom: 1rem;
 }
 
 #formRegister input[type="submit"] {
