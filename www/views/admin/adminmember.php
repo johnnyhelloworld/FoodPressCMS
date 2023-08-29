@@ -14,7 +14,6 @@ use App\core\Router;
             <th>Date de création</th>
             <th>Date de modification</th>
             <th>Update role</th>
-            <th>Action</th>
             <th>Envoyer</th>
             <th>Supprimer</th>
         </tr>
