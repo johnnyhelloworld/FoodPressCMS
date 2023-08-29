@@ -146,7 +146,7 @@ class Admin extends Sql
 
         $users = $user->getAll();
 
-        Router::render('adminmember.php', ["users" => $users]);
+        Router::render('admin/adminmember.php', ["users" => $users]);
     }
 
     public function deleteUser()
