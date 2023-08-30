@@ -15,38 +15,55 @@ class User
     public function login()
     {
         $user = new UserModel();
-        Router::render('front/security/login.php', ["user" => $user]);
-        
-        if(empty($_POST)){
-            die();
-        }
 
-        $errors = Verificator::checkForm($user->getLoginForm(), $_POST);
-        if(!empty($errors)){
-            Router::render('front/security/login.php', ['errors' => $errors]);
-            die();
-        }
-        if(!isset($user->getOneBy(['email' => $_POST['email']])[0])){
-            Router::render('front/security/login.php', ['errors' => ["Votre email ou mot de passe est invalide"]]);
-            die();
-        }
-        $user = $user->getOneBy(['email' => $_POST['email']])[0];
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-        if(!password_verify($_POST['password'], $user->getPassword())){
-            Router::render('front/security/login.php', ['errors'=> ["Votre email ou mot de passe est invalide"]]);
-            die();
-        }
-        $status = $user->getStatus();
+            $errors = Verificator::checkForm($user->getLoginForm(), $_POST);
+            if(count($errors) > 0){
+                Router::render('front/security/login.php',["user" => $user, 'errors' => $errors]);
+                return;
+            }
+            if(!isset($user->getOneBy(['email' => $_POST['email']])[0])){
+                $errors = [];
+                $errors[] = "Les informations sont incorrectes !";
+                Router::render('front/security/login.php',["user" => $user, 'errors' => $errors]);
+                return;
+            }
+            $user = $user->getOneBy(['email' => $_POST['email']])[0];
 
-        if($status == false){
-            Router::render('front/security/login.php', ['errors' => ["Votre compte n'est pas encore actif"]]);
-            die();
+            if(!password_verify($_POST['password'], $user->getPassword())){
+                Router::render('front/security/login.php',["user" => $user,'errors' => $errors]);
+                return;
+            }
+            $status = $user->getStatus();
+
+            if($status == 0){
+                $errors = [];
+                $errors[] = "Veuillez activer votre compte via l'email que vous avez reçu !";
+                Router::render('front/security/login.php',["user" => $user, 'errors' => $errors]);
+                return;
+            }
+
+            $_SESSION['email'] = $_POST['email'];
+            $_SESSION['firstname'] = $_POST['firstname'];
+            $_SESSION['lastname'] = $_POST['lastname'];
+            $_SESSION['id'] = $_POST['id'];
+            $_SESSION['role'] = $user->getRole();
+
+            //Si user, on redirige vers home
+            if ($_SESSION['role'] == 'user') {
+                header("Location: default");
+            }
+            //Tant que le statut != 2, on redirige vers installation
+            if ($_SESSION['role'] == 'admin' && $user->getStatus() == 1) {
+                header("Location: installation");
+            }
+
+            if ($_SESSION['role'] == 'admin' && $user->getStatus() == 2) {
+                header("Location: dashboard");
+            }
         }
-        $session = new Session();
-        $session->set('email', $_POST['email']);
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['password'] = $_POST['password'];
-        header("Location: dashboard");
+        Router::render('front/security/login.php',["user" => $user]);
     }
 
     // public function register()
@@ -123,7 +140,7 @@ class User
 
             if(isset($user->getOneBy(['email' => $_POST['email']])[0])){
                 $errors = [];
-                $errors['errors'] = "L'utilisateur existe déjà"; 
+                $errors[] = "L'utilisateur existe déjà"; 
                 Router::render('front/security/register.php', ["user" => $user, "errors" => $errors]);
             }
 
@@ -131,7 +148,7 @@ class User
             $passwordConfirm = strip_tags($_POST['passwordConfirm']);
 
             if ($password !== $passwordConfirm) {
-                $errors['badPassword'] = "Les mots de passe ne correspondent pas";
+                $errors[] = "Les mots de passe ne correspondent pas";
                 Router::render('front/security/register.php', ["user" => $user, "errors" => $errors]);
             }
 
