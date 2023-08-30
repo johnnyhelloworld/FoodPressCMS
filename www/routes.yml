@@ -25,7 +25,7 @@ register:
 
 confirmregister:
     controller: user
-    action: confirmaccount
+    action: confirmAccount
     role: [public]
 
 dashboard:

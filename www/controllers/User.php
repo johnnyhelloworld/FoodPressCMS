@@ -174,7 +174,7 @@ class User
             $mail->message($mailBody);
 
             if (!$mail->send()) {
-                die("Vous rencontrer une erreur lors de l'envoie de mail");
+                die("Vous rencontrez une erreur lors de l'envoie de mail");
             }
 
             $_SESSION['success'] = "Un e-mail de confirmation vous a été envoyé pour valider votre compte !";
