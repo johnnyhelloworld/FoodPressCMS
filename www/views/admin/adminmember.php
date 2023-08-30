@@ -31,8 +31,8 @@ use App\core\Router;
                     <select id="role" name="role">
                         <option value="<?= $user["role"] ?>"><?=$user["role"]?></option>
                         <option value="admin">Admin</option>
-                        <option value="admin">User</option>
-                        <option value="user">Public</option>
+                        <option value="user">User</option>
+                        <option value="public">Public</option>
                     </select>
                 </td>
                 <td>
