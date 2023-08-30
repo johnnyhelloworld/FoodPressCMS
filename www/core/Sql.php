@@ -221,4 +221,23 @@ abstract class Sql
         $sql = "UPDATE " . $this->table . " SET position = ?  WHERE id= ?";
         $queryPrepared = $this->pdo->databasePrepare($sql, [$block_id, $position]);
     }
+
+    public function getBlockByPosition($pageId)
+    {
+        $sql = "SELECT b.id as blockId, f.id as formId, b.position, b.title, b.page_id, s.id as textId, s.block_id, s.content, f.title  as formTitle
+                FROM " . DB_PREFIX . "_blocks as b 
+                LEFT JOIN " . DB_PREFIX . "_texts as s ON s.block_id = b.id
+                LEFT JOIN " . DB_PREFIX . "_forms as f ON f.block_id = b.id
+                WHERE page_id = ? 
+                ORDER BY position";
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$pageId]);
+
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function createBlock($position, $title, $page_id)
+    {
+        $sql = "INSERT INTO {$this->table} (position, title, page_id) VALUES (?, ?, ?)";
+        $this->pdo->databasePrepare($sql, [$position, $title, $page_id]);
+    }
 }

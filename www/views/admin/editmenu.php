@@ -1,36 +1,35 @@
 <?php ob_start(); ?>
-<div style="display:flex;flex-flow:row wrap;justify-content:center;width:100%;background:white;min-height:100vh">
-    <div class="left-dashboard-menu-admin" style="width:20%;background:lightgrey;min-height:100vh">
-        <h5 style="text-align:center">Mon dashboard</h5>
+<div style="display:flex; align-items:center">
+    <h1>Gérer mon menu</h1><br><br>
+</div>
+
+<div class="right-render-menu-items" style="min-height:80">
+    <div style="padding:20px;margin:100px;border:1px solid grey;min-height:60vh;background:white">
+        <ul class="site-menu-nav-list droppable connected-sortable">
+            <h3>Mon menu de navigation</h3>
+            <p>Drag and drop les items pour organiser le menu</p>
+            <?php foreach ($items as $item) : ?>
+                <li style="cursor:pointer;border:0.5px solid grey;list-style:none;padding:25px 10px;background:#D6DCE1;width:95%;" class="draggable-item" id="<?= $item['id'] ?>">
+                    <?= $item['name'] ?>
+                </li>
+            <?php endforeach ?>
+        </ul>
     </div>
-    <div class="right-render-menu-items" style="width:80%;background:#F0F6FB;min-height:100vh">
-        <div style="padding:20px;margin:100px;border:1px solid grey;min-height:60vh">
-            <ul class="site-menu-nav-list droppable connected-sortable">
-                <h3>Mon menu de navigation</h3>
-                <p>Drag and drop les items pour organiser le menu</p>
-                <?php foreach ($items as $item) : ?>
-                    <li style="cursor:pointer;border:0.5px solid grey;list-style:none;padding:25px 10px;background:#D6DCE1;width:95%;" class="draggable-item" id="<?= $item['id'] ?>">
-                        <?= $item['name'] ?>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-        </div>
 
-        <div style="padding:20px;margin:100px;border:1px solid grey;min-height:20vh">
-            <h3>Ajouter un lien NAV</h3>
-            <span>Donnez un nom à votre nouveau lien de navigation</span><br>
-            <input style=" width:400px;height:30px;padding:3px" type="text" id="item-name" /><br><br>
+    <div style="padding:20px;margin:100px;border:1px solid grey;min-height:20vh;background:white">
+        <h3>Ajouter un lien NAV</h3>
+        <span>Donnez un nom à votre nouveau lien de navigation</span><br>
+        <input style=" width:400px;height:30px;padding:3px" type="text" id="item-name" /><br><br>
 
-            <span>Choisir une destination (créer une page pour ajouter une nouvelle destination)</span><br>
-            <select id="item-route" style=" width:410px;height:40px;padding:3px">
-                <option value="">Choisir une page</option>
-                <?php foreach ($pages as $page) : ?>
-                    <option value="<?= $page['title'] ?>"><?= $page['title'] ?></option>
-                <?php endforeach ?>
-            </select><br><br>
-            <button style="padding:9px 15px" id="addItem">Valider</button>
-            <br><small id="error" style="color:red;font-size:11px"></small>
-        </div>
+        <span>Choisir une destination (créer une page pour ajouter une nouvelle destination)</span><br>
+        <select id="item-route" style=" width:410px;height:40px;padding:3px">
+            <option value="">Choisir une page</option>
+            <?php foreach ($pages as $page) : ?>
+                <option value="<?= $page['title'] ?>"><?= $page['title'] ?></option>
+            <?php endforeach ?>
+        </select><br><br>
+        <button style="padding:9px 15px" id="addItem">Valider</button>
+        <br><small id="error" style="color:red;font-size:11px"></small>
     </div>
 </div>
 </div>
@@ -73,7 +72,6 @@
                 },
                 data: chain,
                 success: function(rep) {
-		let response = JSON.parse(rep);
                     console.log(rep)
                 }
             });
