@@ -47,58 +47,141 @@ class User
         header("Location: dashboard");
     }
 
-    public function register()
+    // public function register()
+    // {
+    //     $user = new UserModel();
+
+    //     Router::render('front/security/register.php', ['user' => $user]);
+
+    //     if(empty($_POST)){
+    //         die();
+    //     }
+
+    //     $errors = Verificator::checkForm($user->getRegisterForm(), $_POST);
+
+    //     if(!empty($errors)){
+    //         Router::render('front/security/register.php', ["errors" => $errors]);
+    //         die();
+    //     }
+    //     $firstname = strip_tags($_POST['firstname']);
+    //     $lastname = strip_tags($_POST['lastname']);
+
+    //     if(isset($user->getOneBy(['email' => $_POST['email']])[0])){
+    //         Router::render('front/security/register.php', ["errors" =>  ["L'utilisateur existe déjà"]]);
+    //         die();
+    //     }
+
+    //     if($_POST['password'] !== $_POST['passwordConfirm']) {
+    //         echo "Vos mots de passe ne correspondent pas !";
+    //         die();
+    //     }
+
+    //     $user->setFirstname($firstname);
+    //     $user->setLastname($lastname);
+    //     $user->setEmail($_POST['email']);
+    //     $user->setPassword($_POST['password']);
+    //     $user->generateToken();
+    //     $user->setRole('User');
+
+    //     $user->save();
+
+    //     $mail = new Mail();
+    //     $mail->sendTo($_POST['email']);
+    //     $mail->subject("Confirmation inscription FoodPressCMS");
+    //     $mail->message("
+    //     Bonjour " . $user->getFirstname() .
+    //     " <br><br>Nous avons bien reçu vos informations. <br>
+    //     Afin de valider votre compte merci de cliquer sur le lien suivant <a href='http://localhost:81/confirmAccount?token=".$user->getToken()."'>Ici</a> <br><br>
+    //     Cordialement,<br>
+    //     <a href=''>L'Equipe de FoodPressCMS</a>
+    //     ");
+    //     if(!$mail->send()){
+    //         die("Vous rencontrer une erreur lors de l'envoie de mail");
+    //     }
+    //     Router::render('front/security/register.php', ["success" => "Un e-mail de confirmation vous a été envoyé pour valider votre compte !"]);
+    // }
+
+    public function register ()
     {
         $user = new UserModel();
 
-        Router::render('front/security/register.php', ['user' => $user]);
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $errors = Verificator::checkForm($user->getRegisterForm(), $_POST);
 
-        if(empty($_POST)){
-            die();
-        }
+            if(count($errors) > 0){
+                Router::render('front/security/register.php',["user" => $user, "errors" => $errors]);
 
-        $errors = Verificator::checkForm($user->getRegisterForm(), $_POST);
+            }
 
-        if(!empty($errors)){
-            Router::render('front/security/register.php', ["errors" => $errors]);
-            die();
-        }
-        $firstname = strip_tags($_POST['firstname']);
-        $lastname = strip_tags($_POST['lastname']);
+            $firstname = strip_tags($_POST['firstname']);
+            $lastname = strip_tags($_POST['lastname']);
+            $email = strip_tags($_POST['email']);
 
-        if(isset($user->getOneBy(['email' => $_POST['email']])[0])){
-            Router::render('front/security/register.php', ["errors" =>  ["L'utilisateur existe déjà"]]);
-            die();
-        }
 
-        if($_POST['password'] !== $_POST['passwordConfirm']) {
-            echo "Vos mots de passe ne correspondent pas !";
-            die();
-        }
 
-        $user->setFirstname($firstname);
-        $user->setLastname($lastname);
-        $user->setEmail($_POST['email']);
-        $user->setPassword($_POST['password']);
-        $user->generateToken();
-        $user->setRole('User');
+            if(isset($user->getOneBy(['email' => $_POST['email']])[0])){
+                $errors = [];
+                $errors['errors'] = "L'utilisateur existe déjà"; 
+                Router::render('front/security/register.php', ["user" => $user, "errors" => $errors]);
+            }
 
-        $user->save();
+            $password = strip_tags($_POST['password']);
+            $passwordConfirm = strip_tags($_POST['passwordConfirm']);
 
-        $mail = new Mail();
-        $mail->sendTo($_POST['email']);
-        $mail->subject("Confirmation inscription FoodPressCMS");
-        $mail->message("
-        Bonjour " . $user->getFirstname() .
-        " <br><br>Nous avons bien reçu vos informations. <br>
-        Afin de valider votre compte merci de cliquer sur le lien suivant <a href='http://localhost:81/confirmAccount?token=".$user->getToken()."'>Ici</a> <br><br>
-        Cordialement,<br>
-        <a href=''>L'Equipe de FoodPressCMS</a>
-        ");
-        if(!$mail->send()){
-            die("Vous rencontrer une erreur lors de l'envoie de mail");
-        }
-        Router::render('front/security/register.php', ["success" => "Un e-mail de confirmation vous a été envoyé pour valider votre compte !"]);
+            if ($password !== $passwordConfirm) {
+                $errors['badPassword'] = "Les mots de passe ne correspondent pas";
+                Router::render('front/security/register.php', ["user" => $user, "errors" => $errors]);
+            }
+
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+            $user->setEmail($email);
+            $user->setPassword($password);
+            $user->generateToken();
+
+            //Public
+            if ($_SERVER['REQUEST_URI'] == '/register') {
+
+            $user->setRole('user');
+
+            $user->save();
+
+            $mailBody = "Bonjour " . $user->getFirstname() .
+            " <br><br>Nous avons bien reçu vos informations. <br>
+            Afin de valider votre compte, merci de cliquer sur le lien suivant: <a href='http://localhost:81/confirmAccount?token=".$user->getToken()."'>Ici</a> <br><br>
+            Cordialement,<br>
+            <a href=''>L'Equipe de FoodPressCMS</a>";
+            }
+            
+            //Admin
+            if ($_SERVER['REQUEST_URI'] == '/adminregister') {
+
+            $user->setRole('admin');
+
+            $user->save();
+
+            $mailBody = "Bonjour " . $user->getFirstname() .
+            " <br><br>Nous avons bien reçu vos informations. <br>
+            Afin de valider votre compte administrateur, merci de cliquer sur le lien suivant: <a href='http://localhost:81/confirmAccount?token=".$user->getToken()."'>Ici</a> <br><br>
+            Cordialement,<br>
+            <a href=''>L'Equipe de FoodPressCMS</a>";
+            }
+
+            // send email
+            $mail = new Mail();
+            $mail->sendTo($_POST['email']);
+            $mail->subject("Confirmation inscription FoodPressCMS");
+            $mail->message($mailBody);
+
+            if (!$mail->send()) {
+                die("Vous rencontrez une erreur lors de l'envoie de mail");
+            }
+
+            $_SESSION['success'] = "Un e-mail de confirmation vous a été envoyé pour valider votre compte !";
+            header('Location:' . $_SERVER['REQUEST_URI']);
+
+            }
+            Router::render('front/security/register.php', ["user" => $user]);
     }
 
     public function logout()

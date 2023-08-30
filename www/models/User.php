@@ -136,7 +136,7 @@ class User extends Sql
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"/register",
+                "action"=>"",
                 "id"=>"formRegister",
                 "class"=>"formRegister",
                 "submit"=>"S'inscrire"
