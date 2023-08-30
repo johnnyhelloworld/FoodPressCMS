@@ -224,11 +224,9 @@ abstract class Sql
 
     public function getBlockByPosition($pageId)
     {
-        $sql = "SELECT b.id as blockId, f.id as formId, b.position, b.title, b.page_id, s.id as textId, s.block_id, s.content, f.title  as formTitle
-                FROM " . DB_PREFIX . "_blocks as b 
-                LEFT JOIN " . DB_PREFIX . "_texts as s ON s.block_id = b.id
-                LEFT JOIN " . DB_PREFIX . "_forms as f ON f.block_id = b.id
-                WHERE page_id = ? 
+        $sql = "SELECT b.id as blockId, b.position, b.title, b.fp_page_id
+                FROM " . DB_PREFIX . "block as b 
+                WHERE b.fp_page_id = ? 
                 ORDER BY position";
         $queryPrepared = $this->pdo->databasePrepare($sql, [$pageId]);
 

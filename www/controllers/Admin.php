@@ -72,11 +72,13 @@ class Admin extends Sql
     {
         $page = new PageModel();
         $menuItem = new MenuItemsModel();
-        $item = $menuItem->getOneBy(['link' => '/' . $_GET['page']])[0];
-
-        $item->delete($item->getId());
-        $page->deletePage($_GET['page']);
-        $this->eraseRoute($_GET['page']);
+        $item = $menuItem->getOneBy(['link' => '/' . $_GET['page']])[0] ?? null;
+        
+        if ($item != null) {
+            $item->delete($item->getId());
+        }
+            $page->deletePage($_GET['page']);
+            $this->eraseRoute($_GET['page']);
 
         header('Location: addpage');
     }
