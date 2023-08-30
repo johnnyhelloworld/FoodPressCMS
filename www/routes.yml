@@ -252,3 +252,8 @@ userprofile:
     controller: admin
     action: getUserProfile
     role: [public]
+
+userprofilepassword:
+    controller: user
+    action: changePassword
+    role: [public]

@@ -17,10 +17,6 @@ class Admin extends Sql
 {
     public function dashboard(): void
     {
-        // pour les test, session en dur
-        // a mettre au login si role du user = 'admin
-        $_SESSION['role'] = 'admin';
-
         $report = new ReportModel();
         $reports = $report->getReportNotifications();
         $_SESSION['report'] = count($reports);
