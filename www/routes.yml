@@ -13,9 +13,19 @@ logout:
     action: logout
     role: [user, admin, super_admin]
 
+adminregister:
+    controller: user
+    action: register
+    role: [public]
+
 register:
     controller: user
     action: register
+    role: [public]
+
+confirmregister:
+    controller: user
+    action: confirmAccount
     role: [public]
 
 dashboard:

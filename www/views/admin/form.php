@@ -78,7 +78,7 @@
             <br>
             <?php break;?>
         <?php default:?>
-            <?php if($_SERVER['REQUEST_URI'] == '/register') :?>
+            <?php if ($_SERVER['REQUEST_URI'] == '/register' || $_SERVER['REQUEST_URI'] == '/adminregister') :?>
                 <div class="logo__text">
                     <label><?= $input["label"] ?? "" ?></label>
                 </div>

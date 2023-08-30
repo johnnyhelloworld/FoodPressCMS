@@ -38,6 +38,8 @@ document.querySelectorAll(".reply").forEach(function (reply) {
                     let response = JSON.parse(rep)
                     let parentBlock = document.getElementById('replyComment' + parentId)
 
+                    $('#textareaReply').html('');
+                    $('#textareaReply').fadeOut();
 
                     $go = `
                         <br>

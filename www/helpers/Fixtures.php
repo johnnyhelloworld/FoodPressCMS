@@ -3,19 +3,16 @@
 namespace App\Helpers;
 
 use App\core\Sql;
-use App\core\Router;
-use App\Helpers\DevFixtures;
+
 use App\Helpers\Slugger;
 
 use App\models\Page as PageModel;
 use App\models\Theme as ThemeModel;
-use App\models\Block as BlockModel;
 use App\models\Like as LikeModel;
 use App\models\MenuItem as MenuItemsModel;
 use App\models\Comment as CommentModel;
 use App\models\Category;
 use App\models\Recipe as RecipeModel;
-use App\models\Report as ReportModel;
 use App\models\User;
 
 class Fixtures extends Sql

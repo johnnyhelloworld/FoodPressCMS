@@ -5,6 +5,7 @@
     <title>FoodPressCMS - Dashboard</title>
     <link rel="stylesheet" href="../../../public/dist/back.css">
     <link rel="stylesheet" href="../../../public/dist/main.css">
+    <link rel="stylesheet" href="../../../public/dist/adminmember.css">
     <script src="/public/src/js/main.js" defer></script>
     <script src="/public/src/js/script.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
