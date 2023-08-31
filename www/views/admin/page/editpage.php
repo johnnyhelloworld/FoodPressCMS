@@ -17,7 +17,7 @@
     </form><br>
 
     <?php foreach ($blocksPage as $block) : ?>
-        <div style="padding:40px;border:1px solid grey; position:relative;z-index:1;" data-idblock="<?= $block['blockId'] ?>">
+        <div style="padding:40px;border:1px solid grey; position:relative;z-index:1;" data-idblock="<?= $block['blockid'] ?>">
             <?php if (isset($block['content'])) : ?>
                 <?= $block['content'] ?>
             <?php elseif (isset($block['formTitle'])) : ?>

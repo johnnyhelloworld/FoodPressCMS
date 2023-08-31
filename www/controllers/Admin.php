@@ -124,13 +124,14 @@ class Admin extends Sql
 
             $block = new BlockModel();
             $block->setPageId($page->getId());
-            $block->setPosition(1); // create a default position
+            $block->setPosition(1);
             $block->setTitle($_POST['page_title']);
             $block->save();
 
             $this->writeRoute($params);
 
-            Router::render('admin/page/addpage.php');
+            unset($_SESSION['flash']);
+            header('Location: addpage');
         }
         Router::render('admin/page/addpage.php', ['pages' => $pages]);
     }

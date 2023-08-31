@@ -224,10 +224,12 @@ abstract class Sql
 
     public function getBlockByPosition($pageId)
     {
-        $sql = "SELECT b.id as blockId, b.position, b.title, b.fp_page_id
-                FROM " . DB_PREFIX . "block as b 
-                WHERE b.fp_page_id = ? 
-                ORDER BY position";
+        $sql = "SELECT b.id as blockId, f.id as formId, b.position, b.title, b.fp_page_id, s.id as textId, s.fp_block_id, s.content, f.title  as formTitle
+            FROM fp_block as b 
+            LEFT JOIN fp_text as s ON s.fp_block_id = b.id
+            LEFT JOIN fp_form as f ON f.fp_block_id = b.id
+            WHERE fp_page_id = ? 
+            ORDER BY position";
         $queryPrepared = $this->pdo->databasePrepare($sql, [$pageId]);
 
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
@@ -237,5 +239,15 @@ abstract class Sql
     {
         $sql = "INSERT INTO {$this->table} (position, title, page_id) VALUES (?, ?, ?)";
         $this->pdo->databasePrepare($sql, [$position, $title, $page_id]);
+    }
+
+    public function getFormInputs($formId)
+    {
+        $sql = "SELECT * FROM fp_input as i
+                LEFT JOIN fp_form as f ON i.form_id = f.id
+                WHERE fp_form_id = ?";
+        $queryPrepared = $this->pdo->queryPrepared($sql, [$formId]);
+
+        return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     }
 }
