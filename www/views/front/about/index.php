@@ -35,4 +35,4 @@ ob_start(); ?>
 <?php endforeach ?>
 
 <?php $base = ob_get_clean(); ?>
-<?php require('./views/front/base/base.php'); ?>
+<?php require(__DIR__ . '/../base/base.php'); ?>
