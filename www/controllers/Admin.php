@@ -77,13 +77,13 @@ class Admin extends Sql
         if ($item != null) {
             $item->delete($item->getId());
         }
-            $page->deletePage($_GET['page']);
-            $this->eraseRoute($_GET['page']);
+        $page->deletePage($_GET['page']);
+        $this->eraseRoute($_GET['page']);
 
         header('Location: addpage');
     }
 
-    public function addPage(): void
+    public function addPage()
     {
         $themeManager = new ThemeModel();
         $pageManager = new PageModel();
@@ -109,6 +109,7 @@ class Admin extends Sql
                 if ($currentPage['type'] == $params['model']) {
                     $message = 'Page déjà existante';
                     Router::render('admin/addpage.php', ['pages' => $pages, "message" => $message]);
+                    return false;
                 }
             }
 
