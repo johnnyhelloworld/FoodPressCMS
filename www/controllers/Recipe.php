@@ -83,7 +83,7 @@ class Recipe extends Sql{
 		$replies = $commentRecipe->getRepliesByComment($recipe->getId());
 		$countComments = $commentRecipe->countComments($recipe->getId());
 
-		Router::render("front/recipe/recipe.php", [
+		Router::render("front/recipe/detailsrecipe.php", [
             "recipe" => $recipe,
             "category" => $category,
             'countComments' => count($countComments) > 0 ? $countComments : null,
