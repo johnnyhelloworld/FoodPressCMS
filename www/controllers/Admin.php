@@ -6,12 +6,15 @@ use App\core\Sql;
 use App\core\Router;
 
 use App\helpers\Fixtures;
+use App\helpers\Slugger;
 
 use App\models\Page as PageModel;
 use App\models\User as UserModel;
 use App\models\Recipe as RecipeModel;
 use App\models\Report as ReportModel;
 use App\models\MenuItem as MenuItemsModel;
+use App\models\Block as BlockModel;
+use App\models\Theme as ThemeModel;
 
 class Admin extends Sql
 {
@@ -41,8 +44,48 @@ class Admin extends Sql
         ]);
     }
 
-    public function addPage(): void
+    public function editPage()
     {
+        $pageModel = new PageModel();
+        $block = new BlockModel();
+
+        $data = $pageModel->getOneBy(['title' => $_GET['page']]);
+        $page = $data[0];
+
+        $blocksPage = $block->getBlockByPosition($page->getId());
+
+        $positionBlocks = count($blocksPage);
+        $position = $positionBlocks + 1;
+
+        if (!$page) {
+            header('Location: addpage');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $block->createBlock($position, 'untitled', $page->getId());
+            header('Location: /editpage?page=' . $_GET['page']);
+        }
+        Router::render('admin/page/editpage.php', ['blocksPage' => $blocksPage]);
+    }
+
+    public function deletePageAdmin(): void
+    {
+        $page = new PageModel();
+        $menuItem = new MenuItemsModel();
+        $item = $menuItem->getOneBy(['link' => '/' . $_GET['page']])[0] ?? null;
+        
+        if ($item != null) {
+            $item->delete($item->getId());
+        }
+        $page->deletePage($_GET['page']);
+        $this->eraseRoute($_GET['page']);
+
+        header('Location: addpage');
+    }
+
+    public function addPage()
+    {
+        $themeManager = new ThemeModel();
         $pageManager = new PageModel();
         $pages = $pageManager->getAll();
 
@@ -53,8 +96,7 @@ class Admin extends Sql
             if (!$_POST['page_title'] || !$_POST['page_role'] || !$_POST['type']) {
                 throw new \Exception('missing parameters');
             }
-
-            $params['route'] = strtolower($_POST['page_title']) ?? null;
+            $params['route'] = Slugger::sluggify(($_POST['page_title'])) ?? null;
             $params['role'] = strtolower($_POST['page_role']) ?? null;
             $params['model'] = strtolower($_POST['type']) ?? null;
             $params['action'] = 'index' .  ucfirst($params['model']) ?? null;
@@ -66,49 +108,39 @@ class Admin extends Sql
             foreach ($currentPages as $currentPage) {
                 if ($currentPage['type'] == $params['model']) {
                     $message = 'Page déjà existante';
-                    Router::render('admin/addpage.php', ["message" => $message]);
+                    Router::render('admin/addpage.php', ['pages' => $pages, "message" => $message]);
+                    return false;
                 }
             }
 
             $pageManager->setTitle($params['route']);
             $pageManager->setType($params['model']);
-            $pageManager->setLink('/' . $params['route']);
-            // $pageManager->setThemeId(1);
+            $pageManager->setLink('/' . Slugger::sluggify($params['route']));
+            $pageManager->setThemeId(1); // remplacer par la suite par l'id_theme en SESSION
             $pageManager->save();
 
             $pageData = $pageManager->getOneBy(['title' => $pageManager->getTitle()]);
             $page = $pageData[0];
 
+            $block = new BlockModel();
+            $block->setPageId($page->getId());
+            $block->setPosition(1);
+            $block->setTitle($_POST['page_title']);
+            $block->save();
+
             $this->writeRoute($params);
+
+            unset($_SESSION['flash']);
+            header('Location: addpage');
         }
-        Router::render('admin/addpage.php', ['pages' => $pages]);
-    }
-
-    public function deletePageAdmin(): void
-    {
-        $page = new PageModel();
-
-        $page->deletePage($_GET['page']);
-
-        $this->eraseRoute($_GET['page']);
-
-        header('Location: /addpage');
-    }
-
-    public function editPage()
-    {
-        $pageModel = new PageModel();
-        Router::render('admin/editPage.php'); //vue a rajouté
-
-        $data = $pageModel->getOneBy(['title' => $_GET['page']]);
-        $page = $data[0];
+        Router::render('admin/page/addpage.php', ['pages' => $pages]);
     }
 
     // écrit la route dans routes.yml
     private function writeRoute(array $params): void
     {
         $content = file_get_contents('routes.yml');
-        $content .= "\n\n" . strtolower($params['route']) . ':';
+        $content .= "\n\n/" . strtolower($params['route']) . ':';
         $content .= "\n  controller: " . $params['model'];
         $content .= "\n  action: " . $params['action'];
         $content .= "\n  role: [" . $params['role'] . "]";
