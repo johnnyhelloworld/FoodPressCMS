@@ -248,17 +248,27 @@
     action: indexAbout
     role: [public]
 
-getstatconnexion:
+/getstatconnexion:
     controller: admin
     action: getStatConnexion
     role: [public]
 
-userprofile:
+/userprofile:
     controller: admin
     action: getUserProfile
     role: [public]
 
-userprofilepassword:
+/userprofilepassword:
     controller: user
     action: changePassword
     role: [public]
+
+/installation:
+    controller: installation
+    action: completeRegistration
+    role: [admin]
+
+/loading:
+    controller: installation
+    action: loading
+    role: [admin]
