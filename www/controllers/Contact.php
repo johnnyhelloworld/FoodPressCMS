@@ -21,10 +21,12 @@ class Contact extends Sql
             $contact = new ContactModel();
             $contact->setMessage($message);
             $contact->setEmail($_SESSION['email'] ?? 'test@gmail.com');
+            $contact->setDateCreated((new \DateTime('now'))->format('Y-m-d H:i:s'));
             $contact->save();
             $alert = array('success', 'Message envoyé');
 
             Router::render('front/contact/index.php', ['alert' => $alert]);
+            return;
         }
         Router::render('front/contact/index.php');
     }

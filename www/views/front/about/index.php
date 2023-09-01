@@ -19,7 +19,7 @@ ob_start(); ?>
     <?php endif ?>
 
     <?php $inputManager = new Input();
-    if ($inputs = $inputManager->getFormInputs($block['formId'])) ?>
+    if ($inputs = $inputManager->getFormInputs($block['formid'])) ?>
     <?php foreach ($inputs as $input) : ?>
         <div class="ligne">
             <?php if ($input['type'] != 'submit') : ?>

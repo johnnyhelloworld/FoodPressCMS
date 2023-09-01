@@ -15,7 +15,7 @@ spl_autoload_register(function ($class)
 });
 
 
-$base_uri = strtolower(trim($_SERVER["REQUEST_URI"], "/"));
+$base_uri = strtolower(trim($_SERVER["REQUEST_URI"]));
 $base_uri = empty($base_uri) ? "default" : $base_uri;
 
 $uri = strstr($base_uri, "?", true);

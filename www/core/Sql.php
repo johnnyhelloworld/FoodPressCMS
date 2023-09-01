@@ -101,7 +101,7 @@ abstract class Sql
 
     public function deletePage($page)
     {
-        $sql = "DELETE FROM {$this->table} WHERE title = ?";
+        $sql = "DELETE FROM {$this->table} CASCADE WHERE title = ?";
         $this->pdo->databasePrepare($sql, [$page]);
     }
 
@@ -244,9 +244,9 @@ abstract class Sql
     public function getFormInputs($formId)
     {
         $sql = "SELECT * FROM fp_input as i
-                LEFT JOIN fp_form as f ON i.form_id = f.id
+                LEFT JOIN fp_form as f ON i.fp_form_id = f.id
                 WHERE fp_form_id = ?";
-        $queryPrepared = $this->pdo->queryPrepared($sql, [$formId]);
+        $queryPrepared = $this->pdo->databasePrepare($sql, [$formId]);
 
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     }

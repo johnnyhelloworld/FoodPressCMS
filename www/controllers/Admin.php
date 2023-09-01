@@ -140,7 +140,7 @@ class Admin extends Sql
     private function writeRoute(array $params): void
     {
         $content = file_get_contents('routes.yml');
-        $content .= "\n\n" . strtolower($params['route']) . ':';
+        $content .= "\n\n/" . strtolower($params['route']) . ':';
         $content .= "\n  controller: " . $params['model'];
         $content .= "\n  action: " . $params['action'];
         $content .= "\n  role: [" . $params['role'] . "]";

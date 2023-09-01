@@ -1,254 +1,259 @@
-default:
+/default:
     controller: main
     action: home
     role: [public]
 
-login:
+/login:
     controller: user
     action: login
     role: [public]
 
-logout:
+/logout:
     controller: user
     action: logout
     role: [user, admin, super_admin]
 
-adminregister:
+/adminregister:
     controller: user
     action: register
     role: [public]
 
-register:
+/register:
     controller: user
     action: register
     role: [public]
 
-confirmregister:
+/confirmregister:
     controller: user
     action: confirmAccount
     role: [public]
 
-dashboard:
+/dashboard:
     controller: admin
     action: dashboard
     role: [admin, super_admin]    
 
-# dashboard:
+# /dashboard:
 #   controller: admin
 #   action: home
 #   role: [public, user, admin, super_admin]  
 
-mail:
+/mail:
     controller: mail
     action: main
     role: [user, admin, super_admin]
 
-confirmaccount:
+/confirmaccount:
     controller: user
     action: confirmAccount
     role: [public]
 
-forgetpassword:
+/forgetpassword:
     controller: user
     action: forgetPassword
     role: [public]
 
-sendpasswordreset:
+/sendpasswordreset:
     controller: user
     action: sendPasswordReset
     role: [public]
 
-changepassword:
+/changepassword:
     controller: user
     action: changePassword
     role: [user, admin, super_admin]
 
-confirmchange:
+/confirmchange:
     controller: user
     action: confirmPasswordChangement
     role: [user, admin, super_admin]
 
-redirection:
+/redirection:
     controller: user
     action: redirection
     role: [user, admin, super_admin]
 
-comment:
+/comment:
     controller: comment
     action: commentCreate
     role: [user, admin, super_admin]
 
-createrecipe:
+/createrecipe:
     controller: recipe
     action: recipeCreate
     role: [admin, super_admin]
 
-detailsrecipe:
+/detailsrecipe:
     controller: recipe
     action: detailsRecipe
     role: [public, user, admin, super_admin]
 
-updaterecipe:
+/updaterecipe:
     controller: recipe
     action: updateRecipe
     role: [admin, super_admin]
 
-deleterecipe:
+/deleterecipe:
     controller: recipe
     action: deleteRecipe
     role: [admin, super_admin]
 
-recipes:
+/recipes:
     controller: recipe
     action: indexRecipe
     role: [public, user, admin, super_admin]
 
-managerecipes:
+/managerecipes:
     controller: admin
     action: indexRecipe
     role: [public, user, admin, super_admin]
 
-comment:
+/comment:
     controller: comment
     action: commentCreate
     role: [public, user, admin, super_admin]
 
-replycomment:
+/replycomment:
     controller: comment
     action: replyComment
     role: [public, user, admin, super_admin]
 
-createlike:
+/createlike:
     controller: like
     action: createLike
     role: [public, user, admin, super_admin]
 
-getlikes:
+/getlikes:
     controller: like
     action: getLikes
     role: [public, user, admin, super_admin]
 
-adminmember:
+/adminmember:
     controller: admin
     action: memberView
     role: [admin, super_admin]
 
-deleteuser:
+/deleteuser:
     controller: admin
     action: deleteUser
     role: [admin, super_admin]
 
-edituserrole:
+/edituserrole:
     controller: admin
     action: editUserRole
     role: [admin, super_admin]
 
-addpage:
+/addpage:
     controller: admin
     action: addPage
     role: [public, user, admin, super_admin]
 
-editpage:
+/editpage:
     controller: admin
     action: editPage
     role: [public, user, admin, super_admin]
 
-deletepage:
+/deletepage:
     controller: admin
     action: deletePageAdmin
     role: [public, user, admin, super_admin]
 
-editpage:
+/editpage:
     controller: admin
     action: editPage
     role: [admin, super_admin]
 
-reportcomment:
+/reportcomment:
     controller: comment 
     action: reportComment
     role: [public, user, admin, super_admin]
 
-reports:
+/reports:
     controller: comment
     action: getReports
     role: [public, user, admin, super_admin]
 
-pagenotfound:
+/pagenotfound:
     controller: error
     action: errorNotFound
     role: [public, user, admin, super_admin]
 
-notauthorized:
+/notauthorized:
     controller: error
     action: errorUnauthorized
     role: [public]
 
-servererror:
+/servererror:
     controller: error
     action: errorServer
     role: [public]
 
-devfixtures:
+/devfixtures:
     controller: admin
     action: loadFixtures
     role: [public]
 
-vegetarien:
+/vegetarien:
     controller: category
     action: categoryPage
     role: [public]
 
-viande:
+/viande:
     controller: category
     action: categoryPage
     role: [public]
 
-pate:
+/pate:
     controller: category
     action: categoryPage
     role: [public]
 
-asie:
+/asie:
     controller: category
     action: categoryPage
     role: [public]
     
-menu:
+/menu:
     controller: admin
     action: editMenu
     role: [public]
 
-moveitemposition:
+/moveitemposition:
     controller: admin
     action: moveItemPosition
     role: [public]
 
-additem:
+/additem:
     controller: admin
     action: addItem
     role: [public]
 
-about:
+/about:
     controller: about
-    action: index
+    action: indexAbout
     role: [public]
 
-contact:
+/contact:
     controller: contact
-    action: index
+    action: indexContact
     role: [public]
 
-presentation:
+/presentation:
     controller: presentation
-    action: index
+    action: indexPresention
     role: [public]
 
-getstatconnexion:
-    controller: admin
-    action: getStatConnexion
-    role: [public]
+/page2:
+  controller: article
+  action: indexArticle
+  role: [public]
 
-userprofile:
-    controller: admin
-    action: getUserProfile
-    role: [public]
+/about:
+  controller: about
+  action: indexAbout
+  role: [public]
+
+/presentation:
+  controller: presentation
+  action: indexPresentation
+  role: [public]
