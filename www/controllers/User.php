@@ -354,4 +354,25 @@ class User
         header('Location: /login');
     }
 
+    public function getUserProfile(){
+        $user = new UserModel();
+        if(isset($_SESSION['email'])){
+            $user = $user->getOneBy(['email' => $_SESSION['email']])[0];
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $firstname = strip_tags($_POST['firstname']);
+            $lastname = strip_tags($_POST['lastname']);
+
+            $user->setFirstname($firstname);
+            $user->setLastname($lastname);
+
+            $user->save();
+
+            $_SESSION['succes'] = "Nous avons enregistré vos données avec succès !";
+            header('Location:' . $_SERVER['REQUEST_URI']);
+        }
+
+        Router::render('admin/user/userprofile.php', ["user" => $user]);
+    }
 }

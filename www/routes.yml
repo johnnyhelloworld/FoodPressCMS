@@ -249,7 +249,7 @@
     role: [public]
 
 /userprofile:
-    controller: admin
+    controller: user
     action: getUserProfile
     role: [public]
 

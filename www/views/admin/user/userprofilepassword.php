@@ -1,7 +1,11 @@
 <?php ob_start();
 use App\core\Router; ?>
 
-<h1> Votre profil </h1>
+<ul>
+  <li><a class="" href="/userprofile">Profil</a></li>
+  <li><a class="active" href="/userprofilepassword">Changer le mot de passe</a></li>
+</ul>
+<h1> Mot de passe </h1>
 
 <?php Router::includePartial("form", $user->getUserPasswordForm(null)) ?>
 <?php $content = ob_get_clean(); ?>
