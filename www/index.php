@@ -42,6 +42,11 @@ $a = $routes[$uri]["action"]; //login
 
 $role = $routes[$uri]['role'];
 
+if(!isset($_SESSION['role'])){
+    $_SESSION['role'] = 'public';
+}
+
+
 if(isset($_SESSION['role'])){
     if(!in_array($_SESSION['role'], $role) && !in_array('public',$role)){
         throw new \Exception('Vous n\'avez pas le droit d\'accéder à cette page');
