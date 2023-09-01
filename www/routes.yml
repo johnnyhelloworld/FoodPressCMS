@@ -243,17 +243,7 @@
     action: indexPresention
     role: [public]
 
-/page2:
-  controller: article
-  action: indexArticle
-  role: [public]
-
 /about:
   controller: about
   action: indexAbout
-  role: [public]
-
-/presentation:
-  controller: presentation
-  action: indexPresentation
   role: [public]
