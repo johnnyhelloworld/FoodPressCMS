@@ -235,7 +235,27 @@
 
 
 
+/getstatconnexion:
+    controller: admin
+    action: getStatConnexion
+    role: [public]
 
+/userprofile:
+    controller: admin
+    action: getUserProfile
+    role: [public]
 
+/userprofilepassword:
+    controller: user
+    action: changePassword
+    role: [public]
 
+/installation:
+    controller: installation
+    action: completeRegistration
+    role: [admin]
 
+/loading:
+    controller: installation
+    action: loading
+    role: [admin]
