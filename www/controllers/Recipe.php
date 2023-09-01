@@ -83,7 +83,7 @@ class Recipe extends Sql{
 		$replies = $commentRecipe->getRepliesByComment($recipe->getId());
 		$countComments = $commentRecipe->countComments($recipe->getId());
 
-		Router::render("front/recipe/detailsrecipe.php", [
+		Router::render("front/recipe/recipe.php", [
             "recipe" => $recipe,
             "category" => $category,
             'countComments' => count($countComments) > 0 ? $countComments : null,
@@ -115,7 +115,7 @@ class Recipe extends Sql{
 
         $categoryDatas = $category->getOneBy(['id' => $recipeObject->getCategoryId()]);
         $categoryObject = $categoryDatas[0];
-
+		
         $params = [
             // "id" => $recipeObject->getId(),
             "title" => $recipeObject->getTitle(),
@@ -144,8 +144,13 @@ class Recipe extends Sql{
             $recipeObject->setDateUpdated((new \DateTime('now'))->format('Y-m-d'));
             $recipeObject->save();
 
-            header('Location: /recipes');
+            header('Location: /managerecipes');
         }
+
+		Router::render("admin/recipe/updaterecipe.php", [
+            "recipe" => $recipe,
+            'params' => $params
+        ]);
 	}
 
 	public function deleteRecipe() {

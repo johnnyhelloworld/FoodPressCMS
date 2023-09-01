@@ -106,7 +106,7 @@
 /managerecipes:
     controller: admin
     action: indexRecipe
-    role: [public, user, admin, super_admin]
+    role: [admin, super_admin]
 
 /comment:
     controller: comment
@@ -228,37 +228,14 @@
     action: addItem
     role: [public]
 
-/about:
-    controller: about
-    action: indexAbout
-    role: [public]
-
 /contact:
     controller: contact
     action: indexContact
     role: [public]
 
-/presentation:
-    controller: presentation
-    action: indexPresention
-    role: [public]
 
-/about:
-    controller: about
-    action: indexAbout
-    role: [public]
 
-getstatconnexion:
-    controller: admin
-    action: getStatConnexion
-    role: [public]
 
-userprofile:
-    controller: admin
-    action: getUserProfile
-    role: [public]
 
-userprofilepassword:
-    controller: user
-    action: changePassword
-    role: [public]
+
+
