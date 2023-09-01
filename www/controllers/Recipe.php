@@ -54,7 +54,7 @@ class Recipe extends Sql{
 			$object = $recipeId[0];
 			$id = $object->id;
 
-			header('Location: /recipes');
+			header('Location: /managerecipes');
 		}
         Router::render('admin/recipe/recipecreate.php', [
             "recipe" => $recipe,
@@ -160,6 +160,6 @@ class Recipe extends Sql{
 		$comment->deleteComments($_GET['id']);
 		$recipe->delete($_GET['id']);
 
-		header('Location: /recipes');
+		header('Location: /managerecipes');
 	}
 }
