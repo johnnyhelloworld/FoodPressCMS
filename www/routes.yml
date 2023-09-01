@@ -244,6 +244,21 @@
     role: [public]
 
 /about:
-  controller: about
-  action: indexAbout
-  role: [public]
+    controller: about
+    action: indexAbout
+    role: [public]
+
+getstatconnexion:
+    controller: admin
+    action: getStatConnexion
+    role: [public]
+
+userprofile:
+    controller: admin
+    action: getUserProfile
+    role: [public]
+
+userprofilepassword:
+    controller: user
+    action: changePassword
+    role: [public]
