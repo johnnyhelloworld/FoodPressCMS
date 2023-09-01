@@ -106,7 +106,7 @@
 /managerecipes:
     controller: admin
     action: indexRecipe
-    role: [public, user, admin, super_admin]
+    role: [admin, super_admin]
 
 /comment:
     controller: comment
@@ -226,11 +226,6 @@
 /additem:
     controller: admin
     action: addItem
-    role: [public]
-
-/about:
-    controller: about
-    action: indexAbout
     role: [public]
 
 /contact:

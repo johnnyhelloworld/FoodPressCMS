@@ -54,7 +54,7 @@ class Recipe extends Sql{
 			$object = $recipeId[0];
 			$id = $object->id;
 
-			header('Location: /recipes');
+			header('Location: /managerecipes');
 		}
         Router::render('admin/recipe/recipecreate.php', [
             "recipe" => $recipe,
@@ -115,7 +115,7 @@ class Recipe extends Sql{
 
         $categoryDatas = $category->getOneBy(['id' => $recipeObject->getCategoryId()]);
         $categoryObject = $categoryDatas[0];
-
+		
         $params = [
             // "id" => $recipeObject->getId(),
             "title" => $recipeObject->getTitle(),
@@ -144,8 +144,13 @@ class Recipe extends Sql{
             $recipeObject->setDateUpdated((new \DateTime('now'))->format('Y-m-d'));
             $recipeObject->save();
 
-            header('Location: /recipes');
+            header('Location: /managerecipes');
         }
+
+		Router::render("admin/recipe/updaterecipe.php", [
+            "recipe" => $recipe,
+            'params' => $params
+        ]);
 	}
 
 	public function deleteRecipe() {
@@ -155,6 +160,6 @@ class Recipe extends Sql{
 		$comment->deleteComments($_GET['id']);
 		$recipe->delete($_GET['id']);
 
-		header('Location: /recipes');
+		header('Location: /managerecipes');
 	}
 }

@@ -58,7 +58,7 @@
             <select name="type" id="page_type" class="input-form" required>
                 <option value="">Choisir une page</option>
                 <option value="presentation">Page présentation</option>
-                <option value="article">Page blog</option>
+                <option value="recipe">Page recette</option>
                 <option value="contact">Page contact</option>
                 <option value="about">Page 'A propos'</option>
                 <option value="new">Page vierge</option>
