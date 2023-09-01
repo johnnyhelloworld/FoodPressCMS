@@ -296,7 +296,7 @@ class User extends Sql
                 "action" => "",
                 "id" => "formUserProfile",
                 "class" => "formUserprofile",
-                "submit" => "Valider"
+                "submit" => "Sauvegarder"
             ],
             "inputs" => [
                 "firstname" => [
@@ -304,18 +304,16 @@ class User extends Sql
                     "label" => "Votre prénom",
                     "id" => "firstname",
                     "class" => "formInput",
-                    "placeholder" => "John",
-                    "value" => $this->firstname ?? "",
-                    "disabled" => 'disabled'
+                    "placeholder" => "Saisissez un prénom..",
+                    "value" => $this->getFirstname() ?? "",
                 ],
                 "lastname" => [
                     "type" => "text",
                     "label" => "Votre nom",
                     "id" => "lastname",
                     "class" => "formInput",
-                    "placeholder" => "Doe",
-                    "value" => $this->lastname ?? "",
-                    "disabled" => 'disabled'
+                    "placeholder" => "Saisissez un nom..",
+                    "value" => $this->getLastname() ?? "",
                 ],
                 "email" => [
                     "type" => "email",
