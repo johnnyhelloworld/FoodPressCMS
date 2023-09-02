@@ -10,6 +10,7 @@ class Theme extends Sql
     protected $name;
     protected $description;
     protected $domain;
+    protected $image;
 
     public function __construct()
     {
@@ -49,5 +50,15 @@ class Theme extends Sql
     public function setDomain($domain): void
     {
         $this->domain = $domain;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): void
+    {
+        $this->image = $image;
     }
 }

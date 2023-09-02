@@ -20,7 +20,7 @@
     <div class="ligne">
         <p class="encare"> <label>Choisir un thème</label> </p>
         <br>
-        <?php foreach ($themes as $theme) : ?>
+        <?php var_dump($themes); foreach ($themes as $theme) : ?>
             <div style="display:flex;width:40%;align-items:center">
                 <div style="margin-right:50px">
                     <label for="theme"><?= $theme['name'] ?></label><br>

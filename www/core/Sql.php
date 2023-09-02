@@ -250,4 +250,322 @@ abstract class Sql
 
         return $queryPrepared->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function dropDatabase(): void
+    {
+        $sql = "DROP DATABASE esgi;";
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+        die();
+    }
+
+    public function createDatabase()
+    {
+        $sql = "CREATE DATABASE {$_SESSION['temp_dbName']};";
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+    }
+
+    public function createDatabaseTestDatas()
+    {
+        $sql = "CREATE DATABASE `mvc` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+    }
+
+    public function createtablesDevTestDatas()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_user
+        (
+            id serial NOT NULL,
+            firstname character varying(45) NOT NULL,
+            lastname character varying(120) NOT NULL,
+            email character varying(320) NOT NULL,
+            status boolean NOT NULL,
+            password character varying(255) NOT NULL,
+            token character varying(255),
+            role character varying(50),
+            date_created timestamp NOT NULL,
+            date_updated timestamp NOT NULL,
+            CONSTRAINT fp_user_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_passwordreset
+        (
+            id serial NOT NULL,
+            token character varying(255),
+            tokenexpiry character varying(255),
+            fp_user_id serial NOT NULL,
+            CONSTRAINT fp_passwordreset_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_recipe
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            content text,
+            position integer,
+            block_id integer,
+            slug character varying(255),
+            image bytea,
+            date_created timestamp NOT NULL,
+            date_updated timestamp NOT NULL,
+            fp_category_id serial NOT NULL,
+            CONSTRAINT fp_recipe_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_category
+        (
+            id serial NOT NULL,
+            name character varying(50),
+            description text,
+            image bytea,
+            slug character varying(255),
+            CONSTRAINT fp_category_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_comment
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            content text,
+            parent_id integer,
+            author_id integer,
+            date_created timestamp NOT NULL,
+            fp_recipe_id serial NOT NULL,
+            CONSTRAINT fp_comment_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_like
+        (
+            id serial NOT NULL,
+            fp_user_id serial NOT NULL,
+            fp_recipe_id serial NOT NULL,
+            CONSTRAINT fp_like_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_block
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            position integer,
+            fp_page_id serial NOT NULL,
+            CONSTRAINT fp_block_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_page
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            position integer,
+            link character varying(255),
+            type character varying(255),
+            fp_theme_id serial NOT NULL,
+            CONSTRAINT fp_page_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_theme
+        (
+            id serial NOT NULL,
+            name character varying(50),
+            description text,
+            domain character varying(255),
+            image bytea,
+            CONSTRAINT fp_theme_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_report
+        (
+            id serial NOT NULL,
+            message text,
+            email character varying(255),
+            has_read boolean NOT NULL,
+            date_created timestamp NOT NULL,
+            fp_comment_id serial NOT NULL,
+            CONSTRAINT fp_report_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_menuitem
+        (
+            id serial NOT NULL,
+            name character varying(50),
+            link character varying(255),
+            js_class character varying(255),
+            js_id character varying(255),
+            position integer,
+            CONSTRAINT fp_menuitem_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_contact
+        (
+            id serial NOT NULL,
+            message text,
+            email character varying(320),
+            date_created timestamp NOT NULL,
+            CONSTRAINT fp_contact_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_input
+        (
+            id serial NOT NULL,
+            placeholder character varying(255),
+            name character varying(50),
+            value character varying(255),
+            label character varying(255),
+            type character varying(255),
+            js_class character varying(255),
+            js_id character varying(255),
+            fp_form_id serial NOT NULL,
+            CONSTRAINT fp_input_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_form
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            fp_block_id serial NOT NULL,
+            CONSTRAINT fp_form_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.fp_text
+        (
+            id serial NOT NULL,
+            content text,
+            fp_block_id serial NOT NULL,
+            CONSTRAINT fp_text_id PRIMARY KEY (id)
+        );";
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+    }
+
+    public function createTables()
+    {
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_user
+        (
+            id serial NOT NULL,
+            firstname character varying(45) NOT NULL,
+            lastname character varying(120) NOT NULL,
+            email character varying(320) NOT NULL,
+            status boolean NOT NULL,
+            password character varying(255) NOT NULL,
+            token character varying(255),
+            role character varying(50),
+            date_created timestamp NOT NULL,
+            date_updated timestamp NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_user_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_passwordreset
+        (
+            id serial NOT NULL,
+            token character varying(255),
+            tokenexpiry character varying(255),
+            {$_SESSION['temp_prefix']}_user_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_passwordreset_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_recipe
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            content text,
+            position integer,
+            block_id integer,
+            slug character varying(255),
+            date_created timestamp NOT NULL,
+            date_updated timestamp NOT NULL,
+            {$_SESSION['temp_prefix']}_category_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_recipe_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_category
+        (
+            id serial NOT NULL,
+            name character varying(50),
+            description text,
+            image bytea,
+            slug character varying(255),
+            CONSTRAINT {$_SESSION['temp_prefix']}_category_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_comment
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            content text,
+            parent_id integer,
+            author_id integer,
+            date_created timestamp NOT NULL,
+            {$_SESSION['temp_prefix']}_recipe_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_comment_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_like
+        (
+            id serial NOT NULL,
+            {$_SESSION['temp_prefix']}_user_id serial NOT NULL,
+            {$_SESSION['temp_prefix']}_recipe_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_like_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_block
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            position integer,
+            {$_SESSION['temp_prefix']}_page_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_block_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_page
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            position integer,
+            link character varying(255),
+            type character varying(255),
+            {$_SESSION['temp_prefix']}_theme_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_page_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_theme
+        (
+            id serial NOT NULL,
+            name character varying(50),
+            description text,
+            domain character varying(255),
+            image image bytea,
+            CONSTRAINT {$_SESSION['temp_prefix']}_theme_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_report
+        (
+            id serial NOT NULL,
+            message text,
+            email character varying(255),
+            has_read boolean NOT NULL,
+            date_created timestamp NOT NULL,
+            {$_SESSION['temp_prefix']}_comment_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_report_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_menuitem
+        (
+            id serial NOT NULL,
+            name character varying(50),
+            link character varying(255),
+            js_class character varying(255),
+            js_id character varying(255),
+            position integer,
+            CONSTRAINT {$_SESSION['temp_prefix']}_menuitem_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_contact
+        (
+            id serial NOT NULL,
+            message text,
+            email character varying(320),
+            date_created timestamp NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_contact_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_input
+        (
+            id serial NOT NULL,
+            placeholder character varying(255),
+            name character varying(50),
+            value character varying(255),
+            label character varying(255),
+            type character varying(255),
+            js_class character varying(255),
+            js_id character varying(255),
+            {$_SESSION['temp_prefix']}_form_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_input_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_form
+        (
+            id serial NOT NULL,
+            title character varying(50),
+            {$_SESSION['temp_prefix']}_block_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_form_id PRIMARY KEY (id)
+        );";
+        $sql = "CREATE TABLE IF NOT EXISTS public.{$_SESSION['temp_prefix']}_text
+        (
+            id serial NOT NULL,
+            content text,
+            {$_SESSION['temp_prefix']}_block_id serial NOT NULL,
+            CONSTRAINT {$_SESSION['temp_prefix']}_text_id PRIMARY KEY (id)
+        );";
+        $queryPrepared = $this->pdo->databasePrepare($sql);
+    }
 }

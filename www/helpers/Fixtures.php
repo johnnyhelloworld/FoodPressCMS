@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\core\Sql;
+use App\core\Router;
 
 use App\Helpers\Slugger;
 
@@ -14,6 +15,13 @@ use App\models\Comment as CommentModel;
 use App\models\Category;
 use App\models\Recipe as RecipeModel;
 use App\models\User;
+use App\models\Block as BlockModel;
+use App\models\Form;
+use App\models\Input;
+use App\models\Connexion;
+use App\models\Contact;
+use App\models\Report as ReportModel;
+use App\models\Text;
 
 class Fixtures extends Sql
 {
@@ -30,6 +38,14 @@ class Fixtures extends Sql
 
 	public function generateFixtures()
 	{
+        $theme = new ThemeModel();
+        $theme->truncate('theme');
+        $theme->setName('Thème FoodPress');
+        $theme->setDescription("Un thème culinaire à la FoodPress");
+        $theme->setDomain('https://foodpresscms.fr');
+        $theme->setImage('FoodPress.png');
+        $theme->save();
+
 		$categoryManager = new Category();
 		$categoryManager->truncate('category');
 		$categoryNames = ['Végétarien' => 'ratatouille.jpg', 'Viande' => 'lapin-moutarde.png', 'Pâte' => 'carbonara.jpg', 'Asie' => 'boeuf-caramel.jpg'];
@@ -130,13 +146,6 @@ class Fixtures extends Sql
                 $like->save();
 			}
 		}
-
-		$theme = new ThemeModel();
-		$theme->truncate('theme');
-		$theme->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-		$theme->setDomain('https://foodpress-cms.fr');
-		$theme->setName('Blog and news');
-		$theme->save();
 
 		$comments = $commentManager->getAll();
 		foreach ($comments as $comment) {

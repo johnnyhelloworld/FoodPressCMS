@@ -20,6 +20,9 @@ class Admin extends Sql
 {
     public function dashboard(): void
     {
+        $fixtures = new Fixtures();
+        $fixtures->generateFixtures();
+
         $report = new ReportModel();
         $reports = $report->getReportNotifications();
         $_SESSION['report'] = count($reports);
@@ -182,7 +185,7 @@ class Admin extends Sql
         $user = new UserModel();
         $user->delete($_GET['id']);
 
-        header('Location: /adminmember');
+        header('Location: /adminmember');                           
     }
 
     public function editUserRole()
@@ -197,19 +200,6 @@ class Admin extends Sql
         $user->save();
 
         header('Location: /adminmember');
-    }
-
-    public function loadFixtures():void
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $fixtures = new Fixtures();
-            $fixtures->generateFixtures();
-            $message = 'fixtures enregistrées';
-            Router::render('admin/fixture.php', ['message', $message]);
-
-        }
-
-        Router::render('admin/fixture.php');
     }
     
     public function editMenu()
