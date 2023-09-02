@@ -95,6 +95,9 @@ class Comment extends Sql
 
         $commentDatas = $commentManager->getOneBy(['id' => $_GET['id']]);
         $comment = $commentDatas[0];
+
+		var_dump($commentDatas);
+		die();
         $userDatas = $userManager->getOneBy(['id' => $comment->getAuthorId()]);
         $user = $userDatas[0];
 

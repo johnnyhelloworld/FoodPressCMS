@@ -79,6 +79,11 @@ class Recipe extends Sql{
         $category = $categoryDatas[0];
 
 		$comments = $commentRecipe->getCommentsByRecipe($recipe->getId());
+	
+		echo("<pre>");
+			var_dump($categoryDatas);	
+		echo("</pre>");
+		die();
 
 		$replies = $commentRecipe->getRepliesByComment($recipe->getId());
 		$countComments = $commentRecipe->countComments($recipe->getId());

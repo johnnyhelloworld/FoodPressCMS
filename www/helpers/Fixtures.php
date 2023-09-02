@@ -86,6 +86,7 @@ class Fixtures extends Sql
 			$user->setStatus(1);
 			$user->setPassword(password_hash('1234', PASSWORD_BCRYPT));
 			$user->setRole('user');
+			$user->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
 			$user->save();
 		}
 		$admin = new User();

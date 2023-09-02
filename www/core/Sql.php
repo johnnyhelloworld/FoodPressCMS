@@ -60,7 +60,6 @@ abstract class Sql
         $values = [];
         $sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . array_keys($entry)[0] . '=:' . array_keys($entry)[0];
         $queryPrepared = $this->pdo->databasePrepare($sql, $entry);
-
         while ($row = $queryPrepared->fetchObject(get_called_class())) {
             array_push($values, $row);
         }
@@ -113,7 +112,7 @@ abstract class Sql
 
     public function deleteComments($id)
     {
-        $sql = "DELETE FROM {$this->table} WHERE recipe_id = ?";
+        $sql = "DELETE FROM {$this->table} WHERE fp_recipe_id = ?";
         $this->pdo->databasePrepare($sql, [$id]);
     }
 
