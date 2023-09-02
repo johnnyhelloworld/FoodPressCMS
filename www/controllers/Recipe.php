@@ -79,7 +79,6 @@ class Recipe extends Sql{
         $category = $categoryDatas[0];
 
 		$comments = $commentRecipe->getCommentsByRecipe($recipe->getId());
-
 		$replies = $commentRecipe->getRepliesByComment($recipe->getId());
 		$countComments = $commentRecipe->countComments($recipe->getId());
 

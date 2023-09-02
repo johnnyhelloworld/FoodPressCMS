@@ -157,6 +157,8 @@ class User
             $user->setEmail($email);
             $user->setPassword($password);
             $user->generateToken();
+            $user->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
+
 
             //Public
             if ($_SERVER['REQUEST_URI'] == '/register') {

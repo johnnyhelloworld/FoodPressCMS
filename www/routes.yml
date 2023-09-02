@@ -33,11 +33,6 @@
     action: dashboard
     role: [admin, super_admin]    
 
-# /dashboard:
-#   controller: admin
-#   action: home
-#   role: [public, user, admin, super_admin]  
-
 /mail:
     controller: mail
     action: main
@@ -191,26 +186,6 @@
 /devfixtures:
     controller: admin
     action: loadFixtures
-    role: [public]
-
-/vegetarien:
-    controller: category
-    action: categoryPage
-    role: [public]
-
-/viande:
-    controller: category
-    action: categoryPage
-    role: [public]
-
-/pate:
-    controller: category
-    action: categoryPage
-    role: [public]
-
-/asie:
-    controller: category
-    action: categoryPage
     role: [public]
     
 /menu:
