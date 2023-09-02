@@ -46,7 +46,7 @@
                     <small style=font-weight:bold;font-style:italic>Commenté par <?= $comment['firstname'] . ' ' . $comment['lastname'] ?> le
                         <?= substr($comment['date_created'], 0, 10) ?> à <?= substr($comment['date_created'], -9, 18) ?>
                     </small>
-                    <a title="signaler" href="/reportComment?id=<?= $comment['id'] ?>">
+                    <a title="signaler" href="/reportComment?id=<?= $comment['idcomment'] ?>">
                         <img src="../../../public/assets/images/warning.svg" alt="" width="19" height="19">
                     </a>
                 </div>
@@ -57,7 +57,7 @@
                     &nbsp;&nbsp;
                     <h3 style="margin-top:15px"><?= $comment['title'] ?></h3>
                     &nbsp;&nbsp;
-                    <button type="button" class="reply" data-replyer="1" data-parentid="<?= $comment['id'] ?>" data-recipe="<?= $recipe->getId() ?>">
+                    <button type="button" class="reply" data-replyer="1" data-parentid="<?= $comment['idcomment'] ?>" data-recipe="<?= $recipe->getId() ?>">
                         reply
                     </button>
                 </div>
@@ -65,9 +65,9 @@
                     <?= $comment['content'] ?>
                 </span>
                 <?php if (isset($replies)) : ?>
-                    <div class="replyComments-block" id="replyComment<?= $comment['id'] ?>">
+                    <div class="replyComments-block" id="replyComment<?= $comment['idcomment'] ?>">
                         <?php foreach ($replies as $reply) : ?>
-                            <?php if ($reply['parent_id'] == $comment['id']) : ?>
+                            <?php if ($reply['parent_id'] == $comment['idcomment']) : ?>
                                 <br>
                                 <br>
                                 <div style="margin-left:50px;padding:8px 0; border-top:1px solid black">
