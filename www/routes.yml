@@ -242,3 +242,24 @@
     controller: installation
     action: loading
     role: [admin]
+
+
+végétarien:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+viande:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+pâte:
+  controller: categories
+  action: categoryPage
+  role: [public]
+
+asie:
+  controller: categories
+  action: categoryPage
+  role: [public]

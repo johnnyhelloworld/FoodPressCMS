@@ -1,4 +1,8 @@
-@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap);@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap);@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);
+@charset "UTF-8";
+
 .cols-1 {
   width: 8.3333333333%;
   padding-left: 15px;
@@ -148,6 +152,7 @@
     padding-right: 15px;
   }
 }
+
 @media screen and (max-width: 600px) {
   .container {
     max-width: 400px;
@@ -225,8 +230,9 @@
     padding-right: 15px;
   }
 }
+
 body {
-  background-color: #F2F2F2;
+  background-color: #FFF9F6;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -263,15 +269,15 @@ body {
 }
 
 .titleCmpn {
-  color: #6FA7FF;
+  color: #ffb6a3;
   margin: 0 0 20px 0;
   font-size: 1.5em;
 }
 
 :root {
   --nav-width: 92px;
-  --first-color: #6FA7FF;
-  --bg-color: #7176F1;
+  --first-color: #ffb6a3;
+  --bg-color: #e44e4e;
   --sub-color: #B6CEFC;
   --white-color: #FFF;
   --normal-font-size: 1rem;
@@ -279,7 +285,9 @@ body {
   --z-fixed: 100;
 }
 
-*, ::before, ::after {
+*,
+::before,
+::after {
   box-sizing: border-box;
 }
 
@@ -314,7 +322,7 @@ a {
   width: var(--nav-width);
   height: 100vh;
   background-color: var(--bg-color);
-  color: #fff;
+  color: #FFF9F6;
   padding: 1.5rem 1.5rem 2rem;
   transition: 0.5s;
   z-index: var(--z-fixed);
@@ -328,6 +336,7 @@ a {
   justify-content: space-between;
   overflow: hidden;
 }
+
 .nav__brand {
   display: grid;
   grid-template-columns: -webkit-max-content -webkit-max-content;
@@ -336,26 +345,30 @@ a {
   align-items: center;
   margin-bottom: 2rem;
 }
+
 .nav__brand #t-cms {
   color: #000;
 }
+
 .nav__toggle {
   font-size: 1.75rem;
   padding: 0.75rem;
   cursor: pointer;
 }
+
 .nav__logo {
   color: var(--white-color);
   font-weight: 600;
   font-size: 1.3rem;
 }
+
 .nav__link {
   display: grid;
   grid-template-columns: -webkit-max-content -webkit-max-content;
   grid-template-columns: max-content max-content;
   align-items: center;
   -moz-column-gap: 0.75rem;
-       column-gap: 0.75rem;
+  column-gap: 0.75rem;
   padding: 0.75rem;
   color: var(--white-color);
   border-radius: 0.5rem;
@@ -363,12 +376,15 @@ a {
   transition: 0.3s;
   cursor: pointer;
 }
+
 .nav__link:hover {
   background-color: var(--first-color);
 }
+
 .nav__icon {
   font-size: 1.25rem;
 }
+
 .nav__name {
   font-size: var(--small-font-size);
 }
@@ -389,18 +405,22 @@ a {
   grid-template-columns: 20px -webkit-max-content 1fr;
   grid-template-columns: 20px max-content 1fr;
 }
+
 .collapse__link {
   justify-self: flex-end;
   transition: 0.5s;
 }
+
 .collapse__menu {
   display: none;
   padding: 0.75rem 2.25rem;
 }
+
 .collapse__sublink {
   color: var(--sub-color);
   font-size: var(--small-font-size);
 }
+
 .collapse__sublink:hover {
   color: var(--white-color);
 }
@@ -425,6 +445,7 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
 header .search {
   display: flex;
   flex-direction: row;
@@ -435,6 +456,7 @@ header .search {
   width: 25%;
   margin-left: 10rem;
 }
+
 header .search a {
   margin-left: 1em;
   z-index: 1001;
@@ -444,6 +466,7 @@ header .search a {
   background-color: #FFFFFF;
   border-radius: 16px 0 0 16px;
 }
+
 header .search input {
   color: #A4A4A4;
   width: 100%;
@@ -456,6 +479,7 @@ header .search input {
   background-color: #FFFFFF;
   border-radius: 0 16px 16px 0;
 }
+
 header .search input::-moz-placeholder {
   font-style: italic;
   color: #A4A4A4;
@@ -463,6 +487,7 @@ header .search input::-moz-placeholder {
   font-size: 16px;
   line-height: 19px;
 }
+
 header .search input:-ms-input-placeholder {
   font-style: italic;
   color: #A4A4A4;
@@ -470,6 +495,7 @@ header .search input:-ms-input-placeholder {
   font-size: 16px;
   line-height: 19px;
 }
+
 header .search input::placeholder {
   font-style: italic;
   color: #A4A4A4;
@@ -477,15 +503,19 @@ header .search input::placeholder {
   font-size: 16px;
   line-height: 19px;
 }
+
 header .search input:focus {
   outline: none;
 }
+
 header .search input.large {
   display: inline-block;
 }
+
 header .search input.small {
   display: none;
 }
+
 header .profil {
   color: #FFFFFF;
   display: flex;
@@ -493,6 +523,7 @@ header .profil {
   align-items: center;
   align-self: center;
 }
+
 header .profil a {
   color: #FFFFFF;
   display: flex;
@@ -500,11 +531,13 @@ header .profil a {
   align-items: center;
   text-decoration: none;
 }
+
 header .profil .line {
   width: 2em;
   border: 1px solid #FFFFFF;
   transform: rotate(90deg);
 }
+
 header .profil img {
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -514,6 +547,7 @@ header .profil img {
   header {
     justify-content: flex-end;
   }
+
   header .search {
     display: none;
   }
@@ -526,22 +560,27 @@ header .profil img {
     display: inline-block;
   }
 }
+
 @media screen and (max-width: 770px) {
   header .profil {
     font-size: 0.75rem;
   }
+
   header .profil p {
     display: none;
   }
+
   header .profil .t-contact {
     display: none;
   }
 }
+
 .graph {
   width: 750px;
 }
-.graph > canvas {
-  background-color: #3E6F8D;
+
+.graph>canvas {
+  background-color: #87A397;
   border-radius: 5px;
 }
 
@@ -558,12 +597,14 @@ header .profil img {
   width: 420px;
   justify-content: space-between;
 }
+
 .stats * {
   margin: 0;
   display: flex;
   align-items: flex-end;
-  color: #004CC2;
+  color: #e44e4e;
 }
+
 .stats h3 {
   font-weight: normal;
   font-size: 1.2em;
@@ -573,8 +614,9 @@ header .profil img {
   width: 260px;
   justify-content: space-between;
 }
-.date > div {
-  border: 1px solid #004CC2;
+
+.date>div {
+  border: 1px solid #e44e4e;
   border-radius: 5px;
   padding: 1px 4px;
 }
@@ -586,15 +628,17 @@ header .profil img {
   justify-content: space-between;
   flex-direction: column;
 }
-.various-info > div {
+
+.various-info>div {
   width: 100%;
   height: 100px;
-  background-color: #3E6F8D;
+  background-color: #e44e4e;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-.various-info > div > span {
+
+.various-info>div>span {
   font-size: 1.5em;
   font-weight: bold;
   color: white;
@@ -617,7 +661,8 @@ header .profil img {
   border: 1px solid black;
   border-radius: 5px;
 }
-.msg > .title {
+
+.msg>.title {
   width: 100%;
   height: 63px;
   display: flex;
@@ -625,22 +670,26 @@ header .profil img {
   font-size: 1.5em;
   font-weight: bold;
 }
-.msg > .box {
+
+.msg>.box {
   width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
 }
-.msg > .box > .user-msg {
+
+.msg>.box>.user-msg {
   display: flex;
   align-items: center;
 }
-.msg > .box > .user-info {
+
+.msg>.box>.user-info {
   display: flex;
   align-items: center;
   font-size: 1.5em;
 }
-.msg > .box--grey {
+
+.msg>.box--grey {
   background-color: #ECECEC;
 }
 
@@ -707,7 +756,8 @@ header .profil img {
   background-color: #ECECEC;
   display: flex;
 }
-.days > div {
+
+.days>div {
   width: 14.29%;
   height: 100%;
   font-size: 1.2em;
@@ -721,7 +771,8 @@ header .profil img {
   height: 163px;
   display: flex;
 }
-.days-week > div {
+
+.days-week>div {
   height: 100%;
   width: 14.29%;
   position: relative;
@@ -730,7 +781,8 @@ header .profil img {
   /*Hide scroll bar firefox*/
   padding-bottom: 5px;
 }
-.days-week > div > a {
+
+.days-week>div>a {
   position: absolute;
   top: 5px;
   left: 5px;
@@ -745,11 +797,13 @@ header .profil img {
   text-decoration: none;
   color: black;
 }
-.days-week > div::-webkit-scrollbar {
+
+.days-week>div::-webkit-scrollbar {
   width: 0;
   background: transparent;
 }
-.days-week > div:not(:last-child) {
+
+.days-week>div:not(:last-child) {
   border-right: solid 1px #ECECEC;
 }
 
@@ -771,40 +825,51 @@ header .profil img {
   height: 25px;
   background-color: rgba(240, 2, 14, 0.7);
 }
-.label > div {
+
+.label>div {
   height: 100%;
   width: 10px;
-  background-color: #af0000;
+  background-color: #722626;
 }
+
 .label--blue {
   background-color: rgba(0, 30, 198, 0.7);
 }
-.label--blue > div {
+
+.label--blue>div {
   background-color: #001487;
 }
+
 .label--yellow {
   background-color: rgba(247, 247, 0, 0.7);
   height: 52px;
 }
-.label--yellow > div {
+
+.label--yellow>div {
   background-color: #c2c200;
 }
+
 .label--green {
-  background-color: rgba(36, 240, 0, 0.7);
+  background-color: rgba(135, 163, 151, 0.7);
 }
-.label--green > div {
-  background-color: #1bb100;
+
+.label--green>div {
+  background-color: #87A397;
 }
+
 .label--purple {
-  background-color: rgba(220, 0, 238, 0.7);
+  background-color: rgba(231, 118, 241, 0.7);
 }
-.label--purple > div {
-  background-color: #a800b6;
+
+.label--purple>div {
+  background-color: #e659f3;
 }
+
 .label--orange {
   background-color: rgba(246, 78, 0, 0.7);
 }
-.label--orange > div {
+
+.label--orange>div {
   background-color: #ac3700;
 }
 
@@ -818,7 +883,8 @@ header .profil img {
   display: flex;
   flex-direction: column;
 }
-.last-register > .title {
+
+.last-register>.title {
   width: 100%;
   height: 48px;
   display: flex;
@@ -826,23 +892,27 @@ header .profil img {
   font-size: 1.5em;
   font-weight: bold;
 }
-.last-register > .scroll {
+
+.last-register>.scroll {
   overflow-y: scroll;
   scrollbar-width: none;
   /*Hide scroll bar firefox*/
 }
-.last-register > .scroll::-webkit-scrollbar {
+
+.last-register>.scroll::-webkit-scrollbar {
   width: 0;
   background: transparent;
 }
-.last-register > .scroll > .box {
+
+.last-register>.scroll>.box {
   width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
   font-size: 1.5em;
 }
-.last-register > .scroll > .box--grey {
+
+.last-register>.scroll>.box--grey {
   background-color: #ECECEC;
 }
 
@@ -864,6 +934,7 @@ header .profil img {
 }
 
 @media only screen and (max-width: 1810px) {
+
   /*Redim container*/
   .containerDshb {
     width: 1000px;
@@ -883,10 +954,12 @@ header .profil img {
     width: 490px;
     height: 375px;
   }
-  .various-info > div {
+
+  .various-info>div {
     height: 75px;
   }
-  .various-info > div > span {
+
+  .various-info>div>span {
     font-size: 1.2em;
     width: 400px;
   }
@@ -895,7 +968,8 @@ header .profil img {
     width: 55px;
     height: 55px;
   }
-  .img-container > img {
+
+  .img-container>img {
     width: 35px;
     height: auto;
   }
@@ -905,15 +979,18 @@ header .profil img {
     width: 340px;
     height: 465px;
   }
-  .msg > .title {
+
+  .msg>.title {
     width: 100%;
     height: 53px;
     font-size: 1.2em;
   }
-  .msg > .box {
+
+  .msg>.box {
     height: 40px;
   }
-  .msg > .box > .user-info {
+
+  .msg>.box>.user-info {
     display: flex;
     align-items: center;
     font-size: 1em;
@@ -923,7 +1000,7 @@ header .profil img {
     padding-left: 10px;
   }
 
-  .box > .user-msg {
+  .box>.user-msg {
     font-size: 0.7em;
   }
 
@@ -937,11 +1014,13 @@ header .profil img {
     width: 645px;
     height: 200px;
   }
-  .last-register > .title {
+
+  .last-register>.title {
     height: 38px;
     font-size: 1em;
   }
-  .last-register > .scroll > .box {
+
+  .last-register>.scroll>.box {
     height: 40px;
     font-size: 1em;
   }
@@ -965,14 +1044,16 @@ header .profil img {
   .days {
     height: 30px;
   }
-  .days > div {
+
+  .days>div {
     font-size: 1.1em;
   }
 
   .days-week {
     height: 128px;
   }
-  .days-week > div > a {
+
+  .days-week>div>a {
     font-size: 0.8em;
     width: 20px;
     height: 20px;
@@ -988,11 +1069,13 @@ header .profil img {
     font-size: 0.7em;
     height: 35px;
   }
-  .label > div {
+
+  .label>div {
     height: 100%;
     width: 10px;
   }
 }
+
 @media only screen and (max-width: 1010px) {
   .containerDshb {
     flex-direction: column;
@@ -1009,10 +1092,12 @@ header .profil img {
     width: 645px;
     height: 400px;
   }
-  .various-info > div {
+
+  .various-info>div {
     height: 80px;
   }
-  .various-info > div > span {
+
+  .various-info>div>span {
     font-size: 1.4em;
     width: 500px;
   }
@@ -1021,7 +1106,8 @@ header .profil img {
     width: 65px;
     height: 65px;
   }
-  .img-container > img {
+
+  .img-container>img {
     width: 45px;
     height: auto;
   }
