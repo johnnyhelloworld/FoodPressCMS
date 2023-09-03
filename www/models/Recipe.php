@@ -12,6 +12,7 @@ class Recipe extends Sql
     protected $content;
     protected $position;
     protected $slug;
+    protected $image;
     protected $date_created;
     protected $date_updated;
     protected $fp_category_id;
@@ -64,6 +65,16 @@ class Recipe extends Sql
     public function setSlug($slug): void
     {
         $this->slug = $slug;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): void
+    {
+        $this->image = $image;
     }
 
     public function getDateCreated(): ?string
