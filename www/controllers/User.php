@@ -350,6 +350,7 @@ class User
 
         if($user->getStatus() == 0){
             $user->setStatus(1);
+            $user->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
             $user->save();
         }
 
