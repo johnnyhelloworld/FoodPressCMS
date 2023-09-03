@@ -1,43 +1,46 @@
-.button{
+.button {
     display: inline-block;
     padding: 1em 2em;
     color: $white;
     background-color: transparent;
-    border:1px solid $white;
-    border-radius:5px;
+    border: 1px solid $white;
+    border-radius: 5px;
     transition: all .5s;
     text-decoration: none;
     cursor: pointer;
 
-    &:hover{
-        color: $dark-grey;
-        background-color: lighten($blue, 60%);
+    &:hover {
+        color: $red;
+        background-color: lighten($red, 60%);
     }
 
-    &--form{
-        background-color: $blue;
+    &--form {
+        background-color: $red;
         border: none;
         transition: all .5s;
-        &:hover{
-            background-color: lighten($blue, 10%);
+
+        &:hover {
+            background-color: lighten($red, 10%);
             color: $white;
         }
     }
 
-    &--success{
+    &--success {
         background-color: $green;
         border: none;
         transition: all .5s;
-        &:hover{
+
+        &:hover {
             background-color: lighten($green, 10%);
         }
     }
 
-    &--alert{
+    &--alert {
         background-color: $red;
         border: none;
         transition: all .5s;
-        &:hover{
+
+        &:hover {
             background-color: lighten($red, 10%);
         }
     }

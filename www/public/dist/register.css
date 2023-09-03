@@ -1,5 +1,9 @@
-@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap);@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap);@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);body {
-  background-color: #F7FAFC;
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);
+
+body {
+  background-color: #FFF9F6;
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -10,11 +14,13 @@ main {
   text-align: center;
   margin: auto;
 }
+
 main .title {
   text-align: center;
   margin-bottom: 1em;
   cursor: pointer;
 }
+
 main form {
   font-size: 20px;
   margin: auto;
@@ -24,8 +30,9 @@ main form {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  color: #2A4365;
+  color: #e44e4e;
 }
+
 main form input {
   position: relative;
   width: 100%;
@@ -35,27 +42,32 @@ main form input {
   border: none;
   font-size: 24px;
 }
+
 main form .ligne {
   margin-top: 1em;
 }
+
 main form .ligne .encare {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+
 main form .ligne .encare label {
   margin-left: 0.5em;
 }
+
 main form .link {
   text-decoration: none;
 }
+
 main form button {
   font-size: 20px;
   margin: auto;
   width: 35%;
   margin-top: 2.5em;
   margin-bottom: 1em;
-  background: #2A4365;
+  background: #e44e4e;
   color: white;
   height: 60px;
   border: none;
@@ -69,10 +81,12 @@ main form button {
     margin: auto;
     width: 260px !important;
   }
+
   form input {
     height: 35px;
     font-size: 20px;
   }
+
   form button {
     font-size: 8px;
     height: 50px;
