@@ -7,15 +7,16 @@ use App\core\Sql;
 
 class User extends Sql
 {
-    protected $id;
+    public $id;
     protected $firstname = null;
     protected $lastname = null;
-    protected $email;
+    public $email;
     protected $status = 0;
-    protected $password;
+    public $password;
     protected $date_created;
     protected $date_updated;
-    protected $token = null;
+    public $token = null;
+    protected $role;
     
     public function __construct(){
         parent::__construct();
@@ -84,37 +85,25 @@ class User extends Sql
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
-    /**
-     * @return Integer
-     */
-    public function getDateCreated(): int
+    public function getDateCreated(): ?string
     {
         return $this->date_created;
     }
 
-    /**
-     * @param Integer $date_created
-     */
-    public function setDateCreated(Int $date_created): void
+    public function setDateCreated($date_created): void
     {
         $this->date_created = date("Y-m-d h:i:s", $date_created);
-    }
+    } 
 
-    /**
-     * @return Integer
-     */
-    public function getDateUpdated(): Int
+    public function getDateUpdated(): ?string
     {
         return $this->date_updated;
     }
 
-    /**
-     * @param Integer $date_updated
-     */
-    public function setDateUpdated(Int $date_updated): void
+    public function setDateUpdated($date_updated): void
     {
-        $this->date_updated = date("Y-m-d h:i:s", $date_updated);
-    }
+        $this->date_updated = $date_updated;
+    }   
     
     public function getToken():?string
     {
@@ -125,6 +114,16 @@ class User extends Sql
     {
         $bytes = random_bytes(128);
         $this->token = substr(str_shuffle(bin2hex($bytes)), 0, 255);
+    }
+
+    public function getRole():string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role):void
+    {
+        $this->role = $role;
     }
 
     public function save(): void
@@ -143,7 +142,28 @@ class User extends Sql
                 "submit"=>"S'inscrire"
             ],
             "inputs"=>[
+                "firstname"=>[
+                    "label"=>"Prénom",
+                    "placeholder"=>"Votre prénom ...",
+                    "type"=>"text",
+                    "id"=>"firstnameRegister",
+                    "class"=>"formRegister",
+                    "min"=>2,
+                    "max"=>25,
+                    "error"=>" Votre prénom doit faire entre 2 et 25 caractères",
+                ],
+                "lastname"=>[
+                    "label"=>"Nom",
+                    "placeholder"=>"Votre nom ...",
+                    "type"=>"text",
+                    "id"=>"lastnameRegister",
+                    "class"=>"formRegister",
+                    "min"=>2,
+                    "max"=>100,
+                    "error"=>" Votre nom doit faire entre 2 et 100 caractères",
+                ],
                 "email"=>[
+                    "label"=>"Email",
                     "placeholder"=>"Votre email ...",
                     "type"=>"email",
                     "id"=>"emailRegister",
@@ -154,6 +174,7 @@ class User extends Sql
                     "errorUnicity"=>"Un compte existe déjà avec cet email"
                 ],
                 "password"=>[
+                    "label"=>"Mot de passe",
                     "placeholder"=>"Votre mot de passe ...",
                     "type"=>"password",
                     "id"=>"pwdRegister",
@@ -162,6 +183,7 @@ class User extends Sql
                     "error"=>"Votre mot de passe doit faire au min 8 caratères avec une majuscule et un chiffre"
                 ],
                 "passwordConfirm"=>[
+                    "label"=>"Confirmation du mot de passe",
                     "placeholder"=>"Confirmation ...",
                     "type"=>"password",
                     "id"=>"pwdConfirmRegister",
@@ -170,24 +192,6 @@ class User extends Sql
                     "error"=>"Votre confirmation de mot de passe ne correspond pas",
                     "confirm"=>"password"
                 ],
-                "firstname"=>[
-                    "placeholder"=>"Votre prénom ...",
-                    "type"=>"text",
-                    "id"=>"firstnameRegister",
-                    "class"=>"formRegister",
-                    "min"=>2,
-                    "max"=>25,
-                    "error"=>" Votre prénom doit faire entre 2 et 25 caractères",
-                ],
-                "lastname"=>[
-                    "placeholder"=>"Votre nom ...",
-                    "type"=>"text",
-                    "id"=>"lastnameRegister",
-                    "class"=>"formRegister",
-                    "min"=>2,
-                    "max"=>100,
-                    "error"=>" Votre nom doit faire entre 2 et 100 caractères",
-                ]
             ]
         ];
     }
@@ -196,7 +200,7 @@ class User extends Sql
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"",
+                "action"=>"/login",
                 "id"=>"formLogin",
                 "class"=>"formLogin",
                 "submit"=>"Se connecter"
@@ -208,6 +212,7 @@ class User extends Sql
                     "id"=>"emailRegister",
                     "class"=>"formRegister",
                     "required"=>true,
+                    "error"=>"Email invalide",
                 ],
                 "password"=>[
                     "placeholder"=>"Votre mot de passe ...",
@@ -215,19 +220,20 @@ class User extends Sql
                     "id"=>"pwdRegister",
                     "class"=>"formRegister",
                     "required"=>true,
+                    "error"=>"Mot de passe invalide"
                 ]
             ]
         ];
     }
-    public function getExamForm(): array
+    public function getForgetPasswordForm()
     {
         return [
             "config"=>[
                 "method"=>"POST",
-                "action"=>"",
-                "id"=>"formExam",
-                "class"=>"formExam",
-                "submit"=>"Valider"
+                "action"=>"sendPasswordReset",
+                "id"=>"formResetPassword",
+                "class"=>"formResetPassword",
+                "submit"=>"Récuperer mot de passe"
             ],
             "inputs"=>[
                 "email"=>[
@@ -235,61 +241,134 @@ class User extends Sql
                     "type"=>"email",
                     "id"=>"emailRegister",
                     "class"=>"formRegister",
-                    "required"=>true,
-                    "error" => "Tu as mal renseigner ton email"
-                ],/*
-                "genre"=>[
-                    "type"=>"radio",
-                    "id"=>"radioExam",
-                    "class"=>"formExam",
-                    "value"=> [
-                        "Homme" => "homme",
-                        "Femme" => "femme",
-                        "Neutre" => "neutre",
-                        "Jupiterien" => "jupiterien"
-                    ],
-                    "checked" => "jupiterien"
-                ],
-                "avis"=>[
-                    "type"=>"checkbox",
-                    "id"=>"checkboxExam",
-                    "class"=>"formExam",
-                    "value"=> [
-                        "Oui" => "true",
-                        "Non" => "false",
-                        "Peut être" => "null"
-                    ],
-                    "checked" => "null"
-                ],
-                "pays"=>[
-                    "type"=>"select",
-                    "id"=>"selectExam",
-                    "class"=>"formExam",
-                    "value"=> [
-                        "France" => "france",
-                        "Algérie" => "algérie",
-                        "Maroc" => "maroc"
-                    ],
-                    "selected" => "algérie"
-                ],
-                "msg"=>[
-                    "placeholder"=>"Votre message ...",
-                    "type"=>"textarea",
-                    "id"=>"textareaExam",
-                    "class"=>"formExam"
-                ],
-                "image"=>[
-                    "type"=>"file",
-                    "accept"=>["png","jpg","gif"],
-                    "id"=>"fileExam",
-                    "class"=>"formExam",
-                    "multiple"=>true,
-                    "error" => "Mauvais format de fichier (png,jpg,gif)"
-                ],*/
-                "g-recaptcha-response"=>[
-                    "type"=>"captcha",
-                    "error" => "Il faut renseigner le captcha"
+                    "required"=>true
                 ]
+            ]
+        ];
+    }
+    public function getChangePasswordForm()
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"confirmChange",
+                "id"=>"formChangePassword",
+                "class"=>"formChangePassword",
+                "submit"=>"Changer de mot de passe"
+            ],
+            "inputs"=>[
+                "password"=>[
+                    "placeholder"=>"Votre mot de passe ...",
+                    "type"=>"password",
+                    "id"=>"changePassword",
+                    "class"=>"changePassword",
+                    "required"=>true,
+                    "error"=>"mot de passe incorrect"
+                ],
+                "confirmPassword"=>[
+                    "placeholder"=>"Confirmez votre mot de passe ...",
+                    "type"=>"password",
+                    "id"=>"changePassword",
+                    "class"=>"changePassword",
+                    "required"=>true,
+                    "error"=>"Pas le meme mot de passe"
+                ]
+            ]
+        ];
+    }
+    // public function getLogoutButton(){
+    //     return [
+    //         "config"=>[
+    //             "method"=>"POST",
+    //             "action"=>"logout",
+    //             "id"=>"logout_button",
+    //             "class"=>"logout",
+    //             "submit"=>"Se déconnecter"
+    //         ],
+    //         "inputs"=>[
+    //         ],
+    //     ];
+    // }
+    public function getUserProfileForm(){
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => "",
+                "id" => "formUserProfile",
+                "class" => "formUserprofile",
+                "submit" => "Sauvegarder"
+            ],
+            "inputs" => [
+                "firstname" => [
+                    "type" => "text",
+                    "label" => "Votre prénom",
+                    "id" => "firstname",
+                    "class" => "formInput",
+                    "placeholder" => "Saisissez un prénom..",
+                    "value" => $this->getFirstname() ?? "",
+                ],
+                "lastname" => [
+                    "type" => "text",
+                    "label" => "Votre nom",
+                    "id" => "lastname",
+                    "class" => "formInput",
+                    "placeholder" => "Saisissez un nom..",
+                    "value" => $this->getLastname() ?? "",
+                ],
+                "email" => [
+                    "type" => "email",
+                    "label" => "Votre email",
+                    "id" => "email",
+                    "class" => "formInput",
+                    "placeholder" => "john@doe.com",
+                    "value" => $this->getEmail() ?? '',
+                    "error" => "Votre email doit faire entre 8 et 320 caractères",
+                    "required" => true,
+                    "disabled" => 'disabled'
+                ],
+            ]
+        ];
+    }
+
+    public function getUserPasswordForm(){
+        return [
+
+            "config" => [
+                "method" => "POST",
+                "action" => "",
+                "id" => "formUserprofile",
+                "class" => "formUserprofile",
+                "submit" => "Valider"
+            ],
+            "inputs" => [
+                "oldPassword" => [
+                    "type" => "password",
+                    "label" => "Votre mot de passe actuel",
+                    "id" => "password",
+                    "class" => "formInput",
+                    "placeholder" => "",
+                    "error" => "Votre mot de passe doit faire au minimum 8 caractères",
+                    "required" => false
+                ],
+                "password" => [
+                    "label" => "Votre nouveau mot de passe",
+                    "type" => "password",
+                    "id" => "password",
+                    "class" => "formInput",
+                    "placeholder" => "",
+                    "error" => "Votre mot de passe doit faire au minimum 8 caractères",
+                    "required" => false
+                ],
+                "passwordConfirm" => [
+                    "label" => "Confirmation",
+                    "type" => "password",
+                    "confirm" => "password",
+                    "id" => "passwordConfirm",
+                    "class" => "formInput",
+                    "placeholder" => "",
+                    "error" => "Votre mot de mot de passe de confirmation ne correspond pas",
+                    "required" => false
+                ],
             ]
         ];
     }

@@ -1,23 +1,244 @@
-default:
+/default:
     controller: main
     action: home
+    role: [public]
 
-login:
+/login:
     controller: user
     action: login
+    role: [public]
 
-logout:
+/logout:
     controller: user
     action: logout
+    role: [user, admin, super_admin]
 
-register:
+/adminregister:
     controller: user
     action: register
+    role: [public]
 
-dashboard:
+/register:
+    controller: user
+    action: register
+    role: [public]
+
+/confirmregister:
+    controller: user
+    action: confirmAccount
+    role: [public]
+
+/dashboard:
     controller: admin
-    action: home
+    action: dashboard
+    role: [admin, super_admin]    
 
-mail:
+/mail:
     controller: mail
     action: main
+    role: [user, admin, super_admin]
+
+/confirmaccount:
+    controller: user
+    action: confirmAccount
+    role: [public]
+
+/forgetpassword:
+    controller: user
+    action: forgetPassword
+    role: [public]
+
+/sendpasswordreset:
+    controller: user
+    action: sendPasswordReset
+    role: [public]
+
+/changepassword:
+    controller: user
+    action: changeForgetPassword
+    role: [public, user, admin, super_admin]
+
+/confirmchange:
+    controller: user
+    action: confirmPasswordChangement
+    role: [public, user, admin, super_admin]
+
+/redirection:
+    controller: user
+    action: redirection
+    role: [user, admin, super_admin]
+
+/comment:
+    controller: comment
+    action: commentCreate
+    role: [user, admin, super_admin]
+
+/createrecipe:
+    controller: recipe
+    action: recipeCreate
+    role: [admin, super_admin]
+
+/detailsrecipe:
+    controller: recipe
+    action: detailsRecipe
+    role: [public, user, admin, super_admin]
+
+/updaterecipe:
+    controller: recipe
+    action: updateRecipe
+    role: [admin, super_admin]
+
+/deleterecipe:
+    controller: recipe
+    action: deleteRecipe
+    role: [admin, super_admin]
+
+/recipes:
+    controller: recipe
+    action: indexRecipe
+    role: [public, user, admin, super_admin]
+
+/managerecipes:
+    controller: admin
+    action: indexRecipe
+    role: [admin, super_admin]
+
+/comment:
+    controller: comment
+    action: commentCreate
+    role: [public, user, admin, super_admin]
+
+/replycomment:
+    controller: comment
+    action: replyComment
+    role: [public, user, admin, super_admin]
+
+/createlike:
+    controller: like
+    action: createLike
+    role: [public, user, admin, super_admin]
+
+/getlikes:
+    controller: like
+    action: getLikes
+    role: [public, user, admin, super_admin]
+
+/adminmember:
+    controller: admin
+    action: memberView
+    role: [admin, super_admin]
+
+/deleteuser:
+    controller: admin
+    action: deleteUser
+    role: [admin, super_admin]
+
+/edituserrole:
+    controller: admin
+    action: editUserRole
+    role: [admin, super_admin]
+
+/addpage:
+    controller: admin
+    action: addPage
+    role: [public, user, admin, super_admin]
+
+/editpage:
+    controller: admin
+    action: editPage
+    role: [public, user, admin, super_admin]
+
+/deletepage:
+    controller: admin
+    action: deletePageAdmin
+    role: [public, user, admin, super_admin]
+
+/editpage:
+    controller: admin
+    action: editPage
+    role: [admin, super_admin]
+
+/reportcomment:
+    controller: comment 
+    action: reportComment
+    role: [public, user, admin, super_admin]
+
+/reports:
+    controller: comment
+    action: getReports
+    role: [public, user, admin, super_admin]
+
+/pagenotfound:
+    controller: error
+    action: errorNotFound
+    role: [public, user, admin, super_admin]
+
+/notauthorized:
+    controller: error
+    action: errorUnauthorized
+    role: [public]
+
+/servererror:
+    controller: error
+    action: errorServer
+    role: [public]
+
+/devfixtures:
+    controller: admin
+    action: loadFixtures
+    role: [public]
+    
+/menu:
+    controller: admin
+    action: editMenu
+    role: [public]
+
+/moveitemposition:
+    controller: admin
+    action: moveItemPosition
+    role: [public]
+
+/additem:
+    controller: admin
+    action: addItem
+    role: [public]
+
+/contact:
+    controller: contact
+    action: indexContact
+    role: [public]
+
+/presentation:
+    controller: presentation
+    action: indexPresention
+    role: [public]
+
+/about:
+    controller: about
+    action: indexAbout
+    role: [public]
+
+/getstatconnexion:
+    controller: admin
+    action: getStatConnexion
+    role: [public]
+
+/userprofile:
+    controller: user
+    action: getUserProfile
+    role: [public]
+
+/userprofilepassword:
+    controller: user
+    action: changePassword
+    role: [public]
+
+/installation:
+    controller: installation
+    action: completeRegistration
+    role: [admin]
+
+/loading:
+    controller: installation
+    action: loading
+    role: [admin]

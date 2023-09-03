@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+session_start();
+
 require "conf.inc.php";
 
 spl_autoload_register(function ($class)
@@ -13,8 +15,11 @@ spl_autoload_register(function ($class)
 });
 
 
-$uri = strtolower(trim($_SERVER["REQUEST_URI"], "/"));
-$uri = empty($uri)?"default":$uri;
+$base_uri = strtolower(trim($_SERVER["REQUEST_URI"]));
+$base_uri = empty($base_uri) ? "default" : $base_uri;
+
+$uri = strstr($base_uri, "?", true);
+$uri = $uri !== false ? $uri : $base_uri;
 
 
 if(!file_exists("routes.yml")){
@@ -25,7 +30,7 @@ $routes  = yaml_parse_file("routes.yml");
 
 //Si l'uri n'existe pas dans $routes die page 404
 if(empty($routes[$uri])){
-    die("Page 404 : Not found");
+    ini_get('display_errors') == 0 ? die('404 not found') : header('Location:/pagenotfound');
 }
 //Sinon si l'uri ne possède pas de controller ni d'action die erreur fichier routes.yml
 if(empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
@@ -34,6 +39,19 @@ if(empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
 
 $c = $routes[$uri]["controller"]; //Security
 $a = $routes[$uri]["action"]; //login
+
+$role = $routes[$uri]['role'];
+
+if(!isset($_SESSION['role'])){
+    $_SESSION['role'] = 'public';
+}
+
+
+if(isset($_SESSION['role'])){
+    if(!in_array($_SESSION['role'], $role) && !in_array('public',$role)){
+        throw new \Exception('Vous n\'avez pas le droit d\'accéder à cette page');
+    }
+}
 
 //Sinon si il n'y a pas de fichier controller correspondant die absence du fichier controller
 if(!file_exists("controllers/".$c.".php")){
@@ -51,7 +69,7 @@ $controller = new ($namespaceController.$c)(); //new Front();
 
 //Sinon appel de l'action
 if(!method_exists($controller, $a)){
-    die("La méthode ".$a." n'existe pas");
+    ini_get('display_errors') == 0 ? die('404 not found : la classe n\'existe pas') : header('Location:/pagenotfound');
 }
 
 //Front->contact();
