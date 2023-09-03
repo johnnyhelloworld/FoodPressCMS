@@ -271,20 +271,20 @@ class User
         echo "Vous allez recevoir un mail pour modifier votre mail";
     }
 
-    // public function changePassword(){
-    //     $passwordReset = new PasswordReset();
-    //     $user = new UserModel();
-    //     if(empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
-    //         die('<p style="color:red;">Le token n\'existe pas</p>');
-    //     }
-    //     $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
-    //     if($passwordReset->tokenexpiry < time()){
-    //         die('<p style="color:red;">Le token n\'est plus valide</p>');
-    //     }
-    //     $session = new Session();
-    //     $session->set("token", $passwordReset->getToken());
-    //     Router::render('front/security/changepassword.php', ["user" => $user]);
-    // }
+    public function changeForgetPassword(){
+        $passwordReset = new PasswordReset();
+        $user = new UserModel();
+        if(empty($passwordReset->getOneBy(["token" => $_GET["token"]])[0])){
+            die('<p style="color:red;">Le token n\'existe pas</p>');
+        }
+        $passwordReset = $passwordReset->getOneBy(["token" => $_GET["token"]])[0];
+        if($passwordReset->tokenexpiry < time()){
+            die('<p style="color:red;">Le token n\'est plus valide</p>');
+        }
+        $session = new Session();
+        $session->set("token", $passwordReset->getToken());
+        Router::render('front/security/changepassword.php', ["user" => $user]);
+    }
 
     public function changePassword()
     {
@@ -333,6 +333,7 @@ class User
         }
         $user = $user->setId($passwordReset->getUserId());
         $user->setPassword($_POST['password']);
+        $user->setDateUpdated((new \DateTime('now'))->format('Y-m-d H:i:s'));
         $user->save();
         echo "Mot de passe changé";
     }

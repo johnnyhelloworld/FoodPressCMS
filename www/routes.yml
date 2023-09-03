@@ -60,13 +60,13 @@
 
 /changepassword:
     controller: user
-    action: changePassword
-    role: [user, admin, super_admin]
+    action: changeForgetPassword
+    role: [public, user, admin, super_admin]
 
 /confirmchange:
     controller: user
     action: confirmPasswordChangement
-    role: [user, admin, super_admin]
+    role: [public, user, admin, super_admin]
 
 /redirection:
     controller: user
