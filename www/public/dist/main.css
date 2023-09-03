@@ -333,6 +333,7 @@ header {
   position: fixed;
   width: 100%;
   z-index: 20;
+  background-color: rgba(72, 31, 168, 0.5);
   transition: background-color 1s;
 }
 header.sticky {
